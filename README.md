@@ -1,2 +1,2 @@
-# comp345
-Repository for COMP 345 (Advanced Program Design with C++) course at Concordia University. 
+# Risk Game
+Repository for COMP 345 (Advanced Program Design with C++) Risk project at Concordia University. 
