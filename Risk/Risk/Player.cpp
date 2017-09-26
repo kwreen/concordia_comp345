@@ -21,48 +21,48 @@ Player::Player() {
 //	diceFacility = diceFacility;
 //}
 
-//inline vector<Country> getCountries() const {
+//inline vector<Country> Player::getCountries() const {
 //	return countries;
 //}
 //
-//inline Deck getDeck() const {
+//inline Deck Player::getDeck() const {
 //	return deck;
 //}
 //
-//inline Deck getHand() const {
+//inline Deck Player::getHand() const {
 //	return hand;
 //}
 //
-//inline DiceFacility getDiceFacility() const {
+//inline DiceFacility Player::getDiceFacility() const {
 //	return diceFacility;
 //}
 //
 
 // ARE SETTERS DONE THIS WAY??
-//setCountries(vector<Country> countries) {
+//void Player::setCountries(vector<Country> countries) {
 //	countries = countries;
 //}
 //
-//setDeck(Deck deck) {
+//void Player::setDeck(Deck deck) {
 //	deck = deck;
 //}
 //
-//setHand(Deck hand) {
+//void Player::setHand(Deck hand) {
 //	hand = hand;
 //}
 //
-//setDiceFacility(DiceFacility diceFacility) {
+//void Player::setDiceFacility(DiceFacility diceFacility) {
 //	diceFacility = diceFacility;
 //}
 
-//void reinforce() {
+//void Player::reinforce() {
 //	cout << "Player " << this << " has reinforced." << endl;
 //}
 //
-//void attack() {
+//void Player::attack() {
 //	cout << "Player " << this << " has attacked." << endl;
 //}
 //
-//void fortify() {
+//void Player::fortify() {
 //	cout << "Player " << this << " has fortified." << endl;
 //}
