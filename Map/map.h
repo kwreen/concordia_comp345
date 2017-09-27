@@ -14,9 +14,12 @@ class Map
 public:
 	Map();
 	void addCountry(std::string name);
-	void Map::addAdjacent(Country a, Country b)
+	int getIndex(std::string name);
+	void addAdjacent(Country a, Country b);
+	void showAdjacent(Country a);
 	void getCountries();
 	int getSize();
+
 
 private:
 	std::vector<Country> adjList;

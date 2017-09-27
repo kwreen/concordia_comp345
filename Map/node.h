@@ -15,11 +15,14 @@ class Node
 {
 private:
 	int index;
-	Node* next;
+
 public:
+	Node();
 	Node(int num);
 	Node(int num, Node* n);
 	Node(int num, Node* n, Node* p);
+	Node* next;
+	int getIndex();
 
 };
 

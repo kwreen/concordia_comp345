@@ -15,9 +15,10 @@ class Country
 private:
 	std::string parent; // use this for continents.
 	std::string name;
-	Node* adjCountryList; // countries that are adjacent to each other..
+
 
 public:
+	Node* adjCountryList; // countries that are adjacent to each other.
 	Country();
 	Country(std::string n);
 	Country(std::string n, Node* cList);

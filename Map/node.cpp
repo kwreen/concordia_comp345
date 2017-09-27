@@ -13,5 +13,13 @@ Node::Node(int number, Node* n)
 	next = n;
 
 }
+Node::Node()
+{
+
+}
+int Node::getIndex()
+{
+	return index;
+}
 
 
