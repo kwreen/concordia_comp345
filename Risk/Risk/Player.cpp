@@ -6,63 +6,47 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-
-Player::Player() {
-	// countries = null;
-	// deck = null;
-	// hand = null;
-	// diceFacility = null;
+Player::Player(vector<Country> countries, Hand hand, Dice dice) {
+	this->_countries = countries;
+	this->_hand = hand;
+	this->_dice = dice;
 }
 
-//Player::Player(vector<Country> countries, Deck deck, DiceFacility diceFacility) {
-//	countries = countries;
-//	deck = deck; // TODO: check the correct number of cards is given
-//	hand = null;
-//	diceFacility = diceFacility;
-//}
+inline vector<Country>& Player::getCountries() const {
+	return (vector<Country>&)this->_countries;
+}
 
-//inline vector<Country> Player::getCountries() const {
-//	return countries;
-//}
-//
-//inline Deck Player::getDeck() const {
-//	return deck;
-//}
-//
-//inline Deck Player::getHand() const {
-//	return hand;
-//}
-//
-//inline DiceFacility Player::getDiceFacility() const {
-//	return diceFacility;
-//}
-//
+inline Hand Player::getHand() const {
+	return this->_hand;
+}
 
-// ARE SETTERS DONE THIS WAY??
-//void Player::setCountries(vector<Country> countries) {
-//	countries = countries;
-//}
-//
-//void Player::setDeck(Deck deck) {
-//	deck = deck;
-//}
-//
-//void Player::setHand(Deck hand) {
-//	hand = hand;
-//}
-//
-//void Player::setDiceFacility(DiceFacility diceFacility) {
-//	diceFacility = diceFacility;
-//}
+inline Dice Player::getDice() const {
+	return this->_dice;
+}
 
-//void Player::reinforce() {
-//	cout << "Player " << this << " has reinforced." << endl;
-//}
-//
-//void Player::attack() {
-//	cout << "Player " << this << " has attacked." << endl;
-//}
-//
-//void Player::fortify() {
-//	cout << "Player " << this << " has fortified." << endl;
-//}
+void Player::setCountries(vector<Country> countries) {
+	this->_countries = countries;
+}
+
+void Player::setHand(Hand hand) {
+	this->_hand = hand;
+}
+
+void Player::setDice(Dice dice) {
+	dice = dice;
+}
+
+void Player::reinforce() {
+	// TODO: Implement reinforce mechanism
+	cout << "Player " << this << " has reinforced." << endl;
+}
+
+void Player::attack() {
+	// TODO: Implement attack mechanism
+	cout << "Player " << this << " has attacked." << endl;
+}
+
+void Player::fortify() {
+	// TODO: Implement fortify mechanism
+	cout << "Player " << this << " has fortified." << endl;
+}

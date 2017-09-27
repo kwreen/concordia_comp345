@@ -1,0 +1,11 @@
+﻿  PlayerDriver.cpp
+c:\users\kwreen\documents\github\comp345\risk\risk\player.h(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+  Compiling...
+  Player.cpp
+c:\users\kwreen\documents\github\comp345\risk\risk\player.cpp(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\kwreen\documents\github\comp345\risk\risk\player.h(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\kwreen\documents\github\comp345\risk\risk\player.cpp(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+  Risk.vcxproj -> C:\Users\kwreen\Documents\GitHub\comp345\Risk\x64\Debug\Player.exe
+  Risk.vcxproj -> C:\Users\kwreen\Documents\GitHub\comp345\Risk\x64\Debug\Player.pdb (Partial PDB)
