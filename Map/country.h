@@ -21,9 +21,11 @@ public:
 	Node* adjCountryList; // countries that are adjacent to each other.
 	Country();
 	Country(std::string n);
+	Country(std::string n,std::string p);
 	Country(std::string n, Node* cList);
 	std::string getName();
 	std::string getContinent();
+	void setParent(std::string p);
 
 
 };

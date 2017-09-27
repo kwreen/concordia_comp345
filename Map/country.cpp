@@ -20,6 +20,11 @@ Country::Country(string n)
 {
 	name = n;
 }
+Country::Country(string n, string p)
+{
+	name = n;
+	parent = p;
+}
 string Country::getName()
 {
 	return name;
@@ -27,6 +32,10 @@ string Country::getName()
 string Country::getContinent()
 {
 	return parent;
+}
+void Country::setParent(string p)
+{
+	parent = p;
 }
 
 

@@ -66,7 +66,8 @@ int Map::getSize()
 int main()
 {
 	Map map;
-	Country a("Canada");
+	Country a("Canada","North America");
+	cout << a.getContinent() << endl;
 	Country b("USA");
 	Country c("test");
 	map.addCountry("Canada");
@@ -76,7 +77,7 @@ int main()
 	map.addAdjacent(a,b);
 	map.addAdjacent(a,c);
 	map.showAdjacent(a);
-	//cout << map.getSize() << endl;
-	//map.getCountries();
+	cout << map.getSize() << endl;
+	map.getCountries();
 	return 0;
 }
