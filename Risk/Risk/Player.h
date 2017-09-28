@@ -1,8 +1,7 @@
 #pragma once
-#include <vector>;
-#include "Dice.h"
+#include <vector>
+#include "DiceFacility.h"
 #include "Country.h"
-#include "Deck.h"
 #include "Hand.h"
 
 using std::vector;
@@ -11,13 +10,13 @@ class Player {
 	private:
 		 vector<Country> _countries;
 		 Hand _hand;
-		 Dice _dice;
+		 DiceFacility _dice;
 
 	public:
-		Player(vector<Country> countries, Hand hand, Dice dice);
+		Player(vector<Country> countries, Hand hand, DiceFacility dice);
 		inline vector<Country>& getCountries() const;
 		inline Hand getHand() const;
-		inline Dice getDice() const;
+		inline DiceFacility getDice() const;
 		void reinforce();
 		void attack();
 		void fortify();
@@ -25,5 +24,5 @@ class Player {
 	private:
 		 void setCountries(vector<Country> countries);
 		 void setHand(Hand hand);
-		 void setDice(Dice dice);
+		 void setDice(DiceFacility dice);
 };

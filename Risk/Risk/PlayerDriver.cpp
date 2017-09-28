@@ -10,7 +10,6 @@ int main() {
 	vector<Country> countries;
 	Hand hand;
 	Dice dice;
-
 	cout << "Creating a player..." << endl;
 	Player* player = new Player(countries, hand, dice);
 	cout << "Player " << player << " has been created." << endl;

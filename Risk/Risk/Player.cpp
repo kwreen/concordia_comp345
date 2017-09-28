@@ -1,12 +1,12 @@
 #include "Player.h";
 #include <vector>;
-#include <iostream>
+#include <iostream>;
 
 using std::vector;
 using std::cout;
 using std::endl;
 
-Player::Player(vector<Country> countries, Hand hand, Dice dice) {
+Player::Player(vector<Country> countries, Hand hand, DiceFacility dice) {
 	this->_countries = countries;
 	this->_hand = hand;
 	this->_dice = dice;
@@ -20,7 +20,7 @@ inline Hand Player::getHand() const {
 	return this->_hand;
 }
 
-inline Dice Player::getDice() const {
+inline DiceFacility Player::getDice() const {
 	return this->_dice;
 }
 
@@ -32,8 +32,8 @@ void Player::setHand(Hand hand) {
 	this->_hand = hand;
 }
 
-void Player::setDice(Dice dice) {
-	dice = dice;
+void Player::setDice(DiceFacility dice) {
+	this->_dice = dice;
 }
 
 void Player::reinforce() {
