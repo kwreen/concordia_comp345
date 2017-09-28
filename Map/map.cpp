@@ -10,12 +10,30 @@ using namespace std;
 Map::Map()
 {
 	size = 0;
+	cSize = 0;
 
 }
-void Map::addCountry(string name)
+void Map::addCountry(string name, string continent)
 {
 
 	adjList.push_back(Country(name,NULL));
+	//cout << "Added " << name << endl;
+	int cIndex = getIndexContinent(continent);
+	//cout << cIndex << endl;
+
+	if (cIndex < 0) // if the continent doesnt exist yet..add it
+	{
+		//cout << "Entered for " << name << endl;
+		continentList.push_back(Continent(continent));
+		cSize++;
+	}
+	else // if it exists update country to point to its continent.
+	{
+
+		//cout << adjList.size()<< endl;
+		adjList[adjList.size()].parent = Continent(continent);
+
+	}
 	size++;
 
 }
@@ -43,14 +61,21 @@ void Map::showAdjacent(Country a)
 		current = current->next;
 	}
 }
-void Map::getCountries()
+void Map::printCountries()
 {
 	for (int i=0;i<size;i++)
 	{
 		cout << adjList[i].getName() << endl;
 	}
 }
-int Map::getIndex(string name)
+void Map::printContinents()
+{
+	for (int i=0;i<cSize;i++)
+	{
+		cout << continentList[i].getName() << endl;
+	}
+}
+int Map::getIndex(string name) // for countries
 {
 	for (int i=0; i < size;i++)
 	{
@@ -59,6 +84,17 @@ int Map::getIndex(string name)
 	}
 	return -1; // not found.
 }
+int Map::getIndexContinent(string continent)
+{
+	for (int i=0; i<cSize;i++)
+	{
+		if (continentList[i].getName() == continent)
+		{
+			return i;
+		}
+	}
+	return -1; // not found
+}
 int Map::getSize()
 {
 	return size;
@@ -66,18 +102,20 @@ int Map::getSize()
 int main()
 {
 	Map map;
-	Country a("Canada","North America");
-	cout << a.getContinent() << endl;
-	Country b("USA");
-	Country c("test");
-	map.addCountry("Canada");
-	map.addCountry("USA");
-	map.addCountry("test");
+	Continent conA("North America");
+	Country a("Canada",conA);
+	Country b("Toronto",conA);
+	//cout << a.getContinent() << endl;
+
+	map.addCountry("Canada","North America");
+	map.addCountry("Toronto","North America");
 	//cout << map.getIndex("United States") << endl;
 	map.addAdjacent(a,b);
-	map.addAdjacent(a,c);
+	//map.addAdjacent(a,c);
 	map.showAdjacent(a);
-	cout << map.getSize() << endl;
-	map.getCountries();
+	cout << "Printing Countries" << endl;
+	map.printCountries();
+	cout << "Printing Continents" << endl;
+	map.printContinents();
 	return 0;
 }

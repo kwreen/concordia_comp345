@@ -9,19 +9,21 @@
 #define COUNTRY_H_
 
 #include "node.h"
+#include "continent.h"
 #include <string>
 class Country
 {
 private:
-	std::string parent; // use this for continents.
+
 	std::string name;
 
 
 public:
 	Node* adjCountryList; // countries that are adjacent to each other.
+	Continent parent; // use this for continents
 	Country();
-	Country(std::string n);
-	Country(std::string n,std::string p);
+	Country(std::string n,Continent p);
+	Country(std::string n, Node* cList, Continent p);
 	Country(std::string n, Node* cList);
 	std::string getName();
 	std::string getContinent();

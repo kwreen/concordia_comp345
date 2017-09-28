@@ -11,33 +11,37 @@ Country::Country()
 {
 
 }
-Country::Country(string n, Node* clist)
+Country::Country(string n, Node* cList)
 {
 	name = n;
-	adjCountryList = clist;
+	adjCountryList = cList;
 }
-Country::Country(string n)
+Country::Country(string n, Continent p)
 {
 	name = n;
+	parent = p;
 }
-Country::Country(string n, string p)
+Country::Country(string n, Node *cList, Continent p)
 {
 	name = n;
+	adjCountryList = cList;
 	parent = p;
 }
 string Country::getName()
 {
 	return name;
 }
+
 string Country::getContinent()
 {
-	return parent;
+	return parent.getName();
 }
-void Country::setParent(string p)
+/*
+void Country::setParent(Node* p)
 {
 	parent = p;
 }
-
+*/
 
 
 
