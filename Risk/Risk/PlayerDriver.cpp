@@ -6,24 +6,24 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-int main() {
+int mainbutnotreally() {
 	vector<Country> countries;
 	Hand hand;
-	Dice dice;
+	DiceFacility dice(3);
 	cout << "Creating a player..." << endl;
-	Player* player = new Player(countries, hand, dice);
-	cout << "Player " << player << " has been created." << endl;
+	Player player (countries, hand, dice);
+	cout << "A player has been created." << endl;
 	
 	cout << endl;
 
-	cout << "Player " << player << " will now reinforce..."<< endl;
-	player->reinforce();
+	cout << "The player will now reinforce..."<< endl;
+	player.reinforce();
 	cout << endl;
-	cout << "Player " << player << " will now attack..." << endl;
-	player->attack();
+	cout << "The player will now attack..." << endl;
+	player.attack();
 	cout << endl;
-	cout << "Player " << player << " will now fortify..." << endl;
-	player->fortify();
+	cout << "The player will now fortify..." << endl;
+	player.fortify();
 
 	return 0;
 }

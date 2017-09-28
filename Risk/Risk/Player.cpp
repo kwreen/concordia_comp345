@@ -6,21 +6,17 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-Player::Player(vector<Country> countries, Hand hand, DiceFacility dice) {
-	this->_countries = countries;
-	this->_hand = hand;
-	this->_dice = dice;
-}
+Player::Player(vector<Country> countries, Hand hand, DiceFacility dice) : _countries(countries), _hand(hand), _dice(dice) {}
 
-inline vector<Country>& Player::getCountries() const {
+vector<Country>& Player::getCountries() const {
 	return (vector<Country>&)this->_countries;
 }
 
-inline Hand Player::getHand() const {
+Hand Player::getHand() const {
 	return this->_hand;
 }
 
-inline DiceFacility Player::getDice() const {
+DiceFacility Player::getDice() const {
 	return this->_dice;
 }
 

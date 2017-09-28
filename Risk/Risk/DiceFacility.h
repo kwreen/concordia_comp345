@@ -6,10 +6,9 @@ using std::vector;
 
 class DiceFacility {
 	private:
-		vector<Dice*> _dice;
+		vector<Dice> _dice;
 
 	public:
-		~DiceFacility();
 		DiceFacility(int numOfDice);
 		vector<int> rollDice();
 };

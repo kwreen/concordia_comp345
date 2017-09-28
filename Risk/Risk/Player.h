@@ -14,9 +14,9 @@ class Player {
 
 	public:
 		Player(vector<Country> countries, Hand hand, DiceFacility dice);
-		inline vector<Country>& getCountries() const;
-		inline Hand getHand() const;
-		inline DiceFacility getDice() const;
+		vector<Country>& getCountries() const;
+		Hand getHand() const;
+		DiceFacility getDice() const;
 		void reinforce();
 		void attack();
 		void fortify();
