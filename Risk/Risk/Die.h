@@ -1,6 +1,6 @@
 #pragma once
 
-class Dice {
+class Die {
 	private:
 		int _totalRollCount;
 		int _occurenceCount[6];
@@ -8,7 +8,7 @@ class Dice {
 		static bool _seededRand;
 
 	public:
-		Dice();
+		Die();
 		int roll();
 		double getPercentageOccurence(int value);
 };

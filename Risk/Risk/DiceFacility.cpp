@@ -2,12 +2,16 @@
 
 DiceFacility::DiceFacility(int numOfDice) {
 	for (int i = 0; i < numOfDice; i++) {
-		this->_dice.push_back(Dice());
+		this->_dice.push_back(Die());
 	}
 }
 
-vector<int> DiceFacility::rollDice() {
-	vector<int> dicerollResults;
+std::vector<Die> const &DiceFacility::getDice() const {
+	return this->_dice;
+}
+
+std::vector<int> DiceFacility::rollDice() {
+	std::vector<int> dicerollResults;
 
 	for (int i = 0; i < this->_dice.size(); i++) {
 		dicerollResults.push_back(this->_dice[i].roll());

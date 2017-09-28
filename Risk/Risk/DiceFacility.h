@@ -1,14 +1,13 @@
 #pragma once
-#include "Dice.h"
+#include "Die.h"
 #include <vector>
-
-using std::vector;
 
 class DiceFacility {
 	private:
-		vector<Dice> _dice;
+		std::vector<Die> _dice;
 
 	public:
 		DiceFacility(int numOfDice);
-		vector<int> rollDice();
+		std::vector<Die> const &getDice() const;
+		std::vector<int> rollDice();
 };

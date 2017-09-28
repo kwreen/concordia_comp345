@@ -13,7 +13,7 @@ int main() {
 
 	cout << endl;
 	cout << "Creating " << numOfDice << " dice..." << endl;	
-	DiceFacility dice(numOfDice);
+	DiceFacility diceFacility(numOfDice);
 	cout << numOfDice << " dice have been created." << endl;
 
 	int reroll;
@@ -21,7 +21,7 @@ int main() {
 	do {
 		cout << endl;
 		cout << "Rolling dice..." << endl;
-		auto results = dice.rollDice();
+		auto results = diceFacility.rollDice();
 		cout << "Dice have been rolled." << endl;
 
 		for (int i = 0; i < results.size(); i++) {
@@ -33,8 +33,7 @@ int main() {
 	} while (reroll);
 
 	cout << endl;
-	cout << "Here are the results of your dice rolls:" << endl;
-
+	cout << "Here are the results of your " << numOfDice << " dice rolls:" << endl;
 
 	return 0;
 }

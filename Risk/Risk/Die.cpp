@@ -1,21 +1,21 @@
-#include "Dice.h"
+#include "Die.h"
 #include <time.h>
 #include <random>
 
-bool Dice::_seededRand = false;
+bool Die::_seededRand = false;
 
-Dice::Dice() {
+Die::Die() {
 	this->_totalRollCount = 0;
 	for (int i = 0; i < 6; i++) {
 		this->_occurenceCount[i] = 0;
 	}
 }
 
-int Dice::roll() {
+int Die::roll() {
 	// Seed the random number generator if haven't already.
-	if (!Dice::_seededRand) {
+	if (!Die::_seededRand) {
 		srand(time(NULL));
-		Dice::_seededRand = true;
+		Die::_seededRand = true;
 	}
 
 	int randomNum = (rand() % 6) + 1;
@@ -25,6 +25,6 @@ int Dice::roll() {
 	return randomNum;
 }
 
-double Dice::getPercentageOccurence(int value) {
+double Die::getPercentageOccurence(int value) {
 	return (double) this->_occurenceCount[value - 1] / this->_totalRollCount;
 }
