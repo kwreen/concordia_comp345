@@ -36,3 +36,7 @@
 *.vcxproj
 *.vcxproj.filters
 *.vs
+
+# Debug
+Debug/
+x64/

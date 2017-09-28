@@ -12,7 +12,7 @@ int main() {
 	cin >> numOfDice;
 
 	cout << endl;
-	cout << "Creating " << numOfDice << " dice..." << endl;
+	cout << "Creating " << numOfDice << " dice..." << endl;	
 	DiceFacility dice(numOfDice);
 	cout << numOfDice << " dice have been created." << endl;
 
@@ -28,11 +28,13 @@ int main() {
 			cout << "Dice " << i << ": " << results.at(i) << endl;
 		}
 
-		cout << endl << "Would you like to roll again? ";
+		cout << endl << "Would you like to roll again? (Enter 0 for NO)";
 		cin >> reroll;
 	} while (reroll);
 
 	cout << endl;
+	cout << "Here are the results of your dice rolls:" << endl;
+
 
 	return 0;
 }
