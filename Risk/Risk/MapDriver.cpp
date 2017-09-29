@@ -1,5 +1,5 @@
-#include "Map.h"
-#include "MapLoader.h"
+#include "Risk/Map.h"
+#include "Risk/MapLoader.h"
 #include <iostream>
 #include <queue>
 #include <set>
@@ -58,7 +58,10 @@ int main() {
 		std::cerr << "Exiting\n";
 		return -1;
 	}
-	//map.print();
+	map.print();
+
+	std::cout << std::endl;
+
 	bfs(map);
 
 	std::cout << std::endl;

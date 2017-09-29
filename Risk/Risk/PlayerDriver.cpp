@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "Risk/Player.h"
 #include <iostream>
 #include <vector>
 
@@ -6,7 +6,7 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-int mainbutnotreally() {
+int main() {
 	vector<Country> countries;
 	Hand hand;
 	DiceFacility dice;
@@ -24,6 +24,7 @@ int mainbutnotreally() {
 	cout << endl;
 	cout << "The player will now fortify..." << endl;
 	player.fortify();
+	system("pause");
 
 	return 0;
 }

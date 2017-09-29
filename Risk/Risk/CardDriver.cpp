@@ -1,7 +1,7 @@
-#include "Deck.h"
-#include "Card.h"
-#include "Map.h"
-#include "MapLoader.h"
+#include "Risk/Deck.h"
+#include "Risk/Card.h"
+#include "Risk/Map.h"
+#include "Risk/MapLoader.h"
 #include <iostream>
 #include <sstream>
 
@@ -15,7 +15,7 @@ std::vector<int> split(const std::string& input, char delim) {
 	return contents;
 }
 
-int main4() {
+int main() {
 	Map map = MapLoader::loadMap("World.map");
 
 	Deck deck;
