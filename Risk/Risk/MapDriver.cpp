@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "MapLoader.h"
 #include <iostream>
 #include <queue>
 #include <set>
@@ -27,10 +28,9 @@ void bfs(const Map& map) {
 	}
 }
 
-int main3() {
-	Map map;
-	bool loadMapSuccess = map.loadMap("World.map");
-	if (!loadMapSuccess) {
+int main() {
+	Map map = MapLoader::loadMap("World.map");
+	if (map.getCountries().size() == 0) {
 		std::cerr << "Exiting\n";
 		return -1;
 	}

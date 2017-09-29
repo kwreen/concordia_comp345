@@ -1,6 +1,7 @@
 #include "Deck.h"
 #include "Card.h"
 #include "Map.h"
+#include "MapLoader.h"
 #include <iostream>
 #include <sstream>
 
@@ -14,9 +15,8 @@ std::vector<int> split(const std::string& input, char delim) {
 	return contents;
 }
 
-int main() {
-	Map map;
-	map.loadMap("World.map");
+int main4() {
+	Map map = MapLoader::loadMap("World.map");
 
 	Deck deck;
 	deck.loadDeck(map.getCountries());
@@ -71,5 +71,6 @@ int main() {
 	std::cout << "Number of artillery: " << nArtillery << std::endl;
 	std::cout << "Number of cavalry: " << nCavalry << std::endl;
 	system("pause");
+	return 0;
 }
 

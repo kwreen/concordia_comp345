@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Country.h"
+#include "MapLoader.h"
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -21,7 +22,7 @@ class Map {
 
 		std::vector<Country> adjacent(const Country& country) const;
 
-		bool loadMap(const std::string& filename);
+		friend Map MapLoader::loadMap(std::string filename);
 
 		void print() const;
 };
