@@ -22,6 +22,15 @@ std::vector<Country> Map::getContinent(const std::string& continentName) const {
 	return names;
 }
 
+std::vector<std::string> Map::getContinentNames() const {
+	std::vector<std::string> continentNames;
+	for (const auto& kv : continents) {
+		continentNames.push_back(kv.first);
+	}
+
+	return continentNames;
+}
+
 std::vector<Country> Map::adjacent(const Country& country) const {
 	std::vector<Country> adjacentCountries;
 	// Find index of the specified country.
@@ -37,6 +46,34 @@ std::vector<Country> Map::adjacent(const Country& country) const {
 	for (int i = 0; i < indices.size(); ++i) {
 		if (indices[i]) {
 			adjacentCountries.push_back(countries[i]);
+		}
+	}
+
+	return adjacentCountries;
+}
+
+std::vector<Country> Map::adjacentInContinent(const Country& country, const std::string& continent) const {
+	std::vector<Country> adjacentCountries;
+	// Find index of the specified country.
+	int countryIndex;
+	for (countryIndex = 0; countryIndex < countries.size(); ++countryIndex) {
+		if (country == countries[countryIndex]) break;
+	}
+
+	// Get row of the adjacency matrix.
+	std::vector<bool> indices = adjacencyMatrix[countryIndex];
+
+	// Iterate over this row. Every time a true value is encountered, push the country onto the vector.
+	for (int i = 0; i < indices.size(); ++i) {
+		if (indices[i]) {
+			auto continentIndices = continents.at(continent);
+			// Check to make sure the index i is in continentIndices before adding the country.
+			for (int continentIndex : continentIndices) {
+				if (continentIndex == i) {
+					adjacentCountries.push_back(countries[i]);
+					break;
+				}
+			}
 		}
 	}
 

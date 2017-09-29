@@ -20,7 +20,11 @@ class Map {
 
 		std::vector<Country> getContinent(const std::string& continentName) const;
 
+		std::vector<std::string> getContinentNames() const;
+
 		std::vector<Country> adjacent(const Country& country) const;
+
+		std::vector<Country> adjacentInContinent(const Country& country, const std::string& continent) const;
 
 		friend Map MapLoader::loadMap(std::string filename);
 
