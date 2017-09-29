@@ -13,9 +13,10 @@ class Player {
 		 DiceFacility _dice;
 
 	public:
+		Player() = default;
 		Player(vector<Country> countries, Hand hand, DiceFacility dice);
 		vector<Country>& getCountries() const;
-		Hand getHand() const;
+		Hand& getHand();
 		DiceFacility getDice() const;
 		void reinforce();
 		void attack();

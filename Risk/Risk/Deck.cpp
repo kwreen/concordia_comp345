@@ -1,4 +1,4 @@
-#include <cstdlib> // Let it be known that I, Alessandro, strongly disprove of this method.
+#include <cstdlib>
 #include <ctime>
 #include "Deck.h"
 
@@ -12,6 +12,18 @@ Card Deck::draw(Player& player) {
 	player.getHand().add(card);
 	cards.erase(cards.begin() + randIndex);
 	return card;
+}
+
+int Deck::nCards() const {
+	return cards.size();
+}
+
+void Deck::loadDeck(const std::vector<Country>& countries) {
+	for (int i = 0; i < countries.size(); ++i) {
+		CardType cardType = CardType(i % 3);
+		Country country = countries[i];
+		cards.push_back(Card(country, cardType));
+	}
 }
 
 int Deck::getNExchanges() {

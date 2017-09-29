@@ -7,6 +7,8 @@ class Country {
 		std::string name;
 
 	public:
+		Country() = default;
+
 		Country(std::string name) : name(name) {}
 
 		std::string getName() const;
@@ -14,4 +16,6 @@ class Country {
 		void setName(const std::string& name);
 
 		bool operator==(const Country& other) const;
+
+		bool operator<(const Country& second) const;
 };

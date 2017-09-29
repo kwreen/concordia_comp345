@@ -11,3 +11,7 @@ void Country::setName(const std::string& name) {
 bool Country::operator==(const Country& other) const {
 	return name == other.name;
 }
+
+bool Country::operator<(const Country& second) const {
+	return name < second.name;
+}

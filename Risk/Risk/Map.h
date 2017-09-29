@@ -13,7 +13,15 @@ class Map {
 		std::unordered_map<std::string, std::vector<int>> continents;
 
 	public:
+		std::vector<Country> getCountries() const;
+
+		std::vector<std::vector<bool>> getAdjacencyMatrix() const;
+
 		std::vector<Country> getContinent(const std::string& continentName) const;
 
+		std::vector<Country> adjacent(const Country& country) const;
+
 		bool loadMap(const std::string& filename);
+
+		void print() const;
 };

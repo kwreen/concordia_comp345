@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-int main() {
+int main2() {
 	const int numOfDice = 3;
 	int numOfDiceToRoll;
 

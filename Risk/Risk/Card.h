@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Country.h"
+#include <string>
 
 enum CardType { INFANTRY, ARTILLERY, CAVALRY };
 
@@ -18,6 +19,8 @@ class Card {
 		void setCountry(const Country& country);
 
 		CardType getCardType() const;
+
+		std::string getCardTypeAsString() const;
 
 		void setCardType(CardType cardType);
 };

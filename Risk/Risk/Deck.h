@@ -2,6 +2,7 @@
 
 #include "Card.h"
 #include "Player.h"
+#include "Country.h"
 #include <vector>
 
 class Deck {
@@ -11,9 +12,15 @@ class Deck {
 		static int nExchanges;
 
 	public:
+		Deck() = default;
+
 		Deck(const std::vector<Card>& cards) : cards(cards) {}
 
 		Card draw(Player& player);
+
+		int nCards() const;
+
+		void loadDeck(const std::vector<Country>& countries);
 
 		static int getNExchanges();
 
