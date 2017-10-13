@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../Drivers/../Risk/Country.h
+string
+-
+
+../Drivers/../Risk/Map.h
+Country.h
+../Drivers/../Risk/Country.h
+MapLoader.h
+../Drivers/../Risk/MapLoader.h
+string
+-
+unordered_map
+-
+vector
+-
+
+../Drivers/../Risk/MapLoader.h
+string
+-
+
+/Users/chriswoo/Documents/COMP345/Drivers/MapDriver.cpp
+Risk/Map.h
+/Users/chriswoo/Documents/COMP345/Drivers/Risk/Map.h
+Risk/MapLoader.h
+/Users/chriswoo/Documents/COMP345/Drivers/Risk/MapLoader.h
+iostream
+-
+queue
+-
+set
+-
+
