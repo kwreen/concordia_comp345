@@ -22,10 +22,12 @@ int main() {
 	deck.loadDeck(map.getCountries());
 
 	std::cout << "The deck contains " << deck.nCards() << " cards which matches the " << map.getCountries().size() << " countries!" << std::endl;
+	std::cout << std::endl;
 
 	Player player;
 	int nInfantry = 0, nArtillery = 0, nCavalry = 0;
-	std::cout << "Player will now draw seven cards.\n";
+	std::cout << "Player will now draw seven cards." << std::endl;
+	std::cout << std::endl;
 	for (int i = 0; i < 7; ++i) {
 		Card card = deck.draw(player);
 
@@ -41,6 +43,7 @@ int main() {
 	}
 
 	std::string input;
+	std::cout << std::endl;
 	std::cout << "Enter the cards you want to exchange by entering 3 indices as a comma separated list: ";
 	std::cin >> input;
 	auto indices = split(input, ',');
