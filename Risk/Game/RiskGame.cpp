@@ -1,7 +1,7 @@
-#include "Risk/UserInterface.h"
-#include "Risk/Game.h"
-#include <stdlib.h>
-#include <iostream>
+#include "../Risk/UserInterface.h"
+#include "../Risk/Game.h"
+#include <stdlib.h>;
+#include <iostream>;
 
 
 int main() {
