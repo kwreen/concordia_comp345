@@ -5,14 +5,16 @@
 #include <iostream>
 #include <sstream>
 
-std::vector<int> split(const std::string& input, char delim) {
-	std::stringstream ss(input);
-	std::string segment;
-	std::vector<int> contents;
-	while (std::getline(ss, segment, delim)) {
-		contents.push_back(std::stoi(segment));
+namespace {
+	std::vector<int> split(const std::string &input, char delim) {
+		std::stringstream ss(input);
+		std::string segment;
+		std::vector<int> contents;
+		while (std::getline(ss, segment, delim)) {
+			contents.push_back(std::stoi(segment));
+		}
+		return contents;
 	}
-	return contents;
 }
 
 int main() {

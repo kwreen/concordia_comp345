@@ -4,14 +4,16 @@
 #include <sstream>
 #include <fstream>
 
-std::vector<std::string> split(const std::string& input, char delim) {
-	std::stringstream ss(input);
-	std::string segment;
-	std::vector<std::string> contents;
-	while (std::getline(ss, segment, delim)) {
-		contents.push_back(segment);
+namespace {
+	std::vector<std::string> split(const std::string &input, char delim) {
+		std::stringstream ss(input);
+		std::string segment;
+		std::vector<std::string> contents;
+		while (std::getline(ss, segment, delim)) {
+			contents.push_back(segment);
+		}
+		return contents;
 	}
-	return contents;
 }
 
 Map MapLoader::loadMap(std::string filename) {

@@ -1,0 +1,13 @@
+include_directories(..)
+
+add_executable(CardDriver CardDriver.cpp)
+target_link_libraries(CardDriver Risk)
+
+add_executable(DiceFacilityDriver DiceFacilityDriver.cpp)
+target_link_libraries(DiceFacilityDriver Risk)
+
+add_executable(MapDriver MapDriver.cpp)
+target_link_libraries(MapDriver Risk)
+
+add_executable(PlayerDriver PlayerDriver.cpp)
+target_link_libraries(PlayerDriver Risk)

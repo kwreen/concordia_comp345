@@ -1,6 +1,6 @@
-#include "Player.h";
-#include <vector>;
-#include <iostream>;
+#include "Player.h"
+#include <vector>
+#include <iostream>
 
 using std::vector;
 using std::cout;
