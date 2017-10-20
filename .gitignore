@@ -33,7 +33,7 @@
 
 # Visual Studio Files
 *.sln
-*.vcxproj.*
+*.vcxproj*
 *.vs
 
 # Debug
