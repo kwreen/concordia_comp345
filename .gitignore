@@ -40,3 +40,6 @@
 # Debug
 Debug/
 x64/
+
+.idea/
+cmake-build-*/
