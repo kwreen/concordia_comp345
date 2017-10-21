@@ -4,19 +4,25 @@ set(SOURCES
         Deck.cpp
         DiceFacility.cpp
         Die.cpp
+	Game.cpp
         Hand.cpp
         Map.cpp
         MapLoader.cpp
-        Player.cpp)
+        Player.cpp
+	UserInterface.cpp)
 set(HEADERS
         Card.h
         Country.h
         Deck.h
         DiceFacility.h
         Die.h
+	Game.h
         Hand.h
         Map.h
         MapLoader.h
-        Player.h)
+        Player.h
+	UserInterface.h)
 
 add_library(Risk STATIC ${SOURCES} ${HEADERS})
+add_executable(RiskGame RiskGame.cpp)
+target_link_libraries(RiskGame Risk)

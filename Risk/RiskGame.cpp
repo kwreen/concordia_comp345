@@ -1,5 +1,5 @@
-#include "Risk/UserInterface.h"
-#include "Risk/Game.h"
+#include "UserInterface.h"
+#include "Game.h"
 #include <stdlib.h>
 #include <iostream>
 
