@@ -11,7 +11,12 @@ Player::Player(int playerNumber) : player(playerNumber) {}
 Hand& Player::getHand() {
 	return this->_hand;
 }
+
 vector<Country>& Player::getCountries() {
+	return this->_countries;
+}
+
+const vector<Country>& Player::getCountries() const {
 	return this->_countries;
 }
 

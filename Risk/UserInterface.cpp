@@ -113,8 +113,8 @@ int UserInterface::selectNumPlayers() {
 	return nPlayers;
 }
 
-Country& UserInterface::selectCountry(const Player& player) {
-	std::vector<Country>& countries = player.getCountries();
+Country UserInterface::selectCountry(const Player& player) {
+	const std::vector<Country>& countries = player.getCountries();
 	int sourceChoice;
 
 	for (int i = 0; i < countries.size(); i++) {
