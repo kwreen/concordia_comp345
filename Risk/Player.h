@@ -21,7 +21,7 @@ public:
 	Player(vector<Country> countries, Hand hand, DiceFacility dice);
 	Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber);
 	Player(int playerNumber);
-	vector<Country> getCountries();
+	vector<Country>& getCountries();
 	Hand& getHand();
 	DiceFacility getDice() const;
 	string getID();  //will return string representation of player object
@@ -35,7 +35,8 @@ public:
 	void printCountries(); //prints country list
 	void reinforce();
 	void attack();
-	void fortify();
+	void fortify(int nArmies, Country& source, Country& target);
+	bool hasCountry(std::string country);
 	//will need to add a getPlayerArmies() here which adds getArmies() from hand + ones on countries
 
 private:

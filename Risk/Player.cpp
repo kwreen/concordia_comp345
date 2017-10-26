@@ -11,7 +11,7 @@ Player::Player(int playerNumber) : player(playerNumber) {}
 Hand& Player::getHand() {
 	return this->_hand;
 }
-vector<Country> Player::getCountries() {
+vector<Country>& Player::getCountries() {
 	// (vector<Country>&)this->_countries; C++ handles vector/array passing by reference anyways
 	return this->_countries;
 }
@@ -52,7 +52,7 @@ void Player::printCountries() //prints countries player currently owns
 //	cout << getID() << " has: " << endl;
 	for (int i = 0; i<_countries.size(); i++)
 	{
-		cout << "Country: " << _countries[i].getName() << endl;
+		cout << " " << _countries[i].getName();
 	}
 }
 
@@ -98,10 +98,21 @@ void Player::attack() {
 	cout << "Player " << this << " has attacked." << endl;
 }
 
-void Player::fortify() {
-	// TODO: Implement fortify mechanism
-	cout << "Player " << this << " has fortified." << endl;
+void Player::fortify(int nArmies, Country& source, Country& target) {
+	source.decreaseArmiesBy(nArmies);
+	target.increaseArmiesBy(nArmies);
+	std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
+    std::cout << "Ending fortification phase...";
 }
 
-
-
+//bool Player::hasCountry(std::string country) {
+//	bool hasCountry = false;
+//
+//	for (auto &c : _countries) {
+//		if (c.getName().compare(country)) {
+//			hasCountry = true;
+//		}
+//	}
+//
+//	return hasCountry;
+//}

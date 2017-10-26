@@ -29,6 +29,10 @@ void Country::setArmies(int n) //set armies on this country
 	armies = n;
 }
 
+void Country::increaseArmiesBy(int n) {
+	armies += n;
+}
 
-
-
+void Country::decreaseArmiesBy(int n) {
+	armies -= n;
+}

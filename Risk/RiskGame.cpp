@@ -26,15 +26,17 @@ int main() {
         cout << endl;;
 	}
 
-	while(player.size() > 1){
+//	while(player.size() > 1){
+//
+//        // iterate player turns
+//        for (int i = 0; i < player.size(); i++) {
+//
+//
+//        }
+//
+//	}
 
-        // iterate player turns
-        for (int i = 0; i < player.size(); i++) {
-
-
-        }
-
-	}
+    game.fortificationPhase(player[0]);
     
 	return 0;
 }

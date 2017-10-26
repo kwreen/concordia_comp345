@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "MapLoader.h"
+#include "UserInterface.h"
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
@@ -77,4 +78,16 @@ Game::Game(const std::string& fileName, int nPlayers) {
 	createPlayers(nPlayers);
 	assignTurns();
 	startUp();
+}
+
+void Game::fortificationPhase(Player& player) {
+    std::cout << "Starting fortification phase..." << std::endl;
+	Country country = UserInterface::selectCountry(player, map);
+	Country adjacentCountry = UserInterface::selectAdjacentCountry(country, map);
+	int nArmies = UserInterface::selectArmiesToFortify(country);
+	player.fortify(nArmies, country, adjacentCountry);
+}
+
+Map Game::getMap() const {
+	return	this->map;
 }
