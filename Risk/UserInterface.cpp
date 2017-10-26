@@ -114,11 +114,32 @@ int UserInterface::selectNumPlayers() {
 	return nPlayers;
 }
 
-Country UserInterface::selectCountry(const Player& player) {
-	const std::vector<Country>& countries = player.getCountries();
+Country UserInterface::selectCountry(const Player& player, const Map& map) {
+	std::vector<Country> countries = player.getCountries();
+
+	// Removing countries from the vector which do not have adjacent countries that the player owns
+	countries.erase(std::remove_if(countries.begin(), countries.end(), [&](const Country& c) {
+		std::vector<Country> adjacentCountries = map.adjacent(c);
+		adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
+			for (auto& country : countries) {
+				if (country.getName() == c.getName()) {
+					return false;
+				}
+			}
+			return true;
+		}), adjacentCountries.end());
+
+		if (adjacentCountries.size() == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}), countries.end());
+
 	int sourceChoice;
 
-	std::cout << "Available source countries:" << std::endl;
+	std::cout << "Source countries with available target countries:" << std::endl;
 	for (int i = 0; i < countries.size(); i++) {
 		std::cout << i + 1 << ". " << countries[i].getName() << std::endl;
 	}
@@ -140,6 +161,8 @@ Country UserInterface::selectCountry(const Player& player) {
 
 Country UserInterface::selectAdjacentCountry(const Country& country, const Map& map, const Player& player) {
 	std::vector<Country> adjacentCountries = map.adjacent(country);
+
+	// Removing countries from the adjacentCountries vector that the player does not own
 	adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
 		const auto playerCountries = player.getCountries();
 		for (const auto& country : playerCountries) {
