@@ -24,31 +24,29 @@ void Game::assignTurns() {
 	}
 }
 
-void Game::assignArmies() //again make sure assignTurns is called first
-{
-	int number; //decides initial number of armies to put on players countries
+void Game::assignArmies() {
+	int nArmies;
 
 	if (turns.size() == 2) {
-		number = 40;
+		nArmies = 40;
 	}
 	else if (turns.size() == 3) {
-		number = 35;
+		nArmies = 35;
 	}
 	else if (turns.size() == 4) {
-		number = 30;
+		nArmies = 30;
 	}
 	else if (turns.size() == 5) {
-		number = 25;
+		nArmies = 25;
 	}
 	else if (turns.size() == 6) {
-		number = 20;
+		nArmies = 20;
 	}
 
 	for (int i = 0; i<turns.size(); i++) {
-		turns[i].setArmies(number);
+		turns[i].setArmies(nArmies);
 		turns[i].initializeArmies();
 	}
-
 }
 
 void Game::startUp() //does bulk of part 2. Also again assigntTurns() must be called before this
