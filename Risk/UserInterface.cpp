@@ -113,7 +113,7 @@ int UserInterface::selectNumPlayers() {
 	return nPlayers;
 }
 
-Country& UserInterface::selectCountry(Player& player) {
+Country& UserInterface::selectCountry(const Player& player) {
 	std::vector<Country>& countries = player.getCountries();
 	int sourceChoice;
 
@@ -136,7 +136,7 @@ Country& UserInterface::selectCountry(Player& player) {
 	return countries[sourceChoice - 1];
 }
 
-Country UserInterface::selectAdjacentCountry(Country& country, Map map) {
+Country UserInterface::selectAdjacentCountry(const Country& country, const Map& map) {
 	// TODO: Player has to own adjacent countries too
 	std::vector<Country> adjacentCountries = map.adjacent(country);
 	int targetChoice;
@@ -160,7 +160,7 @@ Country UserInterface::selectAdjacentCountry(Country& country, Map map) {
 	return adjacentCountries[targetChoice - 1];
 }
 
-int UserInterface::selectArmiesToFortify(Country& source) {
+int UserInterface::selectArmiesToFortify(const Country& source) {
 	int nArmies;
 
 	std::cout << source.getName() << " has " << source.getArmies() << " armies." << std::endl;

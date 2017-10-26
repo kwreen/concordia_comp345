@@ -20,8 +20,8 @@ void Country::increaseArmies() //increase amount of armies on this country
 {
 	++armies;
 }
-int Country::getArmies() //get armies on this country
-{
+
+int Country::getArmies() const {
 	return armies;
 }
 void Country::setArmies(int n) //set armies on this country
