@@ -22,6 +22,7 @@ public:
 	Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber);
 	Player(int playerNumber);
 	vector<Country>& getCountries();
+	const vector<Country>& getCountries() const;
 	Hand& getHand();
 	DiceFacility getDice() const;
 	string getID();  //will return string representation of player object

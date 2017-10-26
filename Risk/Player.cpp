@@ -11,8 +11,12 @@ Player::Player(int playerNumber) : player(playerNumber) {}
 Hand& Player::getHand() {
 	return this->_hand;
 }
+
 vector<Country>& Player::getCountries() {
-	// (vector<Country>&)this->_countries; C++ handles vector/array passing by reference anyways
+    return this->_countries;
+}
+
+const vector<Country>& Player::getCountries() const {
 	return this->_countries;
 }
 
@@ -52,7 +56,7 @@ void Player::printCountries() //prints countries player currently owns
 //	cout << getID() << " has: " << endl;
 	for (int i = 0; i<_countries.size(); i++)
 	{
-		cout << " " << _countries[i].getName();
+		cout << "Country: " << _countries[i].getName() << endl;
 	}
 }
 

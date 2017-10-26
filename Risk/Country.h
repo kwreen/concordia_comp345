@@ -22,7 +22,7 @@ public:
 
 	void increaseArmies(); // TODO: Rename to incrementArmies
 
-	int getArmies();
+	int getArmies() const;
 
 	void setArmies(int n); //sets amount of armies on country
 
