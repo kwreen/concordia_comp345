@@ -11,8 +11,7 @@ Player::Player(int playerNumber) : player(playerNumber) {}
 Hand& Player::getHand() {
 	return this->_hand;
 }
-vector<Country> Player::getCountries() {
-	// (vector<Country>&)this->_countries; C++ handles vector/array passing by reference anyways
+vector<Country>& Player::getCountries() {
 	return this->_countries;
 }
 

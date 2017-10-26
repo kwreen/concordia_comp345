@@ -81,7 +81,7 @@ Game::Game(const std::string& fileName, int nPlayers) {
 }
 
 void Game::fortificationPhase(Player& player) {
-	Country country = UserInterface::selectCountry(player, map);
+	Country country = UserInterface::selectCountry(player);
 	Country adjacentCountry = UserInterface::selectAdjacentCountry(country, map);
 	int nArmies = UserInterface::selectArmiesToFortify(country);
 
