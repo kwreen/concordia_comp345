@@ -56,7 +56,7 @@ std::string removeExtension(const std::string& file) {
 
 std::string UserInterface::selectMap() {
 	const auto files = listFiles("Resources");
-	boolean validMap = false;
+	bool validMap = false;
 	int mapChoice;
 	std::string mapName;
 
@@ -112,3 +112,71 @@ int UserInterface::selectNumPlayers() {
 
 	return nPlayers;
 }
+
+Country& UserInterface::selectCountry(Player& player, Map map) {
+	std::vector<Country>& countries = player.getCountries();
+	int sourceChoice;
+
+	for (int i = 0; i < countries.size(); i++) {
+		std::cout << i + 1 << ". " << countries[i].getName() << std::endl;
+	}
+
+	std::cout << std::endl;
+	std::cout << ">>> ";
+	std::cin >> sourceChoice;
+
+	while ((sourceChoice < 1) || (sourceChoice > countries.size())) {
+		std::cerr << "Invalid choice. Try again.\n" << std::endl;
+		std::cout << ">>> ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin >> sourceChoice;
+	}
+
+	return countries[sourceChoice - 1];
+}
+
+Country& UserInterface::selectAdjacentCountry(Country& country, Map map) {
+	// TODO: Player has to own adjacent countries too
+	std::vector<Country>& adjacentCountries = map.adjacent(country);
+	int targetChoice;
+
+	for (int i = 0; i < adjacentCountries.size(); i++) {
+		std::cout << i + 1 << ". " << adjacentCountries[i].getName() << std::endl;
+	}
+
+	std::cout << std::endl;
+	std::cout << ">>> ";
+	std::cin >> targetChoice;
+
+	while ((targetChoice < 1) || (targetChoice > adjacentCountries.size())) {
+		std::cerr << "Invalid choice. Try again.\n" << std::endl;
+		std::cout << ">>> ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin >> targetChoice;
+	}
+
+	return adjacentCountries[targetChoice - 1];
+}
+
+int UserInterface::selectArmiesToFortify(Country& source) {
+	int nArmies;
+
+	std::cout << source.getName() << " has " << source.getArmies() << " armies." << std::endl;
+	std::cout << "Enter the number of armies you want to move to your target country." << std::endl;
+	
+	std::cout << ">>> ";
+	std::cin >> nArmies;
+
+	while ((nArmies < 1) || (nArmies > source.getArmies() - 1)) {
+		std::cerr << "Invalid choice. Try again.\n" << std::endl;
+		std::cout << ">>> ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin >> nArmies;
+	}
+
+	return nArmies;
+}
+

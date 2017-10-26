@@ -20,9 +20,13 @@ public:
 
 	bool operator<(const Country& second) const;
 
-	void increaseArmies(); //increases army count on this country
+	void increaseArmies(); // TODO: Rename to incrementArmies
 
 	int getArmies();
 
 	void setArmies(int n); //sets amount of armies on country
+
+	void increaseArmiesBy(int n);
+
+	void decreaseArmiesBy(int n);
 };

@@ -10,17 +10,16 @@ int main() {
 
 	Game game = Game(mapName, nPlayers);
 
-	//tests part 2. Edits to Country,Player and Game.
 	vector<Player> p = game.getTurns();
 
-
-	for (int i = 0; i < p.size(); i++)
-	{
+	for (int i = 0; i < p.size(); i++) {
 		cout<< p[i].getID() << " has " << p[i].amtCountries() << " countries." << endl;
         p[i].printCountries();
 	}
 	//	cout << "Player a countries: " << endl;
 
-    
+	game.fortificationPhase(p[0]);
+
+	system("pause");
 	return 0;
 }

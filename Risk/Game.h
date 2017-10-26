@@ -25,4 +25,6 @@ public:
 	Game(const std::string& mapName, int nPlayers);
 	vector<Player> getTurns();
 	vector<Player> getUnorderedPlayers() { return players;}
+	void fortificationPhase(Player& player);
+	Map getMap() const;
 };
