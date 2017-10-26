@@ -117,6 +117,7 @@ Country UserInterface::selectCountry(const Player& player) {
 	const std::vector<Country>& countries = player.getCountries();
 	int sourceChoice;
 
+	std::cout << "Available source countries:" << std::endl;
 	for (int i = 0; i < countries.size(); i++) {
 		std::cout << i + 1 << ". " << countries[i].getName() << std::endl;
 	}
@@ -141,6 +142,7 @@ Country UserInterface::selectAdjacentCountry(const Country& country, const Map& 
 	std::vector<Country> adjacentCountries = map.adjacent(country);
 	int targetChoice;
 
+	std::cout << "Available target/adjacent countries:" << std::endl;
 	for (int i = 0; i < adjacentCountries.size(); i++) {
 		std::cout << i + 1 << ". " << adjacentCountries[i].getName() << std::endl;
 	}

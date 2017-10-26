@@ -23,6 +23,7 @@ public:
 	Player(int playerNumber);
 	const vector<Country>& getCountries() const;
 	vector<Country>& getCountries();
+	const vector<Country>& getCountries() const;
 	Hand& getHand();
 	DiceFacility getDice() const;
 	string getID();  //will return string representation of player object
