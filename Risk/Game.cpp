@@ -6,13 +6,6 @@
 
 void Game::setGameMap(const std::string& mapName) {
 	Map map = MapLoader::loadMap(mapName);
-
-	// Exit if map file is invalid.
-	if (map.getCountries().size() == 0) {
-		std::cerr << "Invalid map file. Exiting.\n";
-		exit(1);
-	}
-
 	this->map = map;
 }
 
@@ -21,18 +14,16 @@ void Game::createPlayers(int nPlayers) {
 		players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(),i+1));
 	}
 }
-void Game::assignTurns() // can only be 2-6 player. Accepts an array of players and gives them randomturns
-{
+
+void Game::assignTurns() {
 	int numplayers = players.size();
-	for(int i = 0;i < numplayers;i++)
-	{
+	for(int i = 0; i < numplayers; i++) {
 		int r = rand() % players.size();
 		turns.push_back(players.at(r));
 		players.erase(players.begin() + r);
-
 	}
-
 }
+
 void Game::assignArmies() //again make sure assignTurns is called first
 {
 	int number; //decides initial number of armies to put on players countries
@@ -76,6 +67,7 @@ void Game::assignArmies() //again make sure assignTurns is called first
 	}
 
 }
+
 void Game::startUp() //does bulk of part 2. Also again assigntTurns() must be called before this
 {
 	int index = 0;
@@ -89,10 +81,12 @@ void Game::startUp() //does bulk of part 2. Also again assigntTurns() must be ca
 	assignArmies(); //assign armies to these countries
 
 }
+
 vector<Player> Game::getTurns() //returns vector pointer of player turns
 {
 	return turns;
 }
+
 Game::Game(const std::string& fileName, int nPlayers) {
 	int random = rand() % 100; //place seed for generator
 	srand(random);

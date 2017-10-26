@@ -1,4 +1,6 @@
 #include "UserInterface.h"
+#include "Map.h"
+#include "MapLoader.h"
 #include <iostream>
 #include <limits>
 #include <string>
@@ -54,23 +56,42 @@ std::string removeExtension(const std::string& file) {
 
 std::string UserInterface::selectMap() {
 	const auto files = listFiles("Resources");
-	std::cout << "Please select a map to use.\n";
+	boolean validMap = false;
 	int mapChoice;
+	std::string mapName;
+
+	std::cout << "Please select a map to use.\n";
 
 	for (int i = 2; i < files.size(); ++i) {
 		std::cout << i - 1 << ". " << removeExtension(files[i]) << std::endl;
 	}
-
-	std::cout << ">>> ";
-	std::cin >> mapChoice;
-	while (mapChoice < 1 || mapChoice >= files.size() - 1) {
-		std::cerr << "Invalid choice. Try again.\n";
+	
+	do { 
+		std::cout << std::endl;
 		std::cout << ">>> ";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::cin >> mapChoice;
-	}
-	return "Resources/" + files[mapChoice + 1];
+		while (mapChoice < 1 || mapChoice >= files.size() - 1) {
+			std::cerr << "Invalid choice. Try again.\n" << std::endl;
+			std::cout << ">>> ";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin >> mapChoice;
+		}
+
+		mapName = "Resources/" + files[mapChoice + 1];
+
+		Map map = MapLoader::loadMap(mapName);
+
+		if (map.getCountries().size() == 0) {
+			std::cout << "Invalid map file. Choose again." << std::endl;
+			validMap = false;
+		}
+		else {
+			validMap = true;
+		}
+	} while (!validMap);
+
+	return mapName;
 }
 
 int UserInterface::selectNumPlayers() {
@@ -82,7 +103,7 @@ int UserInterface::selectNumPlayers() {
 	std::cout << ">>> ";
 	std::cin >> nPlayers;
 	while (nPlayers < 2 || nPlayers > 6) {
-		std::cerr << "Invalid choice. Try again.\n";
+		std::cerr << "Invalid choice. Try again.\n" << std::endl;
 		std::cout << ">>> ";
 		std::cin.clear();
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

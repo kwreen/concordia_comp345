@@ -20,7 +20,6 @@ private:
 	void assignTurns();
 	void startUp();
 	void assignArmies();
-	//vector<Player> getTurns();
 
 public:
 	Game(const std::string& mapName, int nPlayers);

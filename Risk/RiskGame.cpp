@@ -5,13 +5,10 @@
 
 
 int main() {
-
-
-
 	const auto mapName = UserInterface::selectMap();
 	const auto nPlayers = UserInterface::selectNumPlayers();
-	
-	Game game(mapName, nPlayers);
+
+	Game game = Game(mapName, nPlayers);
 
 	//tests part 2. Edits to Country,Player and Game.
 	vector<Player> p = game.getTurns();
@@ -23,11 +20,8 @@ int main() {
 
         p[i].printCountries();
 	}
-//	cout << "Player a countries: " << endl;
+	//	cout << "Player a countries: " << endl;
 
     
-
-
 	return 0;
-
 }
