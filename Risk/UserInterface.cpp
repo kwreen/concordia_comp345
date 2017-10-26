@@ -1,6 +1,7 @@
 #include "UserInterface.h"
 #include "Map.h"
 #include "MapLoader.h"
+#include <algorithm>
 #include <iostream>
 #include <limits>
 #include <string>
@@ -137,13 +138,23 @@ Country UserInterface::selectCountry(const Player& player) {
 	return countries[sourceChoice - 1];
 }
 
-Country UserInterface::selectAdjacentCountry(const Country& country, const Map& map) {
-	// TODO: Player has to own adjacent countries too
+Country UserInterface::selectAdjacentCountry(const Country& country, const Map& map, const Player& player) {
 	std::vector<Country> adjacentCountries = map.adjacent(country);
+	adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
+		const auto playerCountries = player.getCountries();
+		for (const auto& country : playerCountries) {
+			if (country.getName() == c.getName()) {
+				return false;
+			}
+		}
+		return true;
+	}), adjacentCountries.end());
+
 	int targetChoice;
 
 	std::cout << "Available target/adjacent countries:" << std::endl;
 	for (int i = 0; i < adjacentCountries.size(); i++) {
+
 		std::cout << i + 1 << ". " << adjacentCountries[i].getName() << std::endl;
 	}
 

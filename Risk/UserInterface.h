@@ -10,6 +10,6 @@ public:
 	static int selectNumPlayers();
 
 	static Country selectCountry(const Player& player);
-	static Country selectAdjacentCountry(const Country& country, const Map& map);
+	static Country selectAdjacentCountry(const Country& country, const Map& map, const Player& player);
 	static int selectArmiesToFortify(const Country& country);
 };

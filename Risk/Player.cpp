@@ -20,10 +20,6 @@ const vector<Country>& Player::getCountries() const {
 	return this->_countries;
 }
 
-const vector<Country>& Player::getCountries() const {
-	return this->_countries;
-}
-
 DiceFacility Player::getDice() const {
 	return this->_dice;
 }
