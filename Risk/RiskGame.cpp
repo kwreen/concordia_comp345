@@ -17,7 +17,6 @@ int main() {
 	for (int i = 0; i < p.size(); i++)
 	{
 		cout<< p[i].getID() << " has " << p[i].amtCountries() << " countries." << endl;
-
         p[i].printCountries();
 	}
 	//	cout << "Player a countries: " << endl;

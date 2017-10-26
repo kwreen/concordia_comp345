@@ -25,5 +25,4 @@ public:
 	int getArmies();
 
 	void setArmies(int n); //sets amount of armies on country
-
 };

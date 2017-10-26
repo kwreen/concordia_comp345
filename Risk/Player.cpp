@@ -31,18 +31,22 @@ void Player::setHand(Hand hand) {
 void Player::setDice(DiceFacility dice) {
 	this->_dice = dice;
 }
+
 string Player::getID()
 {
 	return "Player " + to_string(player);
 }
+
 int Player::getIDAsInt() //gets id as strictly an int
 {
 	return player;
 }
+
 void Player::assignCountry(Country c) //assigns a country to the player. See startup() in mainGameLoop
 {
 	_countries.push_back(c); //<-- size is correct here,seems to be inserting, fine, completetly deleted in countries() method below and when returning it: getCountries
 }
+
 void Player::printCountries() //prints countries player currently owns
 {
 //	cout << getID() << " has: " << endl;
@@ -51,18 +55,22 @@ void Player::printCountries() //prints countries player currently owns
 		cout << "Country: " << _countries[i].getName() << endl;
 	}
 }
+
 int Player::amtCountries() //returns how many countries player has
 {
 	return _countries.size();
 }
+
 void Player::increasePlayerArmies()
 {
 	++armies;
 }
+
 int Player::getPlayerArmies() //will need to add armies gotten from exchange() in players hand here
 {
 	return armies;
 }
+
 void Player::initializeArmies() //used strictly in main game loop class for initalization step
 {
 	int number = armies;
@@ -73,16 +81,13 @@ void Player::initializeArmies() //used strictly in main game loop class for init
 		_countries[index++].increaseArmies();
 		number--;
 	}
-
-
 }
-
-
 
 void Player::setArmies(int nArmies)
 {
 	armies = nArmies;
 }
+
 void Player::reinforce() {
 	// TODO: Implement reinforce mechanism
 	cout << "Player " << this << " has reinforced." << endl;
