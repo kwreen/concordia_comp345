@@ -109,12 +109,6 @@ void Game::reinforcementPhase(Player& player) {
 	int armiesFromCardExchange = UserInterface::exchangeCards(player);
 	int armiesToAdd = armiesFromCardExchange + getArmiesToAdd(player);
 
-//	std::cout << "\nHere are your countries:\n";
-//	for (int i = 0; i < player.getCountries().size(); ++i) {
-//		const auto& country = player.getCountries()[i];
-//		std::cout << i + 1 << ". " << country.getName() << std::endl;
-//	}
-
 	while (armiesToAdd > 0) {
 		std::cout << "\nYou have " << armiesToAdd << " remaining soldiers to add. ";
 		std::cout << "Please select the country you would like to add soldiers to.\n";
@@ -240,14 +234,10 @@ void Game::attackPhase(Player& attacker) {
 				}
 				std::cout << std::endl;
 
-				int tempCmp;
-				if (defDiceResults.size() < attDiceResults.size()){
-					tempCmp = defDiceResults.size();
-				}else{
-					tempCmp = attDiceResults.size();
-				}
+				// Getting the minium number of dice roll
+				int min = std::min(attDiceResults.size(), defDiceResults.size());
 
-				for (int i = 0; i < tempCmp; i++) {
+				for (int i = 0; i < min; i++) {
 					if (attDiceResults[i] > defDiceResults[i]) {
 						// Attacker wins
 						std::cout << "The attacker has rolled " << attDiceResults[i] << " and the defender has rolled " << defDiceResults[i] << "." << std::endl;
