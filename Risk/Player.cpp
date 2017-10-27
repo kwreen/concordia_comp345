@@ -110,15 +110,3 @@ void Player::fortify(int nArmies, Country& source, Country& target) {
 	target.increaseArmiesBy(nArmies);
 	std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
 }
-
-//bool Player::hasCountry(std::string country) {
-//	bool hasCountry = false;
-//
-//	for (auto &c : _countries) {
-//		if (c.getName().compare(country)) {
-//			hasCountry = true;
-//		}
-//	}
-//
-//	return hasCountry;
-//}

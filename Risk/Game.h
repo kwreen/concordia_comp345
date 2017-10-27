@@ -35,4 +35,5 @@ public:
 	vector<Country> checkAvailableCountriesToAttack(Player& player);
 	void attackPhase(Player& player);
 	void removeDeadPlayers();
+	Deck getDeck();
 };
