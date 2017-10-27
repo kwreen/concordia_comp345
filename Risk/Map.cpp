@@ -101,7 +101,7 @@ std::vector<std::string> Map::continentsOwned(const Player& player) const {
 		const auto continentName = kv.first;
 		const auto& continentIndices = kv.second;
 
-		if (std::is_permutation(playerCountryIndices.begin(), playerCountryIndices.end(), continentIndices.begin())) {
+		if (std::is_permutation(playerCountryIndices.begin(), playerCountryIndices.end(), continentIndices.begin(), continentIndices.end())) {
 			continentsOwned.push_back(kv.first);
 		}
 	}
