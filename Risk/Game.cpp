@@ -196,7 +196,6 @@ std::vector<Country> Game::checkAvailableCountriesToAttack(Player& player) {
 	return countries;
 }
 
-
 void Game::attackPhase(Player& attacker) {
 	bool toAttack;
 	std::cout << "Starting attack phase..." << std::endl;
