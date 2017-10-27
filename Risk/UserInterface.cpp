@@ -195,10 +195,7 @@ int UserInterface::selectArmiesToReinforce(const Country& source, int remainingA
 	std::cin >> nArmies;
 
 	while ((nArmies < 1) || nArmies > remainingArmies) {
-		std::cerr << "Invalid choice. Try again." << std::endl;
-		std::cout << ">>> ";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		tryAgain();
 		std::cin >> nArmies;
 	}
 
