@@ -92,8 +92,7 @@ std::vector<std::string> Map::continentsOwned(const Player& player) const {
 
 	for (int i = 0; i < countries.size(); ++i) {
 		const auto Country = countries[i];
-		if (std::find(playerCountries.begin(), playerCountries.end(), Country) !=
-		    playerCountries.end()) {
+		if (std::find(playerCountries.begin(), playerCountries.end(), Country) != playerCountries.end()) {
 			playerCountryIndices.push_back(i);
 		}
 	}
