@@ -10,7 +10,6 @@ int main() {
 
 	Game game = Game(mapName, nPlayers);
 
-	//tests part 2. Edits to Country,Player and Game.
 	vector<Player> players = game.getTurns();
 
     cout<< endl << "Player turn order: ";
@@ -21,19 +20,22 @@ int main() {
     cout << endl;
 	for (int i = 0; i < players.size(); i++) {
 		cout<< " ~ " << players[i].getID() << " has " << players[i].amtCountries() << " countries and " << players[i].getPlayerArmies() << " armies." <<endl;
-        cout << "Countries: ";
         players[i].printCountries();
         cout << endl;;
 	}
 
-	while (!game.getTurns().empty()) {
+	while (game.getTurns().size() > 1) {
 		for (auto& player : players) {
 			std::cout << "\n\nPlayer " << player.getIDAsInt() << " turn.\n";
 			game.reinforcementPhase(player);
+            std::cout << endl;
 			game.attackPhase(player);
+            std::cout << endl;
 			game.fortificationPhase(player);
 		}
 	}
+
+    cout << " The game is over and player " << players[0].getIDAsInt() << " has won.";
 
 
 	return 0;

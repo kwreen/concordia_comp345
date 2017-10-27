@@ -217,10 +217,11 @@ int UserInterface::exchangeCards(Player& player) {
 			std::cout << i + 1 << ". " << card << std::endl;
 		}
 	}
+    std::string input;
 	std::cout << "Select cards you would like to exchange, or 0 to skip.\n";
 	std::cout << ">>> ";
+	std::cin >> input;
 
-	std::string input;
 	auto indices = split(input, ',');
 
 	auto card0 = player.getHand().getCards()[indices[0] - 1];
@@ -260,7 +261,7 @@ bool UserInterface::toAttackOrNot() {
 }
 
 int UserInterface::selectAttackerDice(const Country& country) {
-	int max = country.getArmies() - 1;
+	int max = std::min(country.getArmies() - 1, 3);
 	int input;
 
 	std::cout << "Attacker: Enter the number of dice to roll." << std::endl;
@@ -277,7 +278,7 @@ int UserInterface::selectAttackerDice(const Country& country) {
 }
 
 int UserInterface::selectDefenderDice(const Country& country) {
-	int max = country.getArmies();
+	int max = std::min(country.getArmies(), 2);
 	int input;
 
 	std::cout << "Defender: Enter the number of dice to roll. " << std::endl;
