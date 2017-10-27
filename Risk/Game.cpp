@@ -1,9 +1,21 @@
 #include "Game.h"
 #include "MapLoader.h"
 #include "UserInterface.h"
+#include <algorithm>
 #include <iostream>
+#include <numeric>
 #include <stdlib.h>
 #include <time.h>
+
+int Game::getArmiesToAdd(const Player& player) const {
+	int armiesFromCountries = std::min((int) player.getCountries().size() / 3, 3);
+	const auto continentsOwned = map.continentsOwned(player);
+	int armiesFromContinents = std::accumulate(continentsOwned.begin(), continentsOwned.end(), 0, [&](int i, const std::string& c) {
+		return i + map.getContinentValue(c);
+	});
+
+	return armiesFromCountries + armiesFromContinents;
+}
 
 void Game::setGameMap(const std::string& mapName) {
 	Map map = MapLoader::loadMap(mapName);
@@ -80,9 +92,32 @@ Game::Game(const std::string& fileName, int nPlayers) {
 	startUp();
 }
 
+void Game::reinforcementPhase(Player& player) {
+	std::cout << "Starting reinforcement phase...\n";
+
+	// Get number of armies to use for reinforcement.
+	int armiesFromCardExchange = UserInterface::exchangeCards(player);
+	int armiesToAdd = armiesFromCardExchange + getArmiesToAdd(player);
+
+	std::cout << "\nHere are your countries:\n";
+	for (int i = 0; i < player.getCountries().size(); ++i) {
+		const auto& country = player.getCountries()[i];
+		std::cout << i + 1 << ". " << country.getName() << std::endl;
+	}
+
+	while (armiesToAdd > 0) {
+		std::cout << "\nYou have " << armiesToAdd << " remaining soldiers to add. ";
+		std::cout << "Please select the country you would like to add soldiers to.\n";
+		Country country = UserInterface::selectCountry(player.getCountries());
+
+		int armies = UserInterface::selectArmiesToReinforce(country, armiesToAdd);
+		armiesToAdd -= armies;
+	}
+}
+
 void Game::fortificationPhase(Player& player) {
     std::cout << "Starting fortification phase..." << std::endl;
-	
+
 	std::vector<Country> countries = checkAvailableCountriesToFortify(player);
 
 	if (countries.size() > 0) {
@@ -133,7 +168,7 @@ void Game::attackPhase(Player& player) {
 
 
 	do {
-		
+
 		toAttack = UserInterface::toAttackOrNot();
 
 		if (toAttack) {

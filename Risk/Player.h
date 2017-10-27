@@ -24,6 +24,7 @@ public:
 	vector<Country>& getCountries();
 	const vector<Country>& getCountries() const;
 	Hand& getHand();
+	const Hand& getHand() const;
 	DiceFacility getDice() const;
 	string getID();  //will return string representation of player object
 	int getIDAsInt(); // returns strictly the player id this will be used to see if a player array index is empty

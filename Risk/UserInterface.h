@@ -12,5 +12,7 @@ public:
 	static Country selectCountry(std::vector<Country> countries);
 	static Country selectAdjacentCountry(const Country& country, const Map& map, const Player& player);
 	static int selectArmiesToFortify(const Country& country);
+	static int selectArmiesToReinforce(const Country& country, int armiesRemaining);
+	static int exchangeCards(Player& player);
 	static bool toAttackOrNot();
 };

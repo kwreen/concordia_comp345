@@ -26,6 +26,9 @@ int main() {
         cout << endl;;
 	}
 
+	// Reinforcement phase.
+	game.reinforcementPhase(player[0]);
+
     //game.fortificationPhase(player[0]);
 	game.attackPhase(player[0]);
 

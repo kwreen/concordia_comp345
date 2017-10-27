@@ -1,5 +1,6 @@
 #include "MapLoader.h"
 #include "Map.h"
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -27,7 +28,9 @@ Map MapLoader::loadMap(std::string filename) {
 	while (std::getline(ifs, line) && line != "") {
 		const int equalsIndex = line.find('=');
 		const std::string continent = line.substr(0, equalsIndex);
+		const int value = std::stoi(line.substr(equalsIndex + 1));
 		map.continents.insert({ continent, std::vector<int>() });
+		map.continentValues.insert({ continent, value });
 	}
 
 	// Get all the territories.
@@ -37,12 +40,13 @@ Map MapLoader::loadMap(std::string filename) {
 		if (line != "") {
 			const int commaIndex = line.find(',');
 			const std::string countryName = line.substr(0, commaIndex);
+			const auto country = Country(countryName);
 			// Confirm that country is unique.
-			if (std::find(map.countries.begin(), map.countries.end(), countryName) != map.countries.end()) {
+			if (std::find(map.countries.begin(), map.countries.end(), country) != map.countries.end()) {
 				std::cerr << "Duplicate territory detected: " << countryName << std::endl;
 				return Map();
 			}
-			map.countries.push_back(countryName);
+			map.countries.push_back(country);
 		}
 	}
 

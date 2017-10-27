@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <limits>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -54,6 +55,16 @@ std::string removeExtension(const std::string& file) {
 	return file.substr(0, i);
 }
 
+std::vector<int> split(const std::string &input, char delim) {
+	std::stringstream ss(input);
+	std::string segment;
+	std::vector<int> contents;
+	while (std::getline(ss, segment, delim)) {
+		contents.push_back(std::stoi(segment));
+	}
+	return contents;
+}
+
 
 std::string UserInterface::selectMap() {
 	const auto files = listFiles("Resources");
@@ -66,8 +77,8 @@ std::string UserInterface::selectMap() {
 	for (int i = 2; i < files.size(); ++i) {
 		std::cout << i - 1 << ". " << removeExtension(files[i]) << std::endl;
 	}
-	
-	do { 
+
+	do {
 		std::cout << std::endl;
 		std::cout << ">>> ";
 		std::cin >> mapChoice;
@@ -100,7 +111,7 @@ int UserInterface::selectNumPlayers() {
 
 	std::cout << "Select the number of players (2-6):\n";
 	int nPlayers;
-	
+
 	std::cout << ">>> ";
 	std::cin >> nPlayers;
 	while (nPlayers < 2 || nPlayers > 6) {
@@ -142,15 +153,12 @@ Country UserInterface::selectAdjacentCountry(const Country& country, const Map& 
 	std::vector<Country> adjacentCountries = map.adjacent(country);
 
 	// Removing countries from the adjacentCountries vector that the player does not own
-	adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
-		const auto playerCountries = player.getCountries();
-		for (const auto& country : playerCountries) {
-			if (country.getName() == c.getName()) {
-				return false;
-			}
-		}
-		return true;
-	}), adjacentCountries.end());
+	adjacentCountries.erase(
+			std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
+				const auto& playerCountries = player.getCountries();
+				return std::find(playerCountries.begin(), playerCountries.end(), c) == playerCountries.end();
+			}),
+			adjacentCountries.end());
 
 	int targetChoice;
 
@@ -180,7 +188,7 @@ int UserInterface::selectArmiesToFortify(const Country& source) {
 
 	std::cout << source.getName() << " has " << source.getArmies() << " armies." << std::endl;
 	std::cout << "Enter the number of armies you want to move to your target country." << std::endl;
-	
+
 	std::cout << ">>> ";
 	std::cin >> nArmies;
 
@@ -193,6 +201,59 @@ int UserInterface::selectArmiesToFortify(const Country& source) {
 	}
 
 	return nArmies;
+}
+
+int UserInterface::selectArmiesToReinforce(const Country& source, int remainingArmies) {
+	int nArmies;
+
+	std::cout << source.getName() << " has " << source.getArmies() << " armies." << std::endl;
+	std::cout << "Enter the number of armies you want to move to your target country." << std::endl;
+
+	std::cout << ">>> ";
+	std::cin >> nArmies;
+
+	while ((nArmies < 1) || nArmies > remainingArmies) {
+		std::cerr << "Invalid choice. Try again." << std::endl;
+		std::cout << ">>> ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin >> nArmies;
+	}
+
+	return nArmies;
+}
+
+int UserInterface::exchangeCards(Player& player) {
+	if (player.getHand().empty()) {
+		std::cout << "You have no cards to exchange.\n";
+		return 0;
+	}
+	else {
+		std::cout << "Here are your cards:\n";
+		for (int i = 0; i < player.getHand().size(); ++i) {
+			const auto card = player.getHand().getCards()[i];
+			std::cout << i + 1 << ". " << card << std::endl;
+		}
+	}
+	std::cout << "Select cards you would like to exchange, or 0 to skip.\n";
+	std::cout << ">>> ";
+
+	std::string input;
+	auto indices = split(input, ',');
+
+	auto card0 = player.getHand().getCards()[indices[0] - 1];
+	auto card1 = player.getHand().getCards()[indices[1] - 1];
+	auto card2 = player.getHand().getCards()[indices[2] - 1];
+
+	int numExchanged = player.getHand().exchange(card0, card1, card2);
+	if (numExchanged > 0) {
+		std::cout << "You exchanged cards for " << numExchanged << " soldiers.\n";
+	}
+	else {
+		std::cout << "You have attempted to exchange an invalid set of cards.\n";
+	}
+
+	return numExchanged;
 }
 
 bool UserInterface::toAttackOrNot() {

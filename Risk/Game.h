@@ -21,10 +21,13 @@ private:
 	void startUp();
 	void assignArmies();
 
+	int getArmiesToAdd(const Player& player) const;
+
 public:
 	Game(const std::string& mapName, int nPlayers);
 	vector<Player> getTurns();
 	vector<Player> getUnorderedPlayers() { return players;}
+	void reinforcementPhase(Player& player);
 	void fortificationPhase(Player& player);
 	Map getMap() const;
 	vector<Country> checkAvailableCountriesToFortify(Player& player);

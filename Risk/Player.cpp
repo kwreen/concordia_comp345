@@ -12,6 +12,10 @@ Hand& Player::getHand() {
 	return this->_hand;
 }
 
+const Hand& Player::getHand() const {
+	return this->_hand;
+}
+
 vector<Country>& Player::getCountries() {
     return this->_countries;
 }

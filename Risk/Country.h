@@ -10,13 +10,15 @@ private:
 public:
 	Country() = default;
 
-	Country(std::string name) : name(name) {}
+	Country(const std::string& name) : name(name) {}
 
 	std::string getName() const;
 
 	void setName(const std::string& name);
 
 	bool operator==(const Country& other) const;
+
+	bool operator!=(const Country& other) const { return !operator==(other); }
 
 	bool operator<(const Country& second) const;
 
