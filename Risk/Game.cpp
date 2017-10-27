@@ -109,11 +109,11 @@ void Game::reinforcementPhase(Player& player) {
 	int armiesFromCardExchange = UserInterface::exchangeCards(player);
 	int armiesToAdd = armiesFromCardExchange + getArmiesToAdd(player);
 
-	std::cout << "\nHere are your countries:\n";
-	for (int i = 0; i < player.getCountries().size(); ++i) {
-		const auto& country = player.getCountries()[i];
-		std::cout << i + 1 << ". " << country.getName() << std::endl;
-	}
+//	std::cout << "\nHere are your countries:\n";
+//	for (int i = 0; i < player.getCountries().size(); ++i) {
+//		const auto& country = player.getCountries()[i];
+//		std::cout << i + 1 << ". " << country.getName() << std::endl;
+//	}
 
 	while (armiesToAdd > 0) {
 		std::cout << "\nYou have " << armiesToAdd << " remaining soldiers to add. ";
@@ -121,6 +121,8 @@ void Game::reinforcementPhase(Player& player) {
 		Country country = UserInterface::selectCountry(player.getCountries());
 
 		int armies = UserInterface::selectArmiesToReinforce(country, armiesToAdd);
+		country.increaseArmiesBy(armies);
+		std::cout << country.getName() << " now has " << country.getArmies() << " armies." << std::endl;
 		armiesToAdd -= armies;
 	}
 
@@ -237,12 +239,21 @@ void Game::attackPhase(Player& attacker) {
 					std::cout << " " << i;
 				}
 				std::cout << std::endl;
-				for (int i = 0; i < defDiceResults.size(); i++) {
+
+				int tempCmp;
+				if (defDiceResults.size() < attDiceResults.size()){
+					tempCmp = defDiceResults.size();
+				}else{
+					tempCmp = attDiceResults.size();
+				}
+
+				for (int i = 0; i < tempCmp; i++) {
 					if (attDiceResults[i] > defDiceResults[i]) {
 						// Attacker wins
 						std::cout << "The attacker has rolled " << attDiceResults[i] << " and the defender has rolled " << defDiceResults[i] << "." << std::endl;
 						std::cout << "The defender loses 1 army on " << defendingCountry.getName() << "." << std::endl;
 						defendingCountry.decreaseArmiesBy(1);
+						//cout << defendingCountry.getArmies();
 						if (defendingCountry.getArmies() == 0) {
 							std::cout << defendingCountry.getName() << " has been defeated. Attacker must now move armies to the newly conquered country." << std::endl;
 							const auto pos = std::find(defender.getCountries().begin(), defender.getCountries().end(), defendingCountry);

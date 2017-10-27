@@ -217,10 +217,11 @@ int UserInterface::exchangeCards(Player& player) {
 			std::cout << i + 1 << ". " << card << std::endl;
 		}
 	}
+    std::string input;
 	std::cout << "Select cards you would like to exchange, or 0 to skip.\n";
 	std::cout << ">>> ";
+	std::cin >> input;
 
-	std::string input;
 	auto indices = split(input, ',');
 
 	auto card0 = player.getHand().getCards()[indices[0] - 1];

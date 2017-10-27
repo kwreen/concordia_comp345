@@ -19,6 +19,7 @@ std::vector<int> DiceFacility::rollDice(int numOfDice) {
 	}
 
 	std::sort(results.begin(), results.end());
+	std::reverse(results.begin(), results.end());
 
 	return results;
 }
