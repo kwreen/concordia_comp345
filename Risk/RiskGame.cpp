@@ -12,12 +12,19 @@ int main() {
 
 	vector<Player> players = game.getTurns();
 
-    cout<< endl << "Player turn order: ";
+    vector<string> allContinents = game.getMap().getContinentNames();
+
+    for (auto& continent : allContinents){
+        std::cout << continent << " value is " << game.getMap().getContinentValue(continent) << std::endl;
+    }
+    Deck gameDeck = game.getDeck();
+    std::cout << gameDeck.nCards() << " cards have been loaded into the game.";
+    std::cout<< endl << "Player turn order: ";
     for (int i = 0; i < players.size(); i++) {
         cout << " " << players[i].getID();
     }
+    cout << "\n\n";
 
-    cout << endl;
 	for (int i = 0; i < players.size(); i++) {
 		cout<< " ~ " << players[i].getID() << " has " << players[i].amtCountries() << " countries and " << players[i].getPlayerArmies() << " armies." <<endl;
         players[i].printCountries();

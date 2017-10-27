@@ -206,8 +206,8 @@ int UserInterface::selectArmiesToReinforce(const Country& source, int remainingA
 }
 
 int UserInterface::exchangeCards(Player& player) {
-	if (player.getHand().empty()) {
-		std::cout << "You have no cards to exchange.\n";
+	if (player.getHand().empty() || player.getHand().size() < 3) {
+		std::cout << "You don't have enough cards to exchange.\n";
 		return 0;
 	}
 	else {
@@ -217,10 +217,21 @@ int UserInterface::exchangeCards(Player& player) {
 			std::cout << i + 1 << ". " << card << std::endl;
 		}
 	}
+
     std::string input;
-	std::cout << "Select cards you would like to exchange, or 0 to skip.\n";
-	std::cout << ">>> ";
-	std::cin >> input;
+
+    if (player.getHand().size() > 5){
+        std::cout << "You have more than 5 cards, you need to exchange.\n";
+        std::cout << ">>> ";
+        std::cin >> input;
+    }else{
+        std::cout << "Select cards you would like to exchange, or 0 to skip.\n";
+        std::cout << ">>> ";
+        std::cin >> input;
+        if (input == "0"){
+            return 0;
+        }
+    }
 
 	auto indices = split(input, ',');
 

@@ -294,3 +294,7 @@ void Game::removeDeadPlayers() {
 		players.erase(players.begin() + i);
 	}
 }
+
+Deck Game::getDeck() {
+	return deck;
+}
