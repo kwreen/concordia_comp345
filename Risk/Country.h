@@ -5,7 +5,7 @@
 class Country {
 private:
 	std::string name;
-	int armies = 0;
+	int armies;
 
 public:
 	Country() = default;
