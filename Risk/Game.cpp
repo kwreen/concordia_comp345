@@ -123,6 +123,8 @@ void Game::reinforcementPhase(Player& player) {
 		int armies = UserInterface::selectArmiesToReinforce(country, armiesToAdd);
 		armiesToAdd -= armies;
 	}
+
+	std::cout << "\nEnding reinforcement phase.\n";
 }
 
 void Game::fortificationPhase(Player& player) {
@@ -213,8 +215,9 @@ void Game::attackPhase(Player& attacker) {
 
 			if (countries.size() > 0) {
 				Country attackingCountry = UserInterface::selectCountry(countries);
-				Country defendingCountry = UserInterface::selectAdjacentCountry(map.adjacent(attackingCountry));
-				Player defender = getOwner(defendingCountry);
+				Country fakeDefendingCountry = UserInterface::selectAdjacentCountry(map.adjacent(attackingCountry));
+				Player defender = getOwner(fakeDefendingCountry);
+				Country defendingCountry = *std::find(defender.getCountries().begin(), defender.getCountries().end(), fakeDefendingCountry);
 
 				int nDiceAttacker = UserInterface::selectAttackerDice(attackingCountry);
 				int nDiceDefender = UserInterface::selectDefenderDice(defendingCountry);
@@ -274,5 +277,21 @@ void Game::attackPhase(Player& attacker) {
 
 	} while (toAttack);
 
+	removeDeadPlayers();
+
 	std::cout << "Ending attack phase..." << std::endl;
+}
+
+void Game::removeDeadPlayers() {
+	std::vector<int> playersIndicesToDelete;
+	for (int i = 0; i < players.size(); ++i) {
+		const auto player = players[i];
+		if (player.getCountries().empty()) {
+			playersIndicesToDelete.push_back(i);
+		}
+	}
+
+	for (int i : playersIndicesToDelete) {
+		players.erase(players.begin() + i);
+	}
 }

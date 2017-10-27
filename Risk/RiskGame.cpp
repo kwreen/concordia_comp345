@@ -11,26 +11,30 @@ int main() {
 	Game game = Game(mapName, nPlayers);
 
 	//tests part 2. Edits to Country,Player and Game.
-	vector<Player> player = game.getTurns();
+	vector<Player> players = game.getTurns();
 
     cout<< endl << "Player turn order: ";
-    for (int i = 0; i < player.size(); i++) {
-        cout << " " << player[i].getID();
+    for (int i = 0; i < players.size(); i++) {
+        cout << " " << players[i].getID();
     }
 
     cout << endl;
-	for (int i = 0; i < player.size(); i++) {
-		cout<< " ~ " << player[i].getID() << " has " << player[i].amtCountries() << " countries and " << player[i].getPlayerArmies() << " armies." <<endl;
+	for (int i = 0; i < players.size(); i++) {
+		cout<< " ~ " << players[i].getID() << " has " << players[i].amtCountries() << " countries and " << players[i].getPlayerArmies() << " armies." <<endl;
         cout << "Countries: ";
-        player[i].printCountries();
+        players[i].printCountries();
         cout << endl;;
 	}
 
-	// Reinforcement phase.
-	game.reinforcementPhase(player[0]);
+	while (!game.getTurns().empty()) {
+		for (auto& player : players) {
+			std::cout << "\n\nPlayer " << player.getIDAsInt() << " turn.\n";
+			game.reinforcementPhase(player);
+			game.attackPhase(player);
+			game.fortificationPhase(player);
+		}
+	}
 
-    //game.fortificationPhase(player[0]);
-	game.attackPhase(player[0]);
 
 	return 0;
 }

@@ -34,4 +34,5 @@ public:
 	vector<Country> checkAvailableCountriesToFortify(Player& player);
 	vector<Country> checkAvailableCountriesToAttack(Player& player);
 	void attackPhase(Player& player);
+	void removeDeadPlayers();
 };

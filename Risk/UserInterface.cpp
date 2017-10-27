@@ -172,8 +172,6 @@ int UserInterface::selectArmiesToMove(const Country& source) {
 	int nArmies;
 
 	std::cout << source.getName() << " has " << source.getArmies() << " armies." << std::endl;
-	std::cout << "Enter the number of armies you want to move to the target country." << std::endl;
-
 	std::cout << "Enter the number of armies you want to move to your target country." << std::endl;
 
 	std::cout << ">>> ";
