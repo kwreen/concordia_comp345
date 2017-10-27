@@ -126,3 +126,24 @@ std::vector<Country> Game::checkAvailableCountriesToFortify(Player& player) {
 
 	return countries;
 }
+
+void Game::attackPhase(Player& player) {
+	bool toAttack;
+	std::cout << "Starting attack phase..." << std::endl;
+
+
+	do {
+		
+		toAttack = UserInterface::toAttackOrNot();
+
+		if (toAttack) {
+			std::cout << "attacking.." << std::endl;
+
+
+
+		}
+
+	} while (toAttack);
+
+	std::cout << "Ending attack phase..." << std::endl;
+}

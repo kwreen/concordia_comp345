@@ -28,4 +28,5 @@ public:
 	void fortificationPhase(Player& player);
 	Map getMap() const;
 	vector<Country> checkAvailableCountriesToFortify(Player& player);
+	void attackPhase(Player& player);
 };

@@ -195,3 +195,28 @@ int UserInterface::selectArmiesToFortify(const Country& source) {
 	return nArmies;
 }
 
+bool UserInterface::toAttackOrNot() {
+	int input;
+
+	std::cout << "Do you want to attack? 1 = yes, 0 = no" << std::endl;
+
+	std::cout << ">>> ";
+	std::cin >> input;
+
+	std::cout << input << std::endl;
+
+	while ((input > 1)  || (input < 0)) {
+		std::cerr << "Invalid choice. Try again.\n" << std::endl;
+		std::cout << ">>> ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin >> input;
+	}
+
+	if (input == 1) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
