@@ -106,7 +106,6 @@ void Player::fortify(int nArmies, Country& source, Country& target) {
 	source.decreaseArmiesBy(nArmies);
 	target.increaseArmiesBy(nArmies);
 	std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
-    std::cout << "Ending fortification phase...";
 }
 
 //bool Player::hasCountry(std::string country) {

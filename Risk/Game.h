@@ -27,4 +27,5 @@ public:
 	vector<Player> getUnorderedPlayers() { return players;}
 	void fortificationPhase(Player& player);
 	Map getMap() const;
+	vector<Country> checkAvailableCountriesToFortify(Player& player);
 };

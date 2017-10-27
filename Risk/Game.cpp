@@ -82,12 +82,47 @@ Game::Game(const std::string& fileName, int nPlayers) {
 
 void Game::fortificationPhase(Player& player) {
     std::cout << "Starting fortification phase..." << std::endl;
-	Country country = UserInterface::selectCountry(player, map);
-	Country adjacentCountry = UserInterface::selectAdjacentCountry(country, map, player);
-	int nArmies = UserInterface::selectArmiesToFortify(country);
-	player.fortify(nArmies, country, adjacentCountry);
+	
+	std::vector<Country> countries = checkAvailableCountriesToFortify(player);
+
+	if (countries.size() > 0) {
+		Country country = UserInterface::selectCountry(countries);
+		Country adjacentCountry = UserInterface::selectAdjacentCountry(country, map, player);
+		int nArmies = UserInterface::selectArmiesToFortify(country);
+		player.fortify(nArmies, country, adjacentCountry);
+	}
+	else {
+		std::cout << "No country found." << std::endl;
+	}
+	std::cout << "Ending fortification phase..." << std::endl;
 }
 
 Map Game::getMap() const {
 	return	this->map;
+}
+
+std::vector<Country> Game::checkAvailableCountriesToFortify(Player& player) {
+	vector<Country> countries = player.getCountries();
+
+	// Removing countries from the vector which do not have adjacent countries that the player owns
+	countries.erase(std::remove_if(countries.begin(), countries.end(), [&](const Country& c) {
+		std::vector<Country> adjacentCountries = map.adjacent(c);
+		adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
+			for (auto& country : countries) {
+				if (country.getName() == c.getName()) {
+					return false;
+				}
+			}
+			return true;
+		}), adjacentCountries.end());
+
+		if (adjacentCountries.size() == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}), countries.end());
+
+	return countries;
 }
