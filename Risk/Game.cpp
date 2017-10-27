@@ -8,7 +8,10 @@
 #include <time.h>
 
 int Game::getArmiesToAdd(const Player& player) const {
+	// Number of countries owned on the map, divided by 3 (rounded down), with a minimum of 3
 	int armiesFromCountries = std::min((int) player.getCountries().size() / 3, 3);
+
+	// Continent-control value of all continents totally controlled by that player
 	const auto continentsOwned = map.continentsOwned(player);
 	int armiesFromContinents = std::accumulate(continentsOwned.begin(), continentsOwned.end(), 0, [&](int i, const std::string& c) {
 		return i + map.getContinentValue(c);

@@ -90,6 +90,7 @@ std::vector<std::string> Map::continentsOwned(const Player& player) const {
 	const std::vector<Country>& playerCountries = player.getCountries();
 	std::vector<int> playerCountryIndices;
 
+	// Add country indice from the player's countries if the player owns the country
 	for (int i = 0; i < countries.size(); ++i) {
 		const auto Country = countries[i];
 		if (std::find(playerCountries.begin(), playerCountries.end(), Country) != playerCountries.end()) {
@@ -97,6 +98,7 @@ std::vector<std::string> Map::continentsOwned(const Player& player) const {
 		}
 	}
 
+	// Add continent name to continentsOwned if player owns all countries in the continent
 	for (const auto& kv : continents) {
 		const auto continentName = kv.first;
 		const auto& continentIndices = kv.second;

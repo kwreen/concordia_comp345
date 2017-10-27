@@ -96,12 +96,10 @@ void Player::setArmies(int nArmies)
 }
 
 void Player::reinforce() {
-	// TODO: Implement reinforce mechanism
 	cout << "Player " << this << " has reinforced." << endl;
 }
 
 void Player::attack() {
-	// TODO: Implement attack mechanism
 	cout << "Player " << this << " has attacked." << endl;
 }
 
