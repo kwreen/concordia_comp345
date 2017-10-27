@@ -26,7 +26,7 @@ int main() {
         cout << endl;;
 	}
 
-	while (!game.getTurns().empty()) {
+	while (game.getTurns().size() > 1) {
 		for (auto& player : players) {
 			std::cout << "\n\nPlayer " << player.getIDAsInt() << " turn.\n";
 			game.reinforcementPhase(player);
@@ -34,6 +34,8 @@ int main() {
 			game.fortificationPhase(player);
 		}
 	}
+
+    cout << " The game is over and player " << players[0].getIDAsInt() << " has won.";
 
 
 	return 0;

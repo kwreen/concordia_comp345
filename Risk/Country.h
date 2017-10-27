@@ -10,7 +10,7 @@ private:
 public:
 	Country() = default;
 
-	Country(const std::string& name) : name(name) {}
+	Country(const std::string& name) : name(name), armies(0) {}
 
 	std::string getName() const;
 
