@@ -15,6 +15,7 @@ private:
 	std::vector<Player> turns;
 	int numPlayers;
 
+	Player getOwner(const Country& country) const;
 	void setGameMap(const std::string& mapName);
 	void createPlayers(int nPlayers);
 	void assignTurns();
@@ -28,5 +29,6 @@ public:
 	void fortificationPhase(Player& player);
 	Map getMap() const;
 	vector<Country> checkAvailableCountriesToFortify(Player& player);
+	vector<Country> checkAvailableCountriesToAttack(Player& player);
 	void attackPhase(Player& player);
 };

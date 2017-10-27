@@ -5,12 +5,12 @@
 class Country {
 private:
 	std::string name;
-	int armies = 0;
+	int armies;
 
 public:
 	Country() = default;
 
-	Country(std::string name) : name(name) {}
+	Country(std::string name) : name(name), armies(0) {}
 
 	std::string getName() const;
 
@@ -29,4 +29,8 @@ public:
 	void increaseArmiesBy(int n);
 
 	void decreaseArmiesBy(int n);
+
+	bool operator==(const Country& other) {
+		return name == other.name;
+	}
 };

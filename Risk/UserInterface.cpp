@@ -54,6 +54,12 @@ std::string removeExtension(const std::string& file) {
 	return file.substr(0, i);
 }
 
+void tryAgain() {
+	std::cerr << "Invalid choice. Try again.\n" << std::endl;
+	std::cout << ">>> ";
+	std::cin.clear();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
 
 std::string UserInterface::selectMap() {
 	const auto files = listFiles("Resources");
@@ -72,10 +78,7 @@ std::string UserInterface::selectMap() {
 		std::cout << ">>> ";
 		std::cin >> mapChoice;
 		while (mapChoice < 1 || mapChoice >= files.size() - 1) {
-			std::cerr << "Invalid choice. Try again.\n" << std::endl;
-			std::cout << ">>> ";
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			tryAgain();
 			std::cin >> mapChoice;
 		}
 
@@ -104,10 +107,7 @@ int UserInterface::selectNumPlayers() {
 	std::cout << ">>> ";
 	std::cin >> nPlayers;
 	while (nPlayers < 2 || nPlayers > 6) {
-		std::cerr << "Invalid choice. Try again.\n" << std::endl;
-		std::cout << ">>> ";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		tryAgain();
 		std::cin >> nPlayers;
 	}
 
@@ -128,30 +128,14 @@ Country UserInterface::selectCountry(std::vector<Country> countries) {
 	std::cin >> sourceChoice;
 
 	while ((sourceChoice < 1) || (sourceChoice > countries.size())) {
-		std::cerr << "Invalid choice. Try again.\n" << std::endl;
-		std::cout << ">>> ";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		tryAgain();
 		std::cin >> sourceChoice;
 	}
 
 	return countries[sourceChoice - 1];
 }
 
-Country UserInterface::selectAdjacentCountry(const Country& country, const Map& map, const Player& player) {
-	std::vector<Country> adjacentCountries = map.adjacent(country);
-
-	// Removing countries from the adjacentCountries vector that the player does not own
-	adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
-		const auto playerCountries = player.getCountries();
-		for (const auto& country : playerCountries) {
-			if (country.getName() == c.getName()) {
-				return false;
-			}
-		}
-		return true;
-	}), adjacentCountries.end());
-
+Country UserInterface::selectAdjacentCountry(std::vector<Country> adjacentCountries) {
 	int targetChoice;
 
 	std::cout << "Available target/adjacent countries:" << std::endl;
@@ -165,30 +149,24 @@ Country UserInterface::selectAdjacentCountry(const Country& country, const Map& 
 	std::cin >> targetChoice;
 
 	while ((targetChoice < 1) || (targetChoice > adjacentCountries.size())) {
-		std::cerr << "Invalid choice. Try again.\n" << std::endl;
-		std::cout << ">>> ";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		tryAgain();
 		std::cin >> targetChoice;
 	}
 
 	return adjacentCountries[targetChoice - 1];
 }
 
-int UserInterface::selectArmiesToFortify(const Country& source) {
+int UserInterface::selectArmiesToMove(const Country& source) {
 	int nArmies;
 
 	std::cout << source.getName() << " has " << source.getArmies() << " armies." << std::endl;
-	std::cout << "Enter the number of armies you want to move to your target country." << std::endl;
-	
+	std::cout << "Enter the number of armies you want to move to the target country." << std::endl;
+		
 	std::cout << ">>> ";
 	std::cin >> nArmies;
 
 	while ((nArmies < 1) || (nArmies > source.getArmies() - 1)) {
-		std::cerr << "Invalid choice. Try again.\n" << std::endl;
-		std::cout << ">>> ";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		tryAgain();
 		std::cin >> nArmies;
 	}
 
@@ -203,13 +181,8 @@ bool UserInterface::toAttackOrNot() {
 	std::cout << ">>> ";
 	std::cin >> input;
 
-	std::cout << input << std::endl;
-
 	while ((input > 1)  || (input < 0)) {
-		std::cerr << "Invalid choice. Try again.\n" << std::endl;
-		std::cout << ">>> ";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		tryAgain();
 		std::cin >> input;
 	}
 
@@ -219,4 +192,38 @@ bool UserInterface::toAttackOrNot() {
 	else {
 		return false;
 	}
+}
+
+int UserInterface::selectAttackerDice(const Country& country) {
+	int max = country.getArmies() - 1;
+	int input;
+
+	std::cout << "Attacker: Enter the number of dice to roll." << std::endl;
+
+	std::cout << ">>> ";
+	std::cin >> input;
+
+	while ((input > max) || (input < 1)) {
+		tryAgain();
+		std::cin >> input;
+	}
+
+	return input;
+}
+
+int UserInterface::selectDefenderDice(const Country& country) {
+	int max = country.getArmies();
+	int input;
+
+	std::cout << "Defender: Enter the number of dice to roll. " << std::endl;
+
+	std::cout << ">>> ";
+	std::cin >> input;
+
+	while ((input > max) || (input < 1)) {
+		tryAgain();
+		std::cin >> input;
+	}
+
+	return input;
 }

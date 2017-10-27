@@ -53,10 +53,9 @@ void Player::assignCountry(Country c) //assigns a country to the player. See sta
 
 void Player::printCountries() //prints countries player currently owns
 {
-//	cout << getID() << " has: " << endl;
 	for (int i = 0; i<_countries.size(); i++)
 	{
-		cout << "Country: " << _countries[i].getName() << endl;
+		cout << "Country: " << _countries[i].getName() << " with " << _countries[i].getArmies() << " armies." << endl;
 	}
 }
 

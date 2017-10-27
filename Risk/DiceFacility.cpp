@@ -11,13 +11,15 @@ std::array<Die,3> DiceFacility::getDice() const {
 }
 
 std::vector<int> DiceFacility::rollDice(int numOfDice) {
-	std::vector<int> dicerollResults;
+	std::vector<int> results;
 
 	for (int i = 0; i < numOfDice; i++) {
-		dicerollResults.push_back(this->_dice[i].roll());
+		results.push_back(this->_dice[i].roll());
 	}
 
-	return dicerollResults;
+	std::sort(results.begin(), results.end());
+
+	return results;
 }
 
 std::array<double, 6> DiceFacility::getDiceStats(int diceNum) {
