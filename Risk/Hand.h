@@ -16,6 +16,10 @@ class Hand {
 
 		std::vector<Card> getCards() const;
 
+		int size() const { return cards.size(); }
+
+		bool empty() const { return cards.empty(); }
+
 		void add(const Card& card);
 
 		int exchange(const Card& card0, const Card& card1, const Card& card2);

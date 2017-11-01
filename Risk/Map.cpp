@@ -22,6 +22,10 @@ std::vector<Country> Map::getContinent(const std::string& continentName) const {
 	return names;
 }
 
+int Map::getContinentValue(const std::string& continentName) const {
+	return continentValues.find(continentName)->second;
+}
+
 std::vector<std::string> Map::getContinentNames() const {
 	std::vector<std::string> continentNames;
 	for (const auto& kv : continents) {
@@ -52,7 +56,8 @@ std::vector<Country> Map::adjacent(const Country& country) const {
 	return adjacentCountries;
 }
 
-std::vector<Country> Map::adjacentInContinent(const Country& country, const std::string& continent) const {
+std::vector<Country>
+Map::adjacentInContinent(const Country& country, const std::string& continent) const {
 	std::vector<Country> adjacentCountries;
 	// Find index of the specified country.
 	int countryIndex;
@@ -78,6 +83,32 @@ std::vector<Country> Map::adjacentInContinent(const Country& country, const std:
 	}
 
 	return adjacentCountries;
+}
+
+std::vector<std::string> Map::continentsOwned(const Player& player) const {
+	std::vector<std::string> continentsOwned;
+	const std::vector<Country>& playerCountries = player.getCountries();
+	std::vector<int> playerCountryIndices;
+
+	// Add country indice from the player's countries if the player owns the country
+	for (int i = 0; i < countries.size(); ++i) {
+		const auto Country = countries[i];
+		if (std::find(playerCountries.begin(), playerCountries.end(), Country) != playerCountries.end()) {
+			playerCountryIndices.push_back(i);
+		}
+	}
+
+	// Add continent name to continentsOwned if player owns all countries in the continent
+	for (const auto& kv : continents) {
+		const auto continentName = kv.first;
+		const auto& continentIndices = kv.second;
+
+		if (std::is_permutation(playerCountryIndices.begin(), playerCountryIndices.end(), continentIndices.begin(), continentIndices.end())) {
+			continentsOwned.push_back(kv.first);
+		}
+	}
+
+	return continentsOwned;
 }
 
 void Map::print() const {

@@ -19,7 +19,7 @@ Buru=1
 
 
 [Territories]
-Aceh,45,70,Sumatra,North Sumatra
+North Sumatra,45,70,Sumatra,North Sumatra
 North Sumatra,80,120,Sumatra,Aceh,Riau,West Sumatra
 Riau,140,180,Sumatra,North Sumatra,West Sumatra,Jambi
 West Sumatra,115,210,Sumatra,North Sumatra,Riau,Jambi,Bengkulu
