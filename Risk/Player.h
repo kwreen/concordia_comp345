@@ -3,12 +3,13 @@
 #include "DiceFacility.h"
 #include "Country.h"
 #include "Hand.h"
+#include "Observer.h"
 #include <string>
 using namespace std;
 
 using std::vector;
 
-class Player {
+class Player:public Observer {
 private:
 	vector<Country> _countries;
 	Hand _hand;
@@ -40,6 +41,7 @@ public:
 	void fortify(int nArmies, Country& source, Country& target);
 	bool hasCountry(std::string country);
 	//will need to add a getPlayerArmies() here which adds getArmies() from hand + ones on countries
+	void showStats();
 
 private:
 	void setCountries(vector<Country> countries);

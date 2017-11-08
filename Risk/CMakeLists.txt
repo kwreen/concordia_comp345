@@ -9,7 +9,8 @@ set(SOURCES
         Map.cpp
         MapLoader.cpp
         Player.cpp
-	UserInterface.cpp)
+	UserInterface.cpp
+		Subject.cpp)
 set(HEADERS
         Card.h
         Country.h
@@ -21,7 +22,9 @@ set(HEADERS
         Map.h
         MapLoader.h
         Player.h
-	UserInterface.h)
+	UserInterface.h
+		Observer.h
+		Subject.h)
 
 add_library(Risk STATIC ${SOURCES} ${HEADERS})
 add_executable(RiskGame RiskGame.cpp)
