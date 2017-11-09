@@ -100,8 +100,8 @@ Game::Game(const std::string& fileName, int nPlayers) {
     startUp();
 
 	// Attaching players to the games
-	for (auto player : turns) {
-		attach(&player);
+	for (int i = 0; i < turns.size(); i++) {
+		attach(&turns[i]);
 	}
 }
 
