@@ -96,7 +96,7 @@ void Game::startUp() {
     assignArmies();
 }
 
-vector<Player>& Game::getTurns() {
+std::vector<Player>& Game::getTurns() {
     return turns;
 }
 Game::Game(const std::string& fileName, int nPlayers) {
@@ -134,7 +134,7 @@ void Game::reinforcementPhase(Player& player) {
         int armies = UserInterface::selectArmiesToReinforce(country, armiesToAdd);
 		for (auto& c : player.getCountries()) {
 			if (c.getName() == country.getName()) {
-				country.increaseArmiesBy(armies);
+				c.increaseArmiesBy(armies);
 			}
 		}
         armiesToAdd -= armies;
@@ -156,24 +156,23 @@ void Game::fortificationPhase(Player& player) {
 		Country target = UserInterface::selectAdjacentCountry(adjacentCountries);
 		int nArmies = UserInterface::selectArmiesToMove(source);
 
-		for (auto& country : player.getCountries()) {
-			if (country.getName() == source.getName()) {
-				source.decreaseArmiesBy(nArmies);
-				std::cout << source.getName() << " now has " << source.getArmies() << " armies." << std::endl;
+		for (auto& c : player.getCountries()) {
+			if (c.getName() == source.getName()) {
+				c.decreaseArmiesBy(nArmies);
+				std::cout << c.getName() << " now has " << c.getArmies() << " armies." << std::endl;
 				break;
 			}
 		}
 
-		for (auto& country : player.getCountries()) {
-			if (country.getName() == target.getName()) {
-				target.increaseArmiesBy(nArmies);
-				std::cout << target.getName() << " now has " << target.getArmies() << " armies." << std::endl;
+		for (auto& c : player.getCountries()) {
+			if (c.getName() == target.getName()) {
+				c.increaseArmiesBy(nArmies);
+				std::cout << c.getName() << " now has " << c.getArmies() << " armies." << std::endl;
 				break;
 			}
 		}
 
         std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
-
     }
     else {
         std::cout << "No available country found to fortify." << std::endl;
@@ -186,7 +185,7 @@ Map Game::getMap() const {
 }
 
 std::vector<Country> Game::checkAvailableCountriesToFortify(Player& player) {
-    vector<Country> countries = player.getCountries();
+    std::vector<Country> countries = player.getCountries();
 
     // Removing countries from the vector which do not have adjacent countries that the player owns
     countries.erase(std::remove_if(countries.begin(), countries.end(), [&](const Country& c) {
@@ -213,24 +212,24 @@ std::vector<Country> Game::checkAvailableCountriesToFortify(Player& player) {
 }
 
 std::vector<Country> Game::checkAvailableAdjacentCountriesToFortify(Player& player, Country source) {
-	vector<Country> countries = player.getCountries();
-	vector<Country> adjacentCountries = map.adjacent(source);
+	std::vector<Country> countries = player.getCountries();
+	std::vector<Country> adjacentCountries = map.adjacent(source);
 
 	// Removing adjacent countries to the Source that the player does not own
 	adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
 		for (auto& country : countries) {
 			if (country.getName() == c.getName()) {
-				return true;
+				return false;
 			}
-			return false;
 		}
+		return true;
 	}), adjacentCountries.end());
 
 	return adjacentCountries;
 }
 
 std::vector<Country> Game::checkAvailableCountriesToAttack(Player& player) {
-    vector<Country> countries = player.getCountries();
+    std::vector<Country> countries = player.getCountries();
 
     // Removing countries from the vector which have adjacent countries that the player owns
     countries.erase(std::remove_if(countries.begin(), countries.end(), [&](const Country& c) {
@@ -284,8 +283,8 @@ void Game::attackPhase(Player& attacker) {
                 int nDiceDefender = UserInterface::selectDefenderDice(defendingCountry);
 
                 std::cout << "Rolling dice..." << std::endl;
-                vector<int> attDiceResults = attacker.getDice().rollDice(nDiceAttacker);
-                vector<int> defDiceResults = defender.getDice().rollDice(nDiceDefender);
+                std::vector<int> attDiceResults = attacker.getDice().rollDice(nDiceAttacker);
+                std::vector<int> defDiceResults = defender.getDice().rollDice(nDiceDefender);
 
                 std::cout << "Comparing dice..." << std::endl;
                 std::cout << "Attacker rolled...";
@@ -369,4 +368,3 @@ void Game::removeDeadPlayers() {
 Deck Game::getDeck() {
     return deck;
 }
-

@@ -1,20 +1,16 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "DiceFacility.h"
 #include "Country.h"
 #include "Hand.h"
 #include "Observer.h"
-#include <string>
 #include "Strategy.h"
-
-using namespace std;
-
-using std::vector;
 
 class Player : public Observer {
 private:
 	Strategy *strategy;
-	vector<Country> _countries;
+	std::vector<Country> _countries;
 	Hand _hand;
 	DiceFacility _dice;
 	int player = 0;
@@ -22,14 +18,14 @@ private:
 
 public:
 	Player() = default;
-	Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber, Strategy *strategy);
+	Player(std::vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber, Strategy *strategy);
 	Player(int playerNumber);
-	vector<Country>& getCountries();
-	const vector<Country>& getCountries() const;
+	std::vector<Country>& getCountries();
+	const std::vector<Country>& getCountries() const;
 	Hand& getHand();
 	const Hand& getHand() const;
 	DiceFacility getDice() const;
-	string getID();
+	std::string getID();
 	int getIDAsInt();
 	void assignCountry(Country c);
 	int amtCountries();
@@ -47,7 +43,7 @@ public:
     void notifyGame(int totalCountries, int totalArmies);
 
 private:
-	void setCountries(vector<Country> countries);
+	void setCountries(std::vector<Country> countries);
 	void setHand(Hand hand);
 	void setDice(DiceFacility dice);
 };

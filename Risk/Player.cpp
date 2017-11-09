@@ -3,12 +3,7 @@
 #include <iostream>
 #include <iomanip>
 
-using std::vector;
-using std::cout;
-using std::endl;
-using std::setw;
-using std::setfill;
-Player::Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber, Strategy *strategy) : _countries(countries), _hand(hand), _dice(dice), player(playerNumber) {
+Player::Player(std::vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber, Strategy *strategy) : _countries(countries), _hand(hand), _dice(dice), player(playerNumber) {
         this->setStrategy(strategy);
 }
 
@@ -23,11 +18,11 @@ const Hand& Player::getHand() const {
     return this->_hand;
 }
 
-vector<Country>& Player::getCountries() {
+std::vector<Country>& Player::getCountries() {
     return this->_countries;
 }
 
-const vector<Country>& Player::getCountries() const {
+const std::vector<Country>& Player::getCountries() const {
     return this->_countries;
 }
 
@@ -35,7 +30,7 @@ DiceFacility Player::getDice() const {
     return this->_dice;
 }
 
-void Player::setCountries(vector<Country> countries) {
+void Player::setCountries(std::vector<Country> countries) {
     this->_countries = countries;
 }
 
@@ -47,8 +42,8 @@ void Player::setDice(DiceFacility dice) {
     this->_dice = dice;
 }
 
-string Player::getID() {
-    return "Player " + to_string(player);
+std::string Player::getID() {
+    return "Player " + std::to_string(player);
 }
 
 int Player::getIDAsInt(){
@@ -61,7 +56,7 @@ void Player::assignCountry(Country c) {
 
 void Player::printCountries() {
     for (int i = 0; i<_countries.size(); i++) {
-        cout << "Country: " << _countries[i].getName() << " with " << _countries[i].getArmies() << " armies." << endl;
+        std::cout << "Country: " << _countries[i].getName() << " with " << _countries[i].getArmies() << " armies." << std::endl;
     }
 }
 
@@ -91,42 +86,37 @@ void Player::setArmies(int nArmies) {
 void Player::notifyPhase(int phase) {
 
     // reinforcement
-    if (phase == 1)
-    {
-        cout << "[Phase Observer: "<< getID() << " stats]" << endl;
-        cout << "Armies: " << getPlayerArmies() << ", Cards: " << getHand().size() << ", Countries Owned: " << getCountries().size() << endl;
-        cout << "\nCountries                          Armies" << endl;
-        cout << "-------------------------------------------" << endl;
-        for (int i = 0; i < _countries.size(); i++)
-        {
-            cout << left << setw(35) << setfill(' ') << _countries[i].getName() << left << setw(35) << setfill(' ') << _countries[i].getArmies() << endl;
+    if (phase == 1) {
+        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
+        std::cout << "Armies: " << getPlayerArmies() << ", Cards: " << getHand().size() << ", Countries Owned: " << getCountries().size() << std::endl;
+        std::cout << "\nCountries                          Armies" << std::endl;
+        std::cout << "-------------------------------------------" << std::endl;
+        for (int i = 0; i < _countries.size(); i++) {
+            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
         }
-        cout << endl;
-
+        std::cout << std::endl;
     }
 
     // attack
     else if (phase == 2) {
-        cout << "[Phase Observer: "<< getID() << " stats]" << endl;
-        cout << "\nCountries                          Armies" << endl;
-        cout << "-------------------------------------------" << endl;
-        for (int i = 0; i < _countries.size(); i++)
-        {
-            cout << left << setw(35) << setfill(' ') << _countries[i].getName() << left << setw(35) << setfill(' ') << _countries[i].getArmies() << endl;
+        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
+        std::cout << "\nCountries                          Armies" << std::endl;
+        std::cout << "-------------------------------------------" << std::endl;
+        for (int i = 0; i < _countries.size(); i++) {
+            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 
     // fortification
     else {
-        cout << "[Phase Observer: "<< getID() << " stats]" << endl;
-        cout << "\nCountries                          Armies" << endl;
-        cout << "-------------------------------------------" << endl;
-        for (int i = 0; i < _countries.size(); i++)
-        {
-            cout << left << setw(35) << setfill(' ') << _countries[i].getName() << left << setw(35) << setfill(' ') << _countries[i].getArmies() << endl;
+        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
+        std::cout << "\nCountries                          Armies" << std::endl;
+        std::cout << "-------------------------------------------" << std::endl;
+        for (int i = 0; i < _countries.size(); i++) {
+            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
@@ -135,9 +125,8 @@ void Player::notifyGame(int totalCountries,int totalArmies) {
     int currentArmies = getPlayerArmies();
     double percent = (double)currentCountries / totalCountries;
     double percent2 = (double)currentArmies / totalArmies;
-    cout << getID() << ": " << currentCountries << "/" << totalCountries << ", " << percent*100 << "% " << "of countries owned, " << currentArmies << "/"
-         << totalArmies << ", " << percent2*100 << "% of armies owned "<<
-         endl;
+    std::cout << getID() << ": " << currentCountries << "/" << totalCountries << ", " << percent*100 << "% " << "of countries owned, " << currentArmies << "/"
+         << totalArmies << ", " << percent2*100 << "% of armies owned " << std::endl;
 }
 
 void Player::setStrategy(Strategy *strategy){
@@ -147,4 +136,3 @@ void Player::setStrategy(Strategy *strategy){
 Strategy* Player::getStrategy() {
     return this->strategy;
 }
-
