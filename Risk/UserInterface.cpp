@@ -126,7 +126,7 @@ int UserInterface::selectNumPlayers() {
     return nPlayers;
 }
 
-Country UserInterface::selectCountry(std::vector<Country>& countries) {
+Country UserInterface::selectCountry(std::vector<Country> countries) {
     int sourceChoice;
 
     std::cout << "Source countries with available target countries:" << std::endl;

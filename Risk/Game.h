@@ -27,12 +27,13 @@ private:
 
 public:
 	Game(const std::string& mapName, int nPlayers);
-	vector<Player> getTurns();
+	vector<Player>& getTurns();
 	vector<Player> getUnorderedPlayers() { return players;}
 	void reinforcementPhase(Player& player);
 	void fortificationPhase(Player& player);
 	Map getMap() const;
 	vector<Country> checkAvailableCountriesToFortify(Player& player);
+	vector<Country> checkAvailableAdjacentCountriesToFortify(Player& player, Country source);
 	vector<Country> checkAvailableCountriesToAttack(Player& player);
 	void attackPhase(Player& player);
 	void removeDeadPlayers();

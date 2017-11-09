@@ -9,7 +9,7 @@ int main() {
     const auto mapName = UserInterface::selectMap();
     const auto nPlayers = UserInterface::selectNumPlayers();
     Game game = Game(mapName, nPlayers);
-    vector<Player> players = game.getTurns();
+    vector<Player>& players = game.getTurns();
 
     vector<string> allContinents = game.getMap().getContinentNames();
 
@@ -34,10 +34,10 @@ int main() {
 
     while (game.getTurns().size() > 1) {
         for (auto& player : players) {
-            std::cout << "\n******************************** Player "<< player.getIDAsInt() << " Turn: Reinforcement Phase ********************************" << std::endl;
+            /*std::cout << "\n******************************** Player "<< player.getIDAsInt() << " Turn: Reinforcement Phase ********************************" << std::endl;
             game.reinforcementPhase(player);
             std::cout << "\n******************************** Player "<< player.getIDAsInt() << " Turn: Attack Phase ********************************" << std::endl;
-            game.attackPhase(player);
+            game.attackPhase(player);*/
             std::cout << "\n******************************** Player "<< player.getIDAsInt() << " Turn: Fortification Phase ********************************" << std::endl;
             game.fortificationPhase(player);
         }

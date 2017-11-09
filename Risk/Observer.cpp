@@ -3,5 +3,3 @@
 Observer::Observer() {};
 
 Observer::~Observer(){};
-
-

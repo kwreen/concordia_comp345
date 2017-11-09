@@ -9,10 +9,10 @@ public:
 	static std::string selectMap();
 	static int selectNumPlayers();
 
-	static Country selectCountry(std::vector<Country>& countries);
+	static Country selectCountry(std::vector<Country> countries);
 	static int selectArmiesToReinforce(const Country& country, int armiesRemaining);
 	static int exchangeCards(Player& player);
-	static Country selectAdjacentCountry(std::vector<Country> adjacentCountries);
+	static Country selectAdjacentCountry(std::vector<Country> adjacentCountries); // TODO: Updating armies issue
 	static int selectArmiesToMove(const Country& country);
 	static bool toAttackOrNot();
 	static int selectAttackerDice(const Country& attackingCountry);

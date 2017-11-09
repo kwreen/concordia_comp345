@@ -10,7 +10,7 @@
 
 int Game::getArmiesToAdd(const Player& player) const {
     // Number of countries owned on the map, divided by 3 (rounded down), with a minimum of 3
-    int armiesFromCountries = std::min((int) player.getCountries().size() / 3, 3);
+    int armiesFromCountries = std::max((int) player.getCountries().size() / 3, 3);
 
     // Continent-control value of all continents totally controlled by that player
     const auto continentsOwned = map.continentsOwned(player);
@@ -96,7 +96,7 @@ void Game::startUp() {
     assignArmies();
 }
 
-vector<Player> Game::getTurns() {
+vector<Player>& Game::getTurns() {
     return turns;
 }
 Game::Game(const std::string& fileName, int nPlayers) {
@@ -109,13 +109,6 @@ Game::Game(const std::string& fileName, int nPlayers) {
     assignTurns();
     assignObservers();
     startUp();
-
-	// Attaching players to the games
-//	for (int i = 0; i < turns.size(); i++) {
-//		attach(&turns[i]);
-//	}
-
-
 }
 
 void Game::reinforcementPhase(Player& player) {
@@ -137,22 +130,13 @@ void Game::reinforcementPhase(Player& player) {
         std::cout << "Please select the country you would like to add soldiers to.\n";
         Country country = UserInterface::selectCountry(player.getCountries());
 
-        // Select number of armies to reinforce for the selected country
+        //// Select number of armies to reinforce for the selected country
         int armies = UserInterface::selectArmiesToReinforce(country, armiesToAdd);
-        for (int i = 0; i < turns.size(); i++) {
-            if (turns[i].getIDAsInt() == player.getIDAsInt()) {
-                x = i;
-                break;
-            }
-        }
-        for (int i = 0; i < player.getCountries().size(); i++) {
-            if (country.getName() == player.getCountries()[i].getName()) {
-                turns[x].getCountries()[i].increaseArmiesBy(armies);
-                player.getCountries()[i].increaseArmiesBy(armies);
-                std::cout << player.getCountries()[i].getName() << " now has " << player.getCountries()[i].getArmies() << " armies." << std::endl;
-                break;
-            }
-        }
+		for (auto& c : player.getCountries()) {
+			if (c.getName() == country.getName()) {
+				country.increaseArmiesBy(armies);
+			}
+		}
         armiesToAdd -= armies;
     }
 }
@@ -163,42 +147,30 @@ void Game::fortificationPhase(Player& player) {
 
     notifyGameAll();
 	notifyPhaseAll();
-
-
     std::vector<Country> countries = checkAvailableCountriesToFortify(player);
 
-    if (countries.size() > 0) {
-        // Select source and target country to move armies to
-        Country source = UserInterface::selectCountry(countries);
-        Country target = UserInterface::selectAdjacentCountry(map.adjacent(source));
-        int nArmies = UserInterface::selectArmiesToMove(source);
+	if (countries.size() > 0) {
+		// Select source and target country to move armies to
+		Country source = UserInterface::selectCountry(countries);
+		std::vector<Country> adjacentCountries = checkAvailableAdjacentCountriesToFortify(player, source);
+		Country target = UserInterface::selectAdjacentCountry(adjacentCountries);
+		int nArmies = UserInterface::selectArmiesToMove(source);
 
-        int x;
+		for (auto& country : player.getCountries()) {
+			if (country.getName() == source.getName()) {
+				source.decreaseArmiesBy(nArmies);
+				std::cout << source.getName() << " now has " << source.getArmies() << " armies." << std::endl;
+				break;
+			}
+		}
 
-        for (int i = 0; i < turns.size(); i++){
-            if (turns[i].getIDAsInt() == player.getIDAsInt()) {
-                x = i;
-                break;
-            }
-        }
-
-        for (int i = 0; i < player.getCountries().size(); i++) {
-            if (source.getName() == player.getCountries()[i].getName()) {
-                turns[x].getCountries()[i].decreaseArmiesBy(nArmies);
-                player.getCountries()[i].decreaseArmiesBy(nArmies);
-                std::cout << player.getCountries()[i].getName() << " now has " << player.getCountries()[i].getArmies() << " armies." << std::endl;
-                break;
-            }
-        }
-
-        for (int i = 0; i < player.getCountries().size(); i++) {
-            if (target.getName() == player.getCountries()[i].getName()){
-                turns[x].getCountries()[i].increaseArmiesBy(nArmies);
-                player.getCountries()[i].increaseArmiesBy(nArmies);
-                std::cout << player.getCountries()[i].getName() << " now has " << player.getCountries()[i].getArmies() << " armies." << std::endl;
-                break;
-            }
-        }
+		for (auto& country : player.getCountries()) {
+			if (country.getName() == target.getName()) {
+				target.increaseArmiesBy(nArmies);
+				std::cout << target.getName() << " now has " << target.getArmies() << " armies." << std::endl;
+				break;
+			}
+		}
 
         std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
 
@@ -228,6 +200,7 @@ std::vector<Country> Game::checkAvailableCountriesToFortify(Player& player) {
             return true;
         }), adjacentCountries.end());
 
+		// If the country has no adjacent countries, remove from available source countries
         if (adjacentCountries.size() == 0) {
             return true;
         }
@@ -237,6 +210,23 @@ std::vector<Country> Game::checkAvailableCountriesToFortify(Player& player) {
     }), countries.end());
 
     return countries;
+}
+
+std::vector<Country> Game::checkAvailableAdjacentCountriesToFortify(Player& player, Country source) {
+	vector<Country> countries = player.getCountries();
+	vector<Country> adjacentCountries = map.adjacent(source);
+
+	// Removing adjacent countries to the Source that the player does not own
+	adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
+		for (auto& country : countries) {
+			if (country.getName() == c.getName()) {
+				return true;
+			}
+			return false;
+		}
+	}), adjacentCountries.end());
+
+	return adjacentCountries;
 }
 
 std::vector<Country> Game::checkAvailableCountriesToAttack(Player& player) {
