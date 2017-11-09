@@ -2,11 +2,12 @@
 
 #include "Map.h"
 #include "Player.h"
+#include "Subject.h"
 #include "Deck.h"
 #include "Country.h"
 #include <vector>
 
-class Game {
+class Game : public Subject {
 
 private:
 	Deck deck;
@@ -21,7 +22,6 @@ private:
 	void assignTurns();
 	void startUp();
 	void assignArmies();
-
 	int getArmiesToAdd(const Player& player) const;
 
 public:

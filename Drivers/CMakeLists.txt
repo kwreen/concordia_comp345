@@ -11,3 +11,9 @@ target_link_libraries(MapDriver Risk)
 
 add_executable(PlayerDriver PlayerDriver.cpp)
 target_link_libraries(PlayerDriver Risk)
+
+
+add_executable(PlayerStrategyDriver PlayerStrategyDriver.cpp)
+target_link_libraries(PlayerStrategyDriver Risk)
+
+
