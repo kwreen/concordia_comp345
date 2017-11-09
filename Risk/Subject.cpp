@@ -1,24 +1,27 @@
 #include "Subject.h"
+#include "Observer.h"
 
-void Subject::attatch(vector<Player>& p) //points to the player list, as we are only storing player objects as listeners,views, polymorphism is not needed, simply use player array as observer list.
-{
-	observers = &p;
+Subject::Subject() {
+	_observers = new std::list<Observer*>;
+}
+
+Subject::~Subject() {
+	delete _observers;
+}
+
+void Subject::attach(Observer* o) {
+	_observers->push_back(o);
 
 }
-void Subject::notify()
-{
-	
-	for (int i = 0; i < observers->size(); i++)
-	{
-		
-		(*observers)[i].showStats();
+
+void Subject::detach(Observer* o) {
+	_observers->remove(o);
+}
+
+void Subject::notify() {
+	std::list<Observer *>::iterator i = _observers->begin();
+
+	for (; i != _observers->end(); ++i) {
+		(*i)->update();
 	}
 }
-/*Not needed as observers points to something on stack not heap, so it will be deleted automatically as it goes out of scope
-Subject::~Subject()
-{
-	delete observers;
-	observers = nullptr;
-}
-*/
-
