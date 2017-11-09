@@ -3,8 +3,8 @@
 class Strategy {
 
 public:
-    virtual void reinforcement(){};
-    virtual void attack(){};
-    virtual void fortify(){};
-    virtual ~Strategy(){};
+    virtual void reinforcement();
+    virtual void attack();
+    virtual void fortify();
+    virtual ~Strategy();
 };
