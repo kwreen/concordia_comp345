@@ -5,6 +5,7 @@
 
 
 int main() {
+    std::cout << "********************************  STARTUP PHASE ******************************** " << std::endl;
     const auto mapName = UserInterface::selectMap();
     const auto nPlayers = UserInterface::selectNumPlayers();
     Game game = Game(mapName, nPlayers);
@@ -29,11 +30,12 @@ int main() {
         cout << endl;;
     }
 
-    while (game.getTurns().size() > 1) { //<-- this doesn't really show who wins
+    std::cout << "******************************** END STARTUP PHASE ********************************" << std::endl;
+
+    while (game.getTurns().size() > 1) {
         for (auto& player : players) {
 
             std::cout << "\n\nPlayer " << player.getIDAsInt() << " turn.\n";
-
             game.reinforcementPhase(player);
             std::cout << endl;
             game.attackPhase(player);

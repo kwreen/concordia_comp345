@@ -8,7 +8,10 @@ using std::cout;
 using std::endl;
 using std::setw;
 using std::setfill;
-Player::Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber) : _countries(countries), _hand(hand), _dice(dice), player(playerNumber) {} //gives them a specific set of countries, Hand, Dice Facility Object
+Player::Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber, Strategy *strategy) : _countries(countries), _hand(hand), _dice(dice), player(playerNumber) {
+        this->setStrategy(strategy);
+
+} //gives them a specific set of countries, Hand, Dice Facility Object
 Player::Player(int playerNumber) : player(playerNumber) {}
 
 Hand& Player::getHand() {
@@ -98,19 +101,6 @@ void Player::setArmies(int nArmies)
     armies = nArmies;
 }
 
-void Player::reinforce() {
-    cout << "Player " << this << " has reinforced." << endl;
-}
-
-void Player::attack() {
-    cout << "Player " << this << " has attacked." << endl;
-}
-
-void Player::fortify(int nArmies, Country& source, Country& target) {
-    source.decreaseArmiesBy(nArmies);
-    target.increaseArmiesBy(nArmies);
-    std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
-}
 
 void Player::showStats() {
     cout << getID() << " has: " << endl;
@@ -124,4 +114,12 @@ void Player::showStats() {
 
 void Player::update() {
 	showStats();
+}
+
+void Player::setStrategy(Strategy *strategy){
+    this->strategy = strategy;
+}
+
+Strategy* Player::getStrategy() {
+    return this->strategy;
 }

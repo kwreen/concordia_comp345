@@ -5,21 +5,24 @@
 #include "Hand.h"
 #include "Observer.h"
 #include <string>
+#include "Strategy.h"
+
 using namespace std;
 
 using std::vector;
 
 class Player : public Observer {
 private:
+	Strategy *strategy;
 	vector<Country> _countries;
 	Hand _hand;
 	DiceFacility _dice;
-	int player = 0; //give each player a player id so can differentiate each
+	int player = 0;
 	int armies = 0;
 
 public:
 	Player() = default;
-	Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber);
+	Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber, Strategy *strategy);
 	Player(int playerNumber);
 	vector<Country>& getCountries();
 	const vector<Country>& getCountries() const;
@@ -35,9 +38,10 @@ public:
 	int getPlayerArmies();
 	void setArmies(int nArmies);
 	void printCountries(); //prints country list
-	void reinforce();
-	void attack();
-	void fortify(int nArmies, Country& source, Country& target);
+    // Strategy pattern
+    Strategy* getStrategy();
+    void setStrategy(Strategy *strategy);
+
 	// Observer pattern
 	void showStats();
 	void update();

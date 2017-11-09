@@ -6,6 +6,7 @@
 #include <numeric>
 #include <stdlib.h>
 #include <time.h>
+#include "HumanPlayer.h"
 
 int Game::getArmiesToAdd(const Player& player) const {
     // Number of countries owned on the map, divided by 3 (rounded down), with a minimum of 3
@@ -37,7 +38,7 @@ void Game::setGameMap(const std::string& mapName) {
 
 void Game::createPlayers(int nPlayers) {
     for (int i = 0; i < nPlayers; i++) {
-        players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(),i+1));
+        players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(),i+1, new HumanPlayer()));
     }
 }
 
@@ -100,13 +101,22 @@ Game::Game(const std::string& fileName, int nPlayers) {
     startUp();
 
 	// Attaching players to the games
-	for (int i = 0; i < turns.size(); i++) {
-		attach(&turns[i]);
-	}
+//	for (int i = 0; i < turns.size(); i++) {
+//		attach(&turns[i]);
+//	}
+
+    for (auto& player : turns){
+        attach(&player);
+    }
 }
 
 void Game::reinforcementPhase(Player& player) {
-	notify();
+	//notify();
+
+    player.getStrategy()->reinforcement();
+
+
+
     std::cout << "Starting reinforcement phase...\n";
 
     // Get number of armies to use for reinforcement.
@@ -121,19 +131,14 @@ void Game::reinforcementPhase(Player& player) {
 
         // Select number of armies to reinforce for the selected country
         int armies = UserInterface::selectArmiesToReinforce(country, armiesToAdd);
-        for (int i = 0; i < turns.size(); i++)
-        {
-            if (turns[i].getIDAsInt() == player.getIDAsInt())
-            {
+        for (int i = 0; i < turns.size(); i++) {
+            if (turns[i].getIDAsInt() == player.getIDAsInt()) {
                 x = i;
                 break;
             }
         }
-        for (int i = 0; i < player.getCountries().size(); i++)
-        {
-            if (country.getName() == player.getCountries()[i].getName())
-            {
-
+        for (int i = 0; i < player.getCountries().size(); i++) {
+            if (country.getName() == player.getCountries()[i].getName()) {
                 turns[x].getCountries()[i].increaseArmiesBy(armies);
                 player.getCountries()[i].increaseArmiesBy(armies);
                 std::cout << player.getCountries()[i].getName() << " now has " << player.getCountries()[i].getArmies() << " armies." << std::endl;
@@ -142,9 +147,7 @@ void Game::reinforcementPhase(Player& player) {
         }
         armiesToAdd -= armies;
     }
-
     std::cout << "\nEnding reinforcement phase.\n";
-    //std::cout << turns[0].getCountries()[x].getName() << " now has " << turns[0].getCountries()[x].getArmies() << " armies." << std::endl;
 }
 
 void Game::fortificationPhase(Player& player) {
@@ -158,7 +161,36 @@ void Game::fortificationPhase(Player& player) {
         Country source = UserInterface::selectCountry(countries);
         Country target = UserInterface::selectAdjacentCountry(map.adjacent(source));
         int nArmies = UserInterface::selectArmiesToMove(source);
-        player.fortify(nArmies, source, target);
+
+        int x;
+
+        for (int i = 0; i < turns.size(); i++){
+            if (turns[i].getIDAsInt() == player.getIDAsInt()) {
+                x = i;
+                break;
+            }
+        }
+
+        for (int i = 0; i < player.getCountries().size(); i++) {
+            if (source.getName() == player.getCountries()[i].getName()) {
+                turns[x].getCountries()[i].decreaseArmiesBy(nArmies);
+                player.getCountries()[i].decreaseArmiesBy(nArmies);
+                std::cout << player.getCountries()[i].getName() << " now has " << player.getCountries()[i].getArmies() << " armies." << std::endl;
+                break;
+            }
+        }
+
+        for (int i = 0; i < player.getCountries().size(); i++) {
+            if (target.getName() == player.getCountries()[i].getName()){
+                turns[x].getCountries()[i].increaseArmiesBy(nArmies);
+                player.getCountries()[i].increaseArmiesBy(nArmies);
+                std::cout << player.getCountries()[i].getName() << " now has " << player.getCountries()[i].getArmies() << " armies." << std::endl;
+                break;
+            }
+        }
+
+        std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
+
     }
     else {
         std::cout << "No available country found to fortify." << std::endl;
