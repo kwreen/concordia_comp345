@@ -9,7 +9,6 @@ private:
 	std::list<Observer*> *_observers;
     int phase;
     int totalCountries;
-    int totalArmies;
 
 protected:
 	Subject();
@@ -22,5 +21,4 @@ public:
     virtual void notifyGameAll();
     virtual void setPhase(int& phase);
     virtual void setTotalCountries(int amt);
-    virtual void setTotalArmies(int amt);
 };

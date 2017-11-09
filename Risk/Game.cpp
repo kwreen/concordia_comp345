@@ -74,8 +74,6 @@ void Game::assignArmies() {
         turns[i].setArmies(nArmies);
         turns[i].initializeArmies();
     }
-
-    setTotalArmies(turns.size()*nArmies);
 }
 
 void Game::assignObservers() {
@@ -147,6 +145,7 @@ void Game::fortificationPhase(Player& player) {
 
     notifyGameAll();
 	notifyPhaseAll();
+
     std::vector<Country> countries = checkAvailableSourceCountriesToFortify(player);
 
 	if (countries.size() > 0) {

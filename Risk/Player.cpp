@@ -120,13 +120,10 @@ void Player::notifyPhase(int phase) {
     }
 }
 
-void Player::notifyGame(int totalCountries,int totalArmies) {
+void Player::notifyGame(int totalCountries) {
     int currentCountries = _countries.size();
-    int currentArmies = getPlayerArmies();
     double percent = (double)currentCountries / totalCountries;
-    double percent2 = (double)currentArmies / totalArmies;
-    std::cout << getID() << ": " << currentCountries << "/" << totalCountries << ", " << percent*100 << "% " << "of countries owned, " << currentArmies << "/"
-         << totalArmies << ", " << percent2*100 << "% of armies owned " << std::endl;
+	std::cout << getID() << ": " << currentCountries << "/" << totalCountries << ", " << percent * 100 << "% " << "of countries owned." << std::endl;
 }
 
 void Player::setStrategy(Strategy *strategy){

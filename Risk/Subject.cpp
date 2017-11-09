@@ -34,15 +34,11 @@ void Subject::notifyGameAll() {
     std::list<Observer *>::iterator i = _observers->begin();
     std::cout << "[Game Statistic Observer]" << std::endl;
     for (; i != _observers->end(); ++i) {
-        (*i)->notifyGame(totalCountries,totalArmies);
+        (*i)->notifyGame(totalCountries);
     }
     std::cout << std::endl;
 }
 
 void Subject::setTotalCountries(int amt) {
     this->totalCountries = amt;
-}
-
-void Subject::setTotalArmies(int amt) {
-    this->totalArmies = amt;
 }

@@ -40,7 +40,7 @@ public:
 
 	// Observer pattern
 	void notifyPhase(int);
-    void notifyGame(int totalCountries, int totalArmies);
+    void notifyGame(int totalCountries);
 
 private:
 	void setCountries(std::vector<Country> countries);
