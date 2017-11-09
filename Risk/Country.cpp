@@ -1,6 +1,11 @@
 #include "Country.h"
 
 
+Country::Country(const Country& c) {
+	name = c.name;
+	armies = c.armies;
+}
+
 std::string Country::getName() const {
 	return name;
 }

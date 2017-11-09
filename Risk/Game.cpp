@@ -21,8 +21,8 @@ int Game::getArmiesToAdd(const Player& player) const {
     return armiesFromCountries + armiesFromContinents;
 }
 
-Player Game::getOwner(const Country& country) const {
-    for (const auto& player : turns) {
+Player& Game::getOwner(const Country& country) {
+    for (auto& player : turns) {
         for (const auto& c : player.getCountries()) {
             if (c == country) {
                 return player;
@@ -147,12 +147,12 @@ void Game::fortificationPhase(Player& player) {
 
     notifyGameAll();
 	notifyPhaseAll();
-    std::vector<Country> countries = checkAvailableCountriesToFortify(player);
+    std::vector<Country> countries = checkAvailableSourceCountriesToFortify(player);
 
 	if (countries.size() > 0) {
 		// Select source and target country to move armies to
 		Country source = UserInterface::selectCountry(countries);
-		std::vector<Country> adjacentCountries = checkAvailableAdjacentCountriesToFortify(player, source);
+		std::vector<Country> adjacentCountries = checkAvailableTargetCountriesToFortify(player, source);
 		Country target = UserInterface::selectAdjacentCountry(adjacentCountries);
 		int nArmies = UserInterface::selectArmiesToMove(source);
 
@@ -184,7 +184,7 @@ Map Game::getMap() const {
     return	this->map;
 }
 
-std::vector<Country> Game::checkAvailableCountriesToFortify(Player& player) {
+std::vector<Country> Game::checkAvailableSourceCountriesToFortify(Player& player) {
     std::vector<Country> countries = player.getCountries();
 
     // Removing countries from the vector which do not have adjacent countries that the player owns
@@ -211,7 +211,7 @@ std::vector<Country> Game::checkAvailableCountriesToFortify(Player& player) {
     return countries;
 }
 
-std::vector<Country> Game::checkAvailableAdjacentCountriesToFortify(Player& player, Country source) {
+std::vector<Country> Game::checkAvailableTargetCountriesToFortify(Player& player, Country source) {
 	std::vector<Country> countries = player.getCountries();
 	std::vector<Country> adjacentCountries = map.adjacent(source);
 
@@ -228,7 +228,7 @@ std::vector<Country> Game::checkAvailableAdjacentCountriesToFortify(Player& play
 	return adjacentCountries;
 }
 
-std::vector<Country> Game::checkAvailableCountriesToAttack(Player& player) {
+std::vector<Country> Game::checkAvailableAttackingCountriesToAttack(Player& player) {
     std::vector<Country> countries = player.getCountries();
 
     // Removing countries from the vector which have adjacent countries that the player owns
@@ -243,7 +243,7 @@ std::vector<Country> Game::checkAvailableCountriesToAttack(Player& player) {
             return false;
         }), adjacentCountries.end());
 
-        // Removing countries that have no adjacent enemy countries or that have less than 2 armies
+        // Removing countries that have no adjacent enemy countries or that don't have at least 2 armies
         if (adjacentCountries.size() == 0 || c.getArmies() < 2) {
             return true;
         }
@@ -255,6 +255,23 @@ std::vector<Country> Game::checkAvailableCountriesToAttack(Player& player) {
     return countries;
 }
 
+std::vector<Country> Game::checkAvailableDefendingCountriesToAttack(Player& player, Country source) {
+	std::vector<Country> countries = player.getCountries();
+	std::vector<Country> adjacentCountries = map.adjacent(source);
+
+	// Removing adjacent countries to the Source that the player does not own
+	adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
+		for (auto& country : countries) {
+			if (country.getName() == c.getName()) {
+				return true;
+			}
+		}
+		return false;
+	}), adjacentCountries.end());
+
+	return adjacentCountries;
+}
+
 void Game::attackPhase(Player& attacker) {
     currentPhase = 2;
     setPhase(currentPhase);
@@ -262,25 +279,37 @@ void Game::attackPhase(Player& attacker) {
     notifyGameAll();
 	notifyPhaseAll();
 
-
     bool toAttack;
 
     do {
         toAttack = UserInterface::toAttackOrNot();
 
         if (toAttack) {
-            std::vector<Country> countries = checkAvailableCountriesToAttack(attacker);
+            std::vector<Country> attackingCountries = checkAvailableAttackingCountriesToAttack(attacker);
 
-            if (countries.size() > 0) {
+            if (attackingCountries.size() > 0) {
                 // Select attacking and defending countries
-                Country attackingCountry = UserInterface::selectCountry(countries);
-                Country fakeDefendingCountry = UserInterface::selectAdjacentCountry(map.adjacent(attackingCountry)); // tmp fix
-                Player defender = getOwner(fakeDefendingCountry);
-                Country defendingCountry = *std::find(defender.getCountries().begin(), defender.getCountries().end(), fakeDefendingCountry);
+                Country attackingCountry = UserInterface::selectCountry(attackingCountries);
+				std::vector <Country> defendingCountries = checkAvailableDefendingCountriesToAttack(attacker, attackingCountry);
+                Country defendingCountry = UserInterface::selectAdjacentCountry(defendingCountries);
+                Player& defender = getOwner(defendingCountry);
 
                 // Select number of dice to roll
-                int nDiceAttacker = UserInterface::selectAttackerDice(attackingCountry);
-                int nDiceDefender = UserInterface::selectDefenderDice(defendingCountry);
+				int nDiceAttacker;
+				for (auto& c : attacker.getCountries()) {
+					if (c.getName() == attackingCountry.getName()) {
+						nDiceAttacker = UserInterface::selectAttackerDice(c);
+						break;
+					}
+				}
+
+				int nDiceDefender;
+				for (auto& c : defender.getCountries()) {
+					if (c.getName() == defendingCountry.getName()) {
+						nDiceDefender = UserInterface::selectDefenderDice(c);
+						break;
+					}
+				}
 
                 std::cout << "Rolling dice..." << std::endl;
                 std::vector<int> attDiceResults = attacker.getDice().rollDice(nDiceAttacker);
@@ -298,7 +327,7 @@ void Game::attackPhase(Player& attacker) {
                 }
                 std::cout << std::endl;
 
-                // Getting the minium number of dice roll
+                // Getting the minimum number of dice roll
                 int min = std::min(attDiceResults.size(), defDiceResults.size());
 
                 for (int i = 0; i < min; i++) {
@@ -306,36 +335,51 @@ void Game::attackPhase(Player& attacker) {
                         // Attacker wins
                         std::cout << "The attacker has rolled " << attDiceResults[i] << " and the defender has rolled " << defDiceResults[i] << "." << std::endl;
                         std::cout << "The defender loses 1 army on " << defendingCountry.getName() << "." << std::endl;
-                        // TODO
-                        defendingCountry.decreaseArmiesBy(1);
-                        //cout << defendingCountry.getArmies();
-                        if (defendingCountry.getArmies() == 0) {
-                            std::cout << defendingCountry.getName() << " has been defeated. Attacker must now move armies to the newly conquered country." << std::endl;
-                            const auto pos = std::find(defender.getCountries().begin(), defender.getCountries().end(), defendingCountry);
-                            defender.getCountries().erase(pos);
-                            attacker.getCountries().push_back(defendingCountry);
+						
+						for (auto& c : defender.getCountries()) {
+							if (c.getName() == defendingCountry.getName()) {
+								c.decreaseArmiesBy(1);
+								if (c.getArmies() == 0) {
+									std::cout << c.getName() << " has been defeated. Attacker must now move armies to the newly conquered country." << std::endl;
 
-                            int nArmiesToMove = UserInterface::selectArmiesToMove(attackingCountry);
-                            // TODO
-                            defendingCountry.increaseArmiesBy(nArmiesToMove);
-                        }
+									// Moving armies from attacking country to defending country
+									// Giving defeated country to attacker
+									int nArmiesToMove = UserInterface::selectArmiesToMove(attackingCountry);
+									c.increaseArmiesBy(nArmiesToMove);
+									attacker.getCountries().push_back(Country(c));
+
+									// Removing defeated country from defender
+									const auto pos = std::find(defender.getCountries().begin(), defender.getCountries().end(), c);
+									defender.getCountries().erase(pos);
+								}
+								break;
+							}
+						}
                     }
                     else {
                         // Defenders wins
                         std::cout << "The defender has rolled " << defDiceResults[i] << " and the attacker has rolled " << attDiceResults[i] << "." << std::endl;
                         std::cout << "The attacker loses 1 army on " << attackingCountry.getName() << "." << std::endl;
-                        // TODO
-                        attackingCountry.decreaseArmiesBy(1);
-                        if (attackingCountry.getArmies() == 0) {
-                            std::cout << attackingCountry.getName() << " has been defeated. Defender must now move armies to the newly conquered country." << std::endl;
-                            const auto pos = std::find(attacker.getCountries().begin(), attacker.getCountries().end(), attackingCountry);
-                            attacker.getCountries().erase(pos);
-                            defender.getCountries().push_back(attackingCountry);
+                        
+						for (auto& c : attacker.getCountries()) {
+							if (c.getName() == attackingCountry.getName()) {
+								c.decreaseArmiesBy(1);
+								if (c.getArmies() == 0) {
+									std::cout << attackingCountry.getName() << " has been defeated. Defender must now move armies to the newly conquered country." << std::endl;
 
-                            int nArmiesToMove = UserInterface::selectArmiesToMove(defendingCountry);
-                            // TODO
-                            attackingCountry.increaseArmiesBy(nArmiesToMove);
-                        }
+									// Moving armies from defending country to attacking country
+									// Giving defeated country to defender
+									int nArmiesToMove = UserInterface::selectArmiesToMove(defendingCountry);
+									c.increaseArmiesBy(nArmiesToMove);
+									defender.getCountries().push_back(Country(c));
+
+									// Removing defeated country from attacker
+									const auto pos = std::find(attacker.getCountries().begin(), attacker.getCountries().end(), c);
+									attacker.getCountries().erase(pos);
+								}
+								break;
+							}
+						}
                     }
                 }
             }

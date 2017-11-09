@@ -16,7 +16,7 @@ private:
 	std::vector<Player> turns;
 	int numPlayers;
     int currentPhase;
-	Player getOwner(const Country& country) const;
+	Player& getOwner(const Country& country);
 	void setGameMap(const std::string& mapName);
 	void createPlayers(int nPlayers);
 	void assignTurns();
@@ -32,9 +32,10 @@ public:
 	void reinforcementPhase(Player& player);
 	void fortificationPhase(Player& player);
 	Map getMap() const;
-	std::vector<Country> checkAvailableCountriesToFortify(Player& player);
-	std::vector<Country> checkAvailableAdjacentCountriesToFortify(Player& player, Country source);
-	std::vector<Country> checkAvailableCountriesToAttack(Player& player);
+	std::vector<Country> checkAvailableSourceCountriesToFortify(Player& player);
+	std::vector<Country> checkAvailableTargetCountriesToFortify(Player& player, Country source);
+	std::vector<Country> checkAvailableAttackingCountriesToAttack(Player& player);
+	std::vector<Country> checkAvailableDefendingCountriesToAttack(Player& player, Country source);
 	void attackPhase(Player& player);
 	void removeDeadPlayers();
 	Deck getDeck();
