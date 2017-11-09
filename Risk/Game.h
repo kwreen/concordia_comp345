@@ -7,12 +7,11 @@
 #include "Country.h"
 #include <vector>
 
-class Game {
+class Game : public Subject {
 
 private:
 	Deck deck;
 	Map map;
-	Subject s; //to use observer pattern
 	std::vector<Player> players;
 	std::vector<Player> turns;
 	int numPlayers;
@@ -23,15 +22,11 @@ private:
 	void assignTurns();
 	void startUp();
 	void assignArmies();
-
 	int getArmiesToAdd(const Player& player) const;
-	void assignObservers(vector<Player>& p); //adds players to observers list
 
 public:
 	Game(const std::string& mapName, int nPlayers);
 	vector<Player> getTurns();
-	vector<Player> getObservers();
-	void printObservers();
 	vector<Player> getUnorderedPlayers() { return players;}
 	void reinforcementPhase(Player& player);
 	void fortificationPhase(Player& player);

@@ -111,15 +111,17 @@ void Player::fortify(int nArmies, Country& source, Country& target) {
     target.increaseArmiesBy(nArmies);
     std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
 }
-//observer pattern method
+
 void Player::showStats() {
     cout << getID() << " has: " << endl;
     cout << getPlayerArmies() << " armies." << endl;
     cout << "Countries                          Armies" << endl;
     cout << "-------------------------------------------" << endl;
-    for (int i = 0; i < _countries.size(); i++)
-    {
+    for (int i = 0; i < _countries.size(); i++) {
         cout << left << setw(35) << setfill(' ') << _countries[i].getName() << left << setw(35) << setfill(' ') << _countries[i].getArmies() << endl;
     }
 }
 
+void Player::update() {
+	showStats();
+}

@@ -85,10 +85,7 @@ void Game::startUp() {
     }
     assignArmies();
 }
-void Game::assignObservers(vector<Player>& p) //<--enlists players as observers
-{
-    s.attatch(turns);
-}
+
 vector<Player> Game::getTurns() {
     return turns;
 }
@@ -100,16 +97,16 @@ Game::Game(const std::string& fileName, int nPlayers) {
     deck.loadDeck(map.getCountries());
     createPlayers(nPlayers);
     assignTurns();
-
-
-    //printObservers();
     startUp();
-    assignObservers(turns);
-    //cout << "Alaska:" << turns[0].getCountries()[0].getArmies() << endl;
+
+	// Attaching players to the games
+	for (auto player : turns) {
+		attach(&player);
+	}
 }
 
 void Game::reinforcementPhase(Player& player) {
-    s.notify();
+	notify();
     std::cout << "Starting reinforcement phase...\n";
 
     // Get number of armies to use for reinforcement.
@@ -148,11 +145,10 @@ void Game::reinforcementPhase(Player& player) {
 
     std::cout << "\nEnding reinforcement phase.\n";
     //std::cout << turns[0].getCountries()[x].getName() << " now has " << turns[0].getCountries()[x].getArmies() << " armies." << std::endl;
-    s.notify();
 }
 
 void Game::fortificationPhase(Player& player) {
-    s.notify();
+	notify();
     std::cout << "Starting fortification phase..." << std::endl;
 
     std::vector<Country> countries = checkAvailableCountriesToFortify(player);
@@ -168,7 +164,6 @@ void Game::fortificationPhase(Player& player) {
         std::cout << "No available country found to fortify." << std::endl;
     }
     std::cout << "Ending fortification phase..." << std::endl;
-    s.notify();
 }
 
 Map Game::getMap() const {
@@ -229,6 +224,8 @@ std::vector<Country> Game::checkAvailableCountriesToAttack(Player& player) {
 }
 
 void Game::attackPhase(Player& attacker) {
+	notify();
+
     bool toAttack;
     std::cout << "Starting attack phase..." << std::endl;
 
@@ -313,10 +310,10 @@ void Game::attackPhase(Player& attacker) {
 
     } while (toAttack);
 
+	// TODO: detach players from Game
     removeDeadPlayers();
 
     std::cout << "Ending attack phase..." << std::endl;
-    s.notify();
 }
 
 void Game::removeDeadPlayers() {
@@ -336,5 +333,4 @@ void Game::removeDeadPlayers() {
 Deck Game::getDeck() {
     return deck;
 }
-
 

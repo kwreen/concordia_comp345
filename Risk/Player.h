@@ -9,7 +9,7 @@ using namespace std;
 
 using std::vector;
 
-class Player:public Observer {
+class Player : public Observer {
 private:
 	vector<Country> _countries;
 	Hand _hand;
@@ -19,7 +19,6 @@ private:
 
 public:
 	Player() = default;
-	Player(vector<Country> countries, Hand hand, DiceFacility dice);
 	Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber);
 	Player(int playerNumber);
 	vector<Country>& getCountries();
@@ -39,9 +38,9 @@ public:
 	void reinforce();
 	void attack();
 	void fortify(int nArmies, Country& source, Country& target);
-	bool hasCountry(std::string country);
-	//will need to add a getPlayerArmies() here which adds getArmies() from hand + ones on countries
+	// Observer pattern
 	void showStats();
+	void update();
 
 private:
 	void setCountries(vector<Country> countries);

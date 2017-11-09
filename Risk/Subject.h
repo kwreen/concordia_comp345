@@ -10,10 +10,10 @@ private:
 	std::list<Observer*> *_observers;
 
 protected:
-	Subject() {};
+	Subject();
 
 public:
-	virtual ~Subject() {};
+	virtual ~Subject();
 	virtual void attach(Observer *);
 	virtual void detach(Observer *);
 	virtual void notify();
