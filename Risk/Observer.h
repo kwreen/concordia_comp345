@@ -1,10 +1,10 @@
 #pragma once
 
 class Observer {
-protected:
-	Observer();
 
 public:
+    Observer();
 	~Observer();
-	virtual void update() = 0;
+	virtual void notifyPhase(int) = 0;
+    virtual void notifyGame(int,int) = 0;
 };

@@ -29,22 +29,22 @@ public:
 	Hand& getHand();
 	const Hand& getHand() const;
 	DiceFacility getDice() const;
-	string getID();  //will return string representation of player object
-	int getIDAsInt(); // returns strictly the player id this will be used to see if a player array index is empty
+	string getID();
+	int getIDAsInt();
 	void assignCountry(Country c);
-	int amtCountries(); //returns amount of countries player has
-	void increasePlayerArmies();
-	void initializeArmies(); //places armies on countries
+	int amtCountries();
+	void initializeArmies();
 	int getPlayerArmies();
 	void setArmies(int nArmies);
-	void printCountries(); //prints country list
+	void printCountries();
+
     // Strategy pattern
     Strategy* getStrategy();
     void setStrategy(Strategy *strategy);
 
 	// Observer pattern
-	void showStats();
-	void update();
+	void notifyPhase(int);
+    void notifyGame(int totalCountries, int totalArmies);
 
 private:
 	void setCountries(vector<Country> countries);

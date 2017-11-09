@@ -74,6 +74,15 @@ void Game::assignArmies() {
         turns[i].setArmies(nArmies);
         turns[i].initializeArmies();
     }
+
+    setTotalArmies(turns.size()*nArmies);
+}
+
+void Game::assignObservers() {
+    for (auto& player : turns){
+        attach(&player);
+    }
+    setTotalCountries(map.getCountries().size());
 }
 
 void Game::startUp() {
@@ -98,6 +107,7 @@ Game::Game(const std::string& fileName, int nPlayers) {
     deck.loadDeck(map.getCountries());
     createPlayers(nPlayers);
     assignTurns();
+    assignObservers();
     startUp();
 
 	// Attaching players to the games
@@ -105,19 +115,17 @@ Game::Game(const std::string& fileName, int nPlayers) {
 //		attach(&turns[i]);
 //	}
 
-    for (auto& player : turns){
-        attach(&player);
-    }
+
 }
 
 void Game::reinforcementPhase(Player& player) {
-	//notify();
+    currentPhase = 1;
+    setPhase(currentPhase);
+
+    notifyGameAll();
+	notifyPhaseAll();
 
     player.getStrategy()->reinforcement();
-
-
-
-    std::cout << "Starting reinforcement phase...\n";
 
     // Get number of armies to use for reinforcement.
     int armiesFromCardExchange = UserInterface::exchangeCards(player);
@@ -147,12 +155,15 @@ void Game::reinforcementPhase(Player& player) {
         }
         armiesToAdd -= armies;
     }
-    std::cout << "\nEnding reinforcement phase.\n";
 }
 
 void Game::fortificationPhase(Player& player) {
-	notify();
-    std::cout << "Starting fortification phase..." << std::endl;
+    currentPhase = 3;
+    setPhase(currentPhase);
+
+    notifyGameAll();
+	notifyPhaseAll();
+
 
     std::vector<Country> countries = checkAvailableCountriesToFortify(player);
 
@@ -195,7 +206,7 @@ void Game::fortificationPhase(Player& player) {
     else {
         std::cout << "No available country found to fortify." << std::endl;
     }
-    std::cout << "Ending fortification phase..." << std::endl;
+
 }
 
 Map Game::getMap() const {
@@ -256,10 +267,14 @@ std::vector<Country> Game::checkAvailableCountriesToAttack(Player& player) {
 }
 
 void Game::attackPhase(Player& attacker) {
-	notify();
+    currentPhase = 2;
+    setPhase(currentPhase);
+
+    notifyGameAll();
+	notifyPhaseAll();
+
 
     bool toAttack;
-    std::cout << "Starting attack phase..." << std::endl;
 
     do {
         toAttack = UserInterface::toAttackOrNot();
@@ -345,7 +360,6 @@ void Game::attackPhase(Player& attacker) {
 	// TODO: detach players from Game
     removeDeadPlayers();
 
-    std::cout << "Ending attack phase..." << std::endl;
 }
 
 void Game::removeDeadPlayers() {
