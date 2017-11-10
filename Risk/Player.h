@@ -35,8 +35,10 @@ public:
 	void printCountries();
 
     // Strategy pattern
-    Strategy* getStrategy();
     void setStrategy(Strategy *strategy);
+	void executeReinforcement();
+	void executeAttack();
+	void executeFortify();
 
 	// Observer pattern
 	void notifyPhase(int);

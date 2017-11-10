@@ -2,7 +2,7 @@
 #include <iostream>
 
 void HumanPlayer::reinforcement() {
-
+std::cout << "adpiwiajdwadadpkada"<< std::endl;
 
 
 }

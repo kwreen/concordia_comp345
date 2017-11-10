@@ -17,7 +17,6 @@ int Game::getArmiesToAdd(const Player& player) const {
     int armiesFromContinents = std::accumulate(continentsOwned.begin(), continentsOwned.end(), 0, [&](int i, const std::string& c) {
         return i + map.getContinentValue(c);
     });
-
     return armiesFromCountries + armiesFromContinents;
 }
 
@@ -115,7 +114,7 @@ void Game::reinforcementPhase(Player& player) {
     notifyGameAll();
 	notifyPhaseAll();
 
-    player.getStrategy()->reinforcement();
+    player.executeReinforcement();
 
     // Get number of armies to use for reinforcement.
     int armiesFromCardExchange = UserInterface::exchangeCards(player);

@@ -130,6 +130,17 @@ void Player::setStrategy(Strategy *strategy){
     this->strategy = strategy;
 }
 
-Strategy* Player::getStrategy() {
-    return this->strategy;
+
+void Player::executeReinforcement(){
+    this->strategy->reinforcement();
+}
+
+
+void Player::executeAttack(){
+    this->strategy->attack();
+}
+
+
+void Player::executeFortify(){
+    this->strategy->fortify();
 }
