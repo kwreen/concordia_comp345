@@ -5,6 +5,7 @@
 void BenevolentPlayer::reinforcement(Player* playerptr) {
 	Player& player = *playerptr;
 	int armiesToAdd = Game::getArmiesToAdd(player);
+	std::cout << "Benevolent Player has " << armiesToAdd << " armies for reinforcement." << std::endl;
 
 	int minArmies = INT_MAX;
 	std::string weakestCountry;

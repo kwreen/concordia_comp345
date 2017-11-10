@@ -7,6 +7,7 @@
 void AggressivePlayer::reinforcement(Player* playerptr) {
 	Player& player = *playerptr;
 	int armiesToAdd = Game::getArmiesToAdd(player);
+	std::cout << "Aggressive Player has " << armiesToAdd << " armies for reinforcement." << std::endl;
 
 	int maxArmies = 0;
 	std::string strongestCountry;
