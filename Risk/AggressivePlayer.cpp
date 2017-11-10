@@ -29,11 +29,11 @@ void AggressivePlayer::reinforcement(Player* playerptr) {
 void AggressivePlayer::attack(Player* playerptr) {
 	Player& attacker = *playerptr;
 	std::vector<Country> attackingCountries = Game::checkAvailableAttackingCountriesToAttack(attacker);
+	bool lostStrongestCountry = false;
 
 	if (attackingCountries.size() > 0) {
 		int maxArmies = 0;
 		std::string strongestCountry;
-
 
 		for (auto& country : attacker.getCountries()) {
 			if (country.getArmies() > maxArmies) {
@@ -44,12 +44,10 @@ void AggressivePlayer::attack(Player* playerptr) {
 
 		for (auto& attackingCountry : attacker.getCountries()) {
 			if (strongestCountry == attackingCountry.getName()) {
-				std::vector <Country> defendingCountries;
-				Country defendingCountry;
+				std::vector <Country> defendingCountries = Game::checkAvailableDefendingCountriesToAttack(attacker, attackingCountry);
 
-				while (defendingCountries.size() != 0 || attackingCountry.getArmies() > 1) {
-					defendingCountries = Game::checkAvailableDefendingCountriesToAttack(attacker, attackingCountry);
-					defendingCountry = defendingCountries[0];
+				while (defendingCountries.size() != 0) {
+					Country defendingCountry = defendingCountries[0];
 					Player& defender = Game::getOwner(defendingCountry);
 
 					int nDiceAttacker = std::max(attackingCountry.getArmies() - 1, 3);
@@ -107,6 +105,7 @@ void AggressivePlayer::attack(Player* playerptr) {
 										// Removing defeated country from defender
 										const auto pos = std::find(defender.getCountries().begin(), defender.getCountries().end(), c);
 										defender.getCountries().erase(pos);
+										defendingCountries = Game::checkAvailableDefendingCountriesToAttack(attacker, attackingCountry);
 									}
 									break;
 								}
@@ -130,11 +129,22 @@ void AggressivePlayer::attack(Player* playerptr) {
 								// Removing defeated country from attacker
 								const auto pos = std::find(attacker.getCountries().begin(), attacker.getCountries().end(), attackingCountry);
 								attacker.getCountries().erase(pos);
+								lostStrongestCountry = true;
 							}
 						}
 					}
+
+					if (attackingCountry.getArmies() < 2) {
+						std::cout << "Aggressive Player does not have enough armies left on " << strongestCountry << " to attack." << std::endl;
+						break;
+					}
+					else if (lostStrongestCountry) {
+						std::cout << "Aggressive player has lost its strongest country, " << strongestCountry << "." << std::endl;
+						break;
+					}
 					system("pause");
 				}
+				break;
 			}
 		}
 
