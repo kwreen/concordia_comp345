@@ -25,8 +25,8 @@ void BenevolentPlayer::reinforcement(Player* playerptr) {
 	}
 }
 
-void BenevolentPlayer::attack() {
-	std::cout << "The Benevolent Player has skipped the attack phase." << std::endl;
+void BenevolentPlayer::attack(Player* playerptr) {
+	std::cout << "The Benevolent Player chooses to not attack. " << playerptr->getID() << " has skipped the attack phase." << std::endl;
 }
 
 void BenevolentPlayer::fortify(Player* playerptr) {
@@ -35,7 +35,7 @@ void BenevolentPlayer::fortify(Player* playerptr) {
 
 	int minTargetArmies = INT_MAX;
 	int maxSourceArmies = 0;
-	std::string strongestSource;		// SHOULD WE BE GETTING THE STRONGEST SOURCE??
+	std::string strongestSource;
 	std::string weakestTarget;
 
 	if (countries.size() > 0) {

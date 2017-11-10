@@ -6,6 +6,6 @@ private:
 
 public:
     void reinforcement(Player* player);
-    void attack();
+    void attack(Player* player);
     void fortify(Player* player);
 };

@@ -83,7 +83,6 @@ void Player::setArmies(int nArmies) {
 }
 
 void Player::notifyPhase(int phase) {
-
     // reinforcement
     if (phase == 1) {
         std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
