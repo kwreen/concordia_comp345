@@ -142,7 +142,6 @@ void AggressivePlayer::attack(Player* playerptr) {
 						std::cout << "Aggressive player has lost its strongest country, " << strongestCountry << "." << std::endl;
 						break;
 					}
-					system("pause");
 				}
 				break;
 			}

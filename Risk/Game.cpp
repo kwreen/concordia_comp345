@@ -42,7 +42,15 @@ void Game::setGameMap(const std::string& mapName) {
 
 void Game::createPlayers(int nPlayers) {
     for (int i = 0; i < nPlayers; i++) {
-        players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(), i+1, new AggressivePlayer()));
+		if (i == 1) {
+			players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(), i + 1, new BenevolentPlayer()));
+		}
+		else if (i == 2) {
+			players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(), i + 1, new AggressivePlayer()));
+		}
+		else {
+			players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(), i + 1, new HumanPlayer()));
+		}
     }
 }
 
