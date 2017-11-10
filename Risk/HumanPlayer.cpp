@@ -22,6 +22,7 @@ void HumanPlayer::reinforcement(Player* playerptr) {
 		for (auto& c : player.getCountries()) {
 			if (c.getName() == country.getName()) {
 				c.increaseArmiesBy(armies);
+				std::cout << c.getName() << " now has " << c.getArmies() << " armies after reinforcing. " << std::endl;
 			}
 		}
 		armiesToAdd -= armies;
@@ -135,7 +136,7 @@ void HumanPlayer::attack(Player* playerptr) {
 				}
 			}
 			else {
-				std::cout << "No available country found to attack." << std::endl;
+				std::cout << "No available country found for Human Player attack." << std::endl;
 			}
 		}
 

@@ -3,6 +3,7 @@
 #include "UserInterface.h"
 #include "HumanPlayer.h"
 #include "AggressivePlayer.h"
+#include "BenevolentPlayer.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -41,7 +42,7 @@ void Game::setGameMap(const std::string& mapName) {
 
 void Game::createPlayers(int nPlayers) {
     for (int i = 0; i < nPlayers; i++) {
-        players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(), i+1, new HumanPlayer()));
+        players.push_back(Player(std::vector<Country>(), Hand(), DiceFacility(), i+1, new BenevolentPlayer()));
     }
 }
 

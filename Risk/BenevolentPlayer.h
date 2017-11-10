@@ -5,7 +5,7 @@ class BenevolentPlayer : public Strategy {
 private:
 
 public:
-    void reinforcement();
+    void reinforcement(Player* player);
     void attack();
-    void fortify();
+    void fortify(Player* player);
 };
