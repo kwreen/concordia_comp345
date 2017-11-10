@@ -1,10 +1,11 @@
 #pragma once
 
-class Strategy {
+class Player;
 
+class Strategy {
 public:
-    virtual void reinforcement();
-    virtual void attack();
-    virtual void fortify();
+    virtual void reinforcement(Player* player);
+    virtual void attack(Player* player);
+    virtual void fortify(Player* player);
     virtual ~Strategy();
 };

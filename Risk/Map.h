@@ -2,10 +2,11 @@
 
 #include "Country.h"
 #include "MapLoader.h"
-#include "Player.h"
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+class Player;
 
 class Map {
 private:

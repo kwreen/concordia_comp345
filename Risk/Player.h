@@ -5,7 +5,9 @@
 #include "Country.h"
 #include "Hand.h"
 #include "Observer.h"
-#include "Strategy.h"
+#include "HumanPlayer.h"
+
+class Strategy;
 
 class Player : public Observer {
 private:
@@ -36,9 +38,9 @@ public:
 
     // Strategy pattern
     void setStrategy(Strategy *strategy);
-	void executeReinforcement();
-	void executeAttack();
-	void executeFortify();
+	void executeReinforcement(Player* player);
+	void executeAttack(Player* player);
+	void executeFortify(Player* player);
 
 	// Observer pattern
 	void notifyPhase(int);

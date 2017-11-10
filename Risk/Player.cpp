@@ -7,7 +7,6 @@ Player::Player(std::vector<Country> countries, Hand hand, DiceFacility dice, int
         this->setStrategy(strategy);
 }
 
-//gives them a specific set of countries, Hand, Dice Facility Object
 Player::Player(int playerNumber) : player(playerNumber) {}
 
 Hand& Player::getHand() {
@@ -130,17 +129,14 @@ void Player::setStrategy(Strategy *strategy){
     this->strategy = strategy;
 }
 
-
-void Player::executeReinforcement(){
-    this->strategy->reinforcement();
+void Player::executeReinforcement(Player* player){
+    this->strategy->reinforcement(player);
 }
 
-
-void Player::executeAttack(){
-    this->strategy->attack();
+void Player::executeAttack(Player* player){
+    this->strategy->attack(player);
 }
 
-
-void Player::executeFortify(){
-    this->strategy->fortify();
+void Player::executeFortify(Player* player){
+    this->strategy->fortify(player);
 }

@@ -1,13 +1,11 @@
 #pragma once
 #include "Strategy.h"
+#include "Player.h"
 
 class HumanPlayer : public Strategy {
-private:
-
 public:
     HumanPlayer() = default;
-    void reinforcement();
-    void attack();
-    void fortify();
-
+    void reinforcement(Player* player);
+    void attack(Player* player);
+    void fortify(Player* player);
 };

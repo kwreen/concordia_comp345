@@ -1,9 +1,9 @@
 #include "Strategy.h"
 
-void Strategy::reinforcement() {}
+void Strategy::reinforcement(Player* player) {}
 
-void Strategy::attack() {}
+void Strategy::attack(Player* player) {}
 
-void Strategy::fortify() {}
+void Strategy::fortify(Player* player) {}
 
 Strategy::~Strategy() {}

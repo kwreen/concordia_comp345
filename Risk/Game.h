@@ -1,28 +1,27 @@
 #pragma once
 
 #include "Map.h"
-#include "Player.h"
 #include "Subject.h"
 #include "Deck.h"
 #include "Country.h"
 #include <vector>
 
+class Player;
+
 class Game : public Subject {
 
 private:
 	Deck deck;
-	Map map;
+	static Map map;
 	std::vector<Player> players;
-	std::vector<Player> turns;
+	static std::vector<Player> turns;
 	int numPlayers;
     int currentPhase;
-	Player& getOwner(const Country& country);
 	void setGameMap(const std::string& mapName);
 	void createPlayers(int nPlayers);
 	void assignTurns();
 	void startUp();
 	void assignArmies();
-	int getArmiesToAdd(const Player& player) const;
 	void assignObservers();
 
 public:
@@ -32,10 +31,12 @@ public:
 	void reinforcementPhase(Player& player);
 	void fortificationPhase(Player& player);
 	Map getMap() const;
-	std::vector<Country> checkAvailableSourceCountriesToFortify(Player& player);
-	std::vector<Country> checkAvailableTargetCountriesToFortify(Player& player, Country source);
-	std::vector<Country> checkAvailableAttackingCountriesToAttack(Player& player);
-	std::vector<Country> checkAvailableDefendingCountriesToAttack(Player& player, Country source);
+	static Player& getOwner(const Country& country);
+	static int getArmiesToAdd(const Player& player);
+	static std::vector<Country> checkAvailableSourceCountriesToFortify(Player& player);
+	static std::vector<Country> checkAvailableTargetCountriesToFortify(Player& player, Country source);
+	static std::vector<Country> checkAvailableAttackingCountriesToAttack(Player& player);
+	static std::vector<Country> checkAvailableDefendingCountriesToAttack(Player& player, Country source);
 	void attackPhase(Player& player);
 	void removeDeadPlayers();
 	Deck getDeck();

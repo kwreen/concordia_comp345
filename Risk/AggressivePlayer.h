@@ -2,11 +2,9 @@
 #include "Strategy.h"
 
 class AggressivePlayer : public Strategy {
-private:
-
 public:
+	AggressivePlayer() = default;
     void reinforcement();
     void attack();
     void fortify();
-
 };
