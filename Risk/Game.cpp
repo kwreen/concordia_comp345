@@ -1,12 +1,12 @@
 #include "Game.h"
 #include "MapLoader.h"
 #include "UserInterface.h"
+#include "HumanPlayer.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
 #include <stdlib.h>
 #include <time.h>
-#include "HumanPlayer.h"
 
 int Game::getArmiesToAdd(const Player& player) const {
     // Number of countries owned on the map, divided by 3 (rounded down), with a minimum of 3
@@ -98,8 +98,7 @@ std::vector<Player>& Game::getTurns() {
     return turns;
 }
 Game::Game(const std::string& fileName, int nPlayers) {
-    int random = rand() % 100; //place seed for generator
-    srand(random);
+    srand(time(NULL));
     numPlayers = nPlayers;
     setGameMap(fileName);
     deck.loadDeck(map.getCountries());
