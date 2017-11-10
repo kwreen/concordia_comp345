@@ -6,7 +6,7 @@
 
 void AggressivePlayer::reinforcement(Player* playerptr) {
 	Player& player = *playerptr;
-	int armiesToAdd = Game::getArmiesToAdd(player); // TODO: Missing armies from card exchange
+	int armiesToAdd = Game::getArmiesToAdd(player);
 
 	int maxArmies = 0;
 	std::string strongestCountry;
