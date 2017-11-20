@@ -1,14 +1,12 @@
 #include "Player.h"
 #include <vector>
 #include <iostream>
-#include <iomanip> //for nice output
+#include <iomanip>
 
-using std::vector;
-using std::cout;
-using std::endl;
-using std::setw;
-using std::setfill;
-Player::Player(vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber) : _countries(countries), _hand(hand), _dice(dice), player(playerNumber) {} //gives them a specific set of countries, Hand, Dice Facility Object
+Player::Player(std::vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber, Strategy *strategy) : _countries(countries), _hand(hand), _dice(dice), player(playerNumber) {
+        this->setStrategy(strategy);
+}
+
 Player::Player(int playerNumber) : player(playerNumber) {}
 
 Hand& Player::getHand() {
@@ -19,11 +17,11 @@ const Hand& Player::getHand() const {
     return this->_hand;
 }
 
-vector<Country>& Player::getCountries() {
+std::vector<Country>& Player::getCountries() {
     return this->_countries;
 }
 
-const vector<Country>& Player::getCountries() const {
+const std::vector<Country>& Player::getCountries() const {
     return this->_countries;
 }
 
@@ -31,7 +29,7 @@ DiceFacility Player::getDice() const {
     return this->_dice;
 }
 
-void Player::setCountries(vector<Country> countries) {
+void Player::setCountries(std::vector<Country> countries) {
     this->_countries = countries;
 }
 
@@ -43,46 +41,33 @@ void Player::setDice(DiceFacility dice) {
     this->_dice = dice;
 }
 
-string Player::getID()
-{
-    return "Player " + to_string(player);
+std::string Player::getID() {
+    return "Player " + std::to_string(player);
 }
 
-int Player::getIDAsInt() //gets id as strictly an int
-{
+int Player::getIDAsInt(){
     return player;
 }
 
-void Player::assignCountry(Country c) //assigns a country to the player. See startup() in mainGameLoop
-{
-    _countries.push_back(c); //<-- size is correct here,seems to be inserting, fine, completetly deleted in countries() method below and when returning it: getCountries
+void Player::assignCountry(Country c) {
+    _countries.push_back(c);
 }
 
-void Player::printCountries() //prints countries player currently owns
-{
-    for (int i = 0; i<_countries.size(); i++)
-    {
-        cout << "Country: " << _countries[i].getName() << " with " << _countries[i].getArmies() << " armies." << endl;
+void Player::printCountries() {
+    for (int i = 0; i<_countries.size(); i++) {
+        std::cout << "Country: " << _countries[i].getName() << " with " << _countries[i].getArmies() << " armies." << std::endl;
     }
 }
 
-int Player::amtCountries() //returns how many countries player has
-{
+int Player::amtCountries() {
     return _countries.size();
 }
 
-void Player::increasePlayerArmies()
-{
-    ++armies;
-}
-
-int Player::getPlayerArmies() //will need to add armies gotten from exchange() in players hand here
-{
+int Player::getPlayerArmies() {
     return armies;
 }
 
-void Player::initializeArmies() //used strictly in main game loop class for initalization step
-{
+void Player::initializeArmies(){
     int number = armies;
     int index = 0;
     while (number>0)
@@ -93,35 +78,64 @@ void Player::initializeArmies() //used strictly in main game loop class for init
     }
 }
 
-void Player::setArmies(int nArmies)
-{
+void Player::setArmies(int nArmies) {
     armies = nArmies;
 }
 
-void Player::reinforce() {
-    cout << "Player " << this << " has reinforced." << endl;
-}
+void Player::notifyPhase(int phase) {
+    // reinforcement
+    if (phase == 1) {
+        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
+        std::cout << "Armies: " << getPlayerArmies() << ", Cards: " << getHand().size() << ", Countries Owned: " << getCountries().size() << std::endl;
+        std::cout << "\nCountries                          Armies" << std::endl;
+        std::cout << "-------------------------------------------" << std::endl;
+        for (int i = 0; i < _countries.size(); i++) {
+            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
+        }
+        std::cout << std::endl;
+    }
 
-void Player::attack() {
-    cout << "Player " << this << " has attacked." << endl;
-}
+    // attack
+    else if (phase == 2) {
+        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
+        std::cout << "\nCountries                          Armies" << std::endl;
+        std::cout << "-------------------------------------------" << std::endl;
+        for (int i = 0; i < _countries.size(); i++) {
+            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
+        }
+        std::cout << std::endl;
+    }
 
-void Player::fortify(int nArmies, Country& source, Country& target) {
-    source.decreaseArmiesBy(nArmies);
-    target.increaseArmiesBy(nArmies);
-    std::cout << nArmies << " have been moved from " << source.getName() << " to " << target.getName() << std::endl;
-}
-
-void Player::showStats() {
-    cout << getID() << " has: " << endl;
-    cout << getPlayerArmies() << " armies." << endl;
-    cout << "Countries                          Armies" << endl;
-    cout << "-------------------------------------------" << endl;
-    for (int i = 0; i < _countries.size(); i++) {
-        cout << left << setw(35) << setfill(' ') << _countries[i].getName() << left << setw(35) << setfill(' ') << _countries[i].getArmies() << endl;
+    // fortification
+    else {
+        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
+        std::cout << "\nCountries                          Armies" << std::endl;
+        std::cout << "-------------------------------------------" << std::endl;
+        for (int i = 0; i < _countries.size(); i++) {
+            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
+        }
+        std::cout << std::endl;
     }
 }
 
-void Player::update() {
-	showStats();
+void Player::notifyGame(int totalCountries) {
+    int currentCountries = _countries.size();
+    double percent = (double)currentCountries / totalCountries;
+	std::cout << getID() << ": " << currentCountries << "/" << totalCountries << ", " << percent * 100 << "% " << "of countries owned." << std::endl;
+}
+
+void Player::setStrategy(Strategy *strategy){
+    this->strategy = strategy;
+}
+
+void Player::executeReinforcement(Player* player){
+    this->strategy->reinforcement(player);
+}
+
+void Player::executeAttack(Player* player){
+    this->strategy->attack(player);
+}
+
+void Player::executeFortify(Player* player){
+    this->strategy->fortify(player);
 }

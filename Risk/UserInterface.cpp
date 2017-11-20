@@ -126,7 +126,7 @@ int UserInterface::selectNumPlayers() {
     return nPlayers;
 }
 
-Country UserInterface::selectCountry(std::vector<Country>& countries) {
+Country UserInterface::selectCountry(std::vector<Country> countries) {
     int sourceChoice;
 
     std::cout << "Source countries with available target countries:" << std::endl;
@@ -221,7 +221,8 @@ int UserInterface::exchangeCards(Player& player) {
         std::cout << "You have more than 5 cards, you need to exchange.\n";
         std::cout << ">>> ";
         std::cin >> input;
-    }else{
+    }
+	else{
         std::cout << "Select cards you would like to exchange, or 0 to skip.\n";
         std::cout << ">>> ";
         std::cin >> input;

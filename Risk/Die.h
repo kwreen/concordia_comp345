@@ -5,8 +5,6 @@ class Die {
 		int _totalRollCount;
 		int _occurenceCount[6];
 
-		static bool _seededRand;
-
 	public:
 		Die();
 		int roll();

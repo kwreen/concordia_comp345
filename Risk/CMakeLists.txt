@@ -11,7 +11,11 @@ set(SOURCES
 		Observer.cpp
         Player.cpp
 		Subject.cpp
-		UserInterface.cpp)
+		UserInterface.cpp
+        Strategy.cpp
+        HumanPlayer.cpp
+        AggressivePlayer.cpp
+        BenevolentPlayer.cpp)
 set(HEADERS
         Card.h
         Country.h
@@ -25,7 +29,11 @@ set(HEADERS
 		Observer.h
         Player.h
 		Subject.h
-		UserInterface.h)
+		UserInterface.h
+        Strategy.h
+        HumanPlayer.h
+        AggressivePlayer.h
+        BenevolentPlayer.h)
 
 add_library(Risk STATIC ${SOURCES} ${HEADERS})
 add_executable(RiskGame RiskGame.cpp)

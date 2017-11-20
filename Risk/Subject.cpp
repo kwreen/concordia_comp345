@@ -1,5 +1,4 @@
 #include "Subject.h"
-#include "Observer.h"
 
 Subject::Subject() {
 	_observers = new std::list<Observer*>;
@@ -7,6 +6,7 @@ Subject::Subject() {
 
 Subject::~Subject() {
 	delete _observers;
+    _observers = nullptr;
 }
 
 void Subject::attach(Observer* o) {
@@ -18,10 +18,27 @@ void Subject::detach(Observer* o) {
 	_observers->remove(o);
 }
 
-void Subject::notify() {
+void Subject::notifyPhaseAll() {
 	std::list<Observer *>::iterator i = _observers->begin();
 
 	for (; i != _observers->end(); ++i) {
-		(*i)->update();
+		(*i)->notifyPhase(phase);
 	}
+}
+
+void Subject::setPhase(int& phase) {
+    this->phase = phase;
+}
+
+void Subject::notifyGameAll() {
+    std::list<Observer *>::iterator i = _observers->begin();
+    std::cout << "[Game Statistic Observer]" << std::endl;
+    for (; i != _observers->end(); ++i) {
+        (*i)->notifyGame(totalCountries);
+    }
+    std::cout << std::endl;
+}
+
+void Subject::setTotalCountries(int amt) {
+    this->totalCountries = amt;
 }
