@@ -17,4 +17,10 @@ public:
 	static bool toAttackOrNot();
 	static int selectAttackerDice(const Country& attackingCountry);
 	static int selectDefenderDice(const Country& defendingCountry);
+
+	// Tournament interactions
+	static std::vector<std::string> selectTournamentMaps();
+	static std::vector<std::string> selectTournamentComputerPlayers();
+	static int selectTournamentGames();
+	static int selectTournamentTurns();
 };

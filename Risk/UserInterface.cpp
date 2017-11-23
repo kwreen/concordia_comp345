@@ -302,3 +302,31 @@ int UserInterface::selectDefenderDice(const Country& country) {
 
     return input;
 }
+
+std::vector<std::string> UserInterface::selectTournamentMaps() {
+	std::cout << "Select the number of different maps for the tournament to be played on (1-5):\n";
+	int nMaps;
+
+	std::cout << ">>> ";
+	std::cin >> nMaps;
+	while (nMaps < 1 || nMaps > 5) {
+		tryAgain();
+		std::cin >> nMaps;
+	}
+
+	for (int i = 0; i < nMaps; i++) {
+		// TODO
+	}
+}
+
+std::vector<std::string> UserInterface::selectTournamentComputerPlayers() {
+	// TODO
+}
+
+int UserInterface::selectTournamentGames() {
+	// TODO
+}
+
+int UserInterface::selectTournamentTurns() {
+	// TODO
+}
