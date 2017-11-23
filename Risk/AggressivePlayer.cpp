@@ -60,7 +60,7 @@ void AggressivePlayer::attack(Player* playerptr) {
 					int nDiceDefender;
 					for (auto& c : defender.getCountries()) {
 						if (c.getName() == defendingCountry.getName()) {
-							nDiceDefender = std::min(defendingCountry.getArmies(), 2);
+							nDiceDefender = std::min(c.getArmies(), 2);
 							break;
 						}
 					}

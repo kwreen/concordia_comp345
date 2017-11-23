@@ -17,6 +17,7 @@ set(SOURCES
 		RandomPlayer.cpp
         Strategy.cpp
 		Subject.cpp
+		Tournament.cpp
 		UserInterface.cpp)
 set(HEADERS
 		AggressivePlayer.h
@@ -37,6 +38,7 @@ set(HEADERS
 		RandomPlayer.h
         Strategy.h
 		Subject.h
+		Tournament.h
 		UserInterface.h)
 
 add_library(Risk STATIC ${SOURCES} ${HEADERS})

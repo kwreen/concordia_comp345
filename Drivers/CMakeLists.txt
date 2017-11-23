@@ -11,3 +11,6 @@ target_link_libraries(MapDriver Risk)
 
 add_executable(PlayerDriver PlayerDriver.cpp)
 target_link_libraries(PlayerDriver Risk)
+
+add_executable(TournamentDriver TournamentDriver.cpp)
+target_link_libraries(TournamentDriver Risk)
