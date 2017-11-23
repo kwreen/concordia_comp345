@@ -37,6 +37,8 @@ public:
 	static std::vector<Country> checkAvailableTargetCountriesToFortify(Player& player, Country source);
 	static std::vector<Country> checkAvailableAttackingCountriesToAttack(Player& player);
 	static std::vector<Country> checkAvailableDefendingCountriesToAttack(Player& player, Country source);
+	static std::vector<Country> checkAvailableCountriesToFortifyForCheater(Player& player);
+	static std::vector<std::vector<int>> rollingDice(Player& attacker, Player& defender, int nDiceAttacker, int nDiceDefender);
 	void attackPhase(Player& player);
 	void removeDeadPlayers();
 	Deck getDeck();

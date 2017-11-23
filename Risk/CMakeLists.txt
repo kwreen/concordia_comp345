@@ -1,39 +1,43 @@
 set(SOURCES
+        AggressivePlayer.cpp
+        BenevolentPlayer.cpp
         Card.cpp
+		CheaterPlayer.cpp
         Country.cpp
         Deck.cpp
         DiceFacility.cpp
         Die.cpp
 		Game.cpp
         Hand.cpp
+        HumanPlayer.cpp
         Map.cpp
         MapLoader.cpp
 		Observer.cpp
         Player.cpp
-		Subject.cpp
-		UserInterface.cpp
+		RandomPlayer.cpp
         Strategy.cpp
-        HumanPlayer.cpp
-        AggressivePlayer.cpp
-        BenevolentPlayer.cpp)
+		Subject.cpp
+		UserInterface.cpp)
 set(HEADERS
+		AggressivePlayer.h
+		BenevolentPlayer.h
         Card.h
+		CheaterPlayer.h
         Country.h
         Deck.h
         DiceFacility.h
         Die.h
 		Game.h
         Hand.h
+		HumanPlayer.h
         Map.h
         MapLoader.h
 		Observer.h
         Player.h
-		Subject.h
-		UserInterface.h
+		RandomPlayer.h
         Strategy.h
-        HumanPlayer.h
-        AggressivePlayer.h
-        BenevolentPlayer.h)
+		Subject.h
+		UserInterface.h)
 
 add_library(Risk STATIC ${SOURCES} ${HEADERS})
 add_executable(RiskGame RiskGame.cpp)

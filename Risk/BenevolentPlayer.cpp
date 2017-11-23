@@ -4,6 +4,7 @@
 
 void BenevolentPlayer::reinforcement(Player* playerptr) {
 	Player& player = *playerptr;
+	// TODO: GET ARMIES FROM CARD EXCHANGE
 	int armiesToAdd = Game::getArmiesToAdd(player);
 	std::cout << "Benevolent Player has " << armiesToAdd << " armies for reinforcement." << std::endl;
 
@@ -89,7 +90,7 @@ void BenevolentPlayer::fortify(Player* playerptr) {
 		}
 	}
 	else {
-		std::cout << "No available country found for Aggressive Player to fortify." << std::endl;
+		std::cout << "No available country found for Benevolent Player to fortify." << std::endl;
 	}
 }
 

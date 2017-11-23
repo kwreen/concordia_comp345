@@ -21,16 +21,12 @@ bool Country::operator==(const Country& other) const { //sees if 2 country objec
 bool Country::operator<(const Country& second) const { //overloads operator when comparing two country objects it compares their names
 	return name < second.name;
 }
-void Country::increaseArmies() //increase amount of armies on this country
-{
-	++armies;
-}
 
 int Country::getArmies() const {
 	return armies;
 }
-void Country::setArmies(int n) //set armies on this country
-{
+
+void Country::setArmies(int n) {
 	armies = n;
 }
 

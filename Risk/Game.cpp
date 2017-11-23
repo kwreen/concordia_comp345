@@ -109,6 +109,7 @@ void Game::startUp() {
 std::vector<Player>& Game::getTurns() {
     return turns;
 }
+
 Game::Game(const std::string& fileName, int nPlayers) {
     srand(time(NULL));
     numPlayers = nPlayers;
@@ -159,7 +160,7 @@ std::vector<Country> Game::checkAvailableSourceCountriesToFortify(Player& player
             return true;
         }), adjacentCountries.end());
 
-		// If the country has no adjacent countries, remove from available source countries
+		// If the country has no adjacent countries owned by the player, remove from available source countries
         if (adjacentCountries.size() == 0) {
             return true;
         }
@@ -191,9 +192,10 @@ std::vector<Country> Game::checkAvailableTargetCountriesToFortify(Player& player
 std::vector<Country> Game::checkAvailableAttackingCountriesToAttack(Player& player) {
     std::vector<Country> countries = player.getCountries();
 
-    // Removing countries from the vector which have adjacent countries that the player owns
+	// Removing countries that have no adjacent enemy countries or that don't have at least 2 armies
     countries.erase(std::remove_if(countries.begin(), countries.end(), [&](const Country& c) {
         std::vector<Country> adjacentCountries = map.adjacent(c);
+		// Removes from adjacentCountries those that the player owns
         adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
             for (auto& country : countries) {
                 if (country.getName() == c.getName()) {
@@ -203,7 +205,6 @@ std::vector<Country> Game::checkAvailableAttackingCountriesToAttack(Player& play
             return false;
         }), adjacentCountries.end());
 
-        // Removing countries that have no adjacent enemy countries or that don't have at least 2 armies
         if (adjacentCountries.size() == 0 || c.getArmies() < 2) {
             return true;
         }
@@ -230,6 +231,31 @@ std::vector<Country> Game::checkAvailableDefendingCountriesToAttack(Player& play
 	}), adjacentCountries.end());
 
 	return adjacentCountries;
+}
+
+std::vector<std::vector<int>> Game::rollingDice(Player& attacker, Player& defender, int nDiceAttacker, int nDiceDefender) {
+	std::vector<std::vector<int>> diceResults;
+
+	std::cout << "Rolling dice..." << std::endl;
+	std::vector<int> attDiceResults = attacker.getDice().rollDice(nDiceAttacker);
+	std::vector<int> defDiceResults = defender.getDice().rollDice(nDiceDefender);
+
+	std::cout << "Comparing dice..." << std::endl;
+	std::cout << "Attacker rolled...";
+	for (const auto& i : attDiceResults) {
+		std::cout << " " << i;
+	}
+	diceResults.push_back(attDiceResults);
+	std::cout << std::endl;
+
+	std::cout << "Defender rolled...";
+	for (const auto& i : defDiceResults) {
+		std::cout << " " << i;
+	}
+	diceResults.push_back(defDiceResults);
+	std::cout << std::endl;
+
+	return diceResults;
 }
 
 void Game::attackPhase(Player& attacker) {
@@ -272,4 +298,32 @@ void Game::removeDeadPlayers() {
 
 Deck Game::getDeck() {
     return deck;
+}
+
+std::vector<Country> Game::checkAvailableCountriesToFortifyForCheater(Player& player) {
+	std::vector<Country> countries = player.getCountries();
+
+	// Removing countries that have no adjacent enemy countries
+	countries.erase(std::remove_if(countries.begin(), countries.end(), [&](const Country& c) {
+		std::vector<Country> adjacentCountries = map.adjacent(c);
+		// Removes from adjacentCountries those that the player owns
+		adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
+			for (auto& country : countries) {
+				if (country.getName() == c.getName()) {
+					return true;
+				}
+			}
+			return false;
+		}), adjacentCountries.end());
+
+		// Cheater fortifies countries that have adjacent enemy countries
+		if (adjacentCountries.size() == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}), countries.end());
+
+	return countries;
 }

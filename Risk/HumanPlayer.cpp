@@ -63,26 +63,16 @@ void HumanPlayer::attack(Player* playerptr) {
 					}
 				}
 
-				std::cout << "Rolling dice..." << std::endl;
-				std::vector<int> attDiceResults = attacker.getDice().rollDice(nDiceAttacker);
-				std::vector<int> defDiceResults = defender.getDice().rollDice(nDiceDefender);
-
-				std::cout << "Comparing dice..." << std::endl;
-				std::cout << "Attacker rolled...";
-				for (const auto& i : attDiceResults) {
-					std::cout << " " << i;
-				}
-				std::cout << std::endl;
-				std::cout << "Defender rolled...";
-				for (const auto& i : defDiceResults) {
-					std::cout << " " << i;
-				}
-				std::cout << std::endl;
+				std::vector<std::vector<int>> diceResults = Game::rollingDice(attacker, defender, nDiceAttacker, nDiceDefender);
+				std::vector<int> attDiceResults = diceResults[0];
+				std::vector<int> defDiceResults = diceResults[1];
 
 				// Getting the minimum number of dice roll
 				int min = std::min(attDiceResults.size(), defDiceResults.size());
 
 				for (int i = 0; i < min; i++) {
+					int nArmiesToMove;
+
 					if (attDiceResults[i] > defDiceResults[i]) {
 						// Attacker wins
 						std::cout << "The attacker has rolled " << attDiceResults[i] << " and the defender has rolled " << defDiceResults[i] << "." << std::endl;
@@ -96,7 +86,7 @@ void HumanPlayer::attack(Player* playerptr) {
 
 									// Moving armies from attacking country to defending country
 									// Giving defeated country to attacker
-									int nArmiesToMove = UserInterface::selectArmiesToMove(attackingCountry);
+									nArmiesToMove = UserInterface::selectArmiesToMove(attackingCountry);
 									c.increaseArmiesBy(nArmiesToMove);
 									attacker.getCountries().push_back(Country(c));
 
@@ -121,7 +111,7 @@ void HumanPlayer::attack(Player* playerptr) {
 
 									// Moving armies from defending country to attacking country
 									// Giving defeated country to defender
-									int nArmiesToMove = UserInterface::selectArmiesToMove(defendingCountry);
+									nArmiesToMove = UserInterface::selectArmiesToMove(defendingCountry);
 									c.increaseArmiesBy(nArmiesToMove);
 									defender.getCountries().push_back(Country(c));
 

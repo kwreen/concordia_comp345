@@ -70,10 +70,9 @@ int Player::getPlayerArmies() {
 void Player::initializeArmies(){
     int number = armies;
     int index = 0;
-    while (number>0)
-    {
+    while (number > 0) {
         if (index>_countries.size() - 1) { index = 0; }
-        _countries[index++].increaseArmies();
+        _countries[index++].increaseArmiesBy(1);
         number--;
     }
 }

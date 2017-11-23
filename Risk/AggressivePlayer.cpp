@@ -6,6 +6,7 @@
 
 void AggressivePlayer::reinforcement(Player* playerptr) {
 	Player& player = *playerptr;
+	// TODO: GET ARMIES FROM CARD EXCHANGE
 	int armiesToAdd = Game::getArmiesToAdd(player);
 	std::cout << "Aggressive Player has " << armiesToAdd << " armies for reinforcement." << std::endl;
 
@@ -51,37 +52,22 @@ void AggressivePlayer::attack(Player* playerptr) {
 					Country defendingCountry = defendingCountries[0];
 					Player& defender = Game::getOwner(defendingCountry);
 
-					int nDiceAttacker = std::max(attackingCountry.getArmies() - 1, 3);
-					if (nDiceAttacker > 3) {
-						nDiceAttacker = 3;
-					}
+					std::cout << "Aggressive Player uses " << attackingCountry.getName() << " to attack Defender on " << defendingCountry.getName() << std::endl;
+					std::cout << std::endl;
+
+					int nDiceAttacker = std::min(attackingCountry.getArmies() - 1, 3);
 
 					int nDiceDefender;
 					for (auto& c : defender.getCountries()) {
 						if (c.getName() == defendingCountry.getName()) {
-							nDiceDefender = std::max(defendingCountry.getArmies(), 2);
-							if (nDiceDefender > 2) {
-								nDiceDefender = 2;
-							}
+							nDiceDefender = std::min(defendingCountry.getArmies(), 2);
 							break;
 						}
 					}
 
-					std::cout << "Rolling dice..." << std::endl;
-					std::vector<int> attDiceResults = attacker.getDice().rollDice(nDiceAttacker);
-					std::vector<int> defDiceResults = defender.getDice().rollDice(nDiceDefender);
-
-					std::cout << "Comparing dice..." << std::endl;
-					std::cout << "Attacker rolled...";
-					for (const auto& i : attDiceResults) {
-						std::cout << " " << i;
-					}
-					std::cout << std::endl;
-					std::cout << "Defender rolled...";
-					for (const auto& i : defDiceResults) {
-						std::cout << " " << i;
-					}
-					std::cout << std::endl;
+					std::vector<std::vector<int>> diceResults = Game::rollingDice(attacker, defender, nDiceAttacker, nDiceDefender);
+					std::vector<int> attDiceResults = diceResults[0];
+					std::vector<int> defDiceResults = diceResults[1];
 
 					// Getting the minimum number of dice roll
 					int min = std::min(attDiceResults.size(), defDiceResults.size());

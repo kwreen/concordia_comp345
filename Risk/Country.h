@@ -24,8 +24,6 @@ public:
 
 	bool operator<(const Country& second) const;
 
-	void increaseArmies(); // TODO: Rename to incrementArmies
-
 	int getArmies() const;
 
 	void setArmies(int n); //sets amount of armies on country
