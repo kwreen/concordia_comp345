@@ -25,6 +25,33 @@ void Tournament::startTournament() {
 void Tournament::displayWinners() {
 	std::cout << "\n\nTournament results:\n";
 
+	std::cout << "M: ";
+	for (const auto& map : maps) {
+		std::cout << map << ' ';
+	}
+	std::cout << std::endl;
+
+	std::cout << "P: ";
+	for (const auto& player : players) {
+		switch (player.getIDAsInt()) {
+		case 1:
+			std::cout << "Aggressive ";
+			break;
+		case 2:
+			std::cout << "Benevolent ";
+			break;
+		case 3:
+			std::cout << "Random ";
+			break;
+		case 4:
+			std::cout << "Cheater ";
+		}
+	}
+	std::cout << std::endl;
+
+	std::cout << "G: " << G << std::endl;
+	std::cout << "D: " << D << std::endl << std::endl;
+
 	std::cout << "                         ";
 	for (int i = 0; i < G; ++i) {
 		std::cout.width(15);

@@ -3,6 +3,7 @@ set(SOURCES
         BenevolentPlayer.cpp
         Card.cpp
 		CheaterPlayer.cpp
+		ContinentControlObserverDecorator.cpp
         Country.cpp
         Deck.cpp
         DiceFacility.cpp
@@ -28,6 +29,7 @@ set(HEADERS
 		BenevolentPlayer.h
         Card.h
 		CheaterPlayer.h
+		ContinentControlObserverDecorator.h
         Country.h
         Deck.h
         DiceFacility.h
