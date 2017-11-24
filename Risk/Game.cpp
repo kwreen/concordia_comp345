@@ -7,6 +7,7 @@
 #include "GameStatisticsObserver.h"
 #include "ObserverDecorator.h"
 #include "PlayerDominationObserverDecorator.h"
+#include "ContinentControlObserverDecorator.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -94,6 +95,7 @@ void Game::assignArmies() {
 void Game::assignObservers() {
 	attach(new ObserverDecorator(new GameStatisticsObserver(this)));
 	attach(new PlayerDominationObserverDecorator(new GameStatisticsObserver(this)));
+	attach(new ContinentControlObserverDecorator(new GameStatisticsObserver(this)));
 }
 
 void Game::startUp() {
