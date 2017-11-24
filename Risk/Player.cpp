@@ -1,7 +1,6 @@
 #include "Player.h"
 #include <vector>
 #include <iostream>
-#include <iomanip>
 
 Player::Player(std::vector<Country> countries, Hand hand, DiceFacility dice, int playerNumber, Strategy *strategy) : _countries(countries), _hand(hand), _dice(dice), player(playerNumber) {
         this->setStrategy(strategy);
@@ -79,48 +78,6 @@ void Player::initializeArmies(){
 
 void Player::setArmies(int nArmies) {
     armies = nArmies;
-}
-
-void Player::notifyPhase(int phase) {
-    // reinforcement
-    if (phase == 1) {
-        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
-        std::cout << "Armies: " << getPlayerArmies() << ", Cards: " << getHand().size() << ", Countries Owned: " << getCountries().size() << std::endl;
-        std::cout << "\nCountries                          Armies" << std::endl;
-        std::cout << "-------------------------------------------" << std::endl;
-        for (int i = 0; i < _countries.size(); i++) {
-            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
-        }
-        std::cout << std::endl;
-    }
-
-    // attack
-    else if (phase == 2) {
-        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
-        std::cout << "\nCountries                          Armies" << std::endl;
-        std::cout << "-------------------------------------------" << std::endl;
-        for (int i = 0; i < _countries.size(); i++) {
-            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
-        }
-        std::cout << std::endl;
-    }
-
-    // fortification
-    else {
-        std::cout << "[Phase Observer: "<< getID() << " stats]" << std::endl;
-        std::cout << "\nCountries                          Armies" << std::endl;
-        std::cout << "-------------------------------------------" << std::endl;
-        for (int i = 0; i < _countries.size(); i++) {
-            std::cout << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getName() << std::left << std::setw(35) << std::setfill(' ') << _countries[i].getArmies() << std::endl;
-        }
-        std::cout << std::endl;
-    }
-}
-
-void Player::notifyGame(int totalCountries) {
-    int currentCountries = _countries.size();
-    double percent = (double)currentCountries / totalCountries;
-	std::cout << getID() << ": " << currentCountries << "/" << totalCountries << ", " << percent * 100 << "% " << "of countries owned." << std::endl;
 }
 
 void Player::setStrategy(Strategy *strategy){

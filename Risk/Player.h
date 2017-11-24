@@ -4,12 +4,11 @@
 #include "DiceFacility.h"
 #include "Country.h"
 #include "Hand.h"
-#include "Observer.h"
 #include "HumanPlayer.h"
 
 class Strategy;
 
-class Player : public Observer {
+class Player {
 private:
 	Strategy *strategy;
 	std::vector<Country> _countries;
@@ -41,10 +40,6 @@ public:
 	void executeReinforcement(Player* player);
 	void executeAttack(Player* player);
 	void executeFortify(Player* player);
-
-	// Observer pattern
-	void notifyPhase(int);
-    void notifyGame(int totalCountries);
 
 private:
 	void setCountries(std::vector<Country> countries);

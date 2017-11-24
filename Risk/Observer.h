@@ -1,10 +1,11 @@
 #pragma once
+#include "Player.h"
 
 class Observer {
 
 public:
     Observer();
 	~Observer();
-	virtual void notifyPhase(int) = 0;
-    virtual void notifyGame(int) = 0;
+	virtual void notifyPhase(int phase) = 0;
+    virtual void notifyGame() = 0;
 };

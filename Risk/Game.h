@@ -17,6 +17,7 @@ private:
 	static std::vector<Player> turns;
 	int numPlayers;
     int currentPhase;
+	Player* currentPlayer;
 	void setGameMap(const std::string& mapName);
 	void createPlayers(int nPlayers);
 	void assignTurns();
@@ -43,4 +44,5 @@ public:
 	void attackPhase(Player& player);
 	void removeDeadPlayers();
 	Deck getDeck();
+	Player* getCurrentPlayer() const;
 };

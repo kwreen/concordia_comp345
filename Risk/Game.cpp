@@ -4,6 +4,7 @@
 #include "HumanPlayer.h"
 #include "AggressivePlayer.h"
 #include "BenevolentPlayer.h"
+#include "GameStatisticsObserver.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -89,10 +90,7 @@ void Game::assignArmies() {
 }
 
 void Game::assignObservers() {
-    for (auto& player : turns){
-        attach(&player);
-    }
-    setTotalCountries(map.getCountries().size());
+	attach(new GameStatisticsObserver(this));
 }
 
 void Game::startUp() {
@@ -117,6 +115,7 @@ Game::Game(const std::string& fileName, int nPlayers) {
     deck.loadDeck(map.getCountries());
     createPlayers(nPlayers);
     assignTurns();
+	currentPlayer = &turns[0];
     assignObservers();
     startUp();
 }
@@ -129,6 +128,7 @@ Game::Game(const std::string& mapName, const std::vector<Player>& players) {
 	this->players = players;
 	turns.erase(turns.begin(), turns.end());
 	assignTurns();
+	currentPlayer = &turns[0];
 	assignObservers();
 	startUp();
 }
@@ -137,8 +137,8 @@ void Game::reinforcementPhase(Player& player) {
     currentPhase = 1;
     setPhase(currentPhase);
 
-    //notifyGameAll();
-	//notifyPhaseAll();
+    notifyGameAll();
+	notifyPhaseAll();
 
     player.executeReinforcement(&player);
 }
@@ -147,10 +147,17 @@ void Game::fortificationPhase(Player& player) {
     currentPhase = 3;
     setPhase(currentPhase);
 
-    //notifyGameAll();
-	//notifyPhaseAll();
+    notifyGameAll();
+	notifyPhaseAll();
 
 	player.executeFortify(&player);
+
+	// Update current player
+	for (int i = 0; i < turns.size(); i++) {
+		if (turns[i].getID() == currentPlayer->getID()) {
+			currentPlayer = &turns[(i + 1) % turns.size()];
+		}
+	}
 }
 
 Map Game::getMap() const {
@@ -278,8 +285,8 @@ void Game::attackPhase(Player& attacker) {
     currentPhase = 2;
     setPhase(currentPhase);
 
-    //notifyGameAll();
-	//notifyPhaseAll();
+    notifyGameAll();
+	notifyPhaseAll();
 
 	attacker.executeAttack(&attacker);
 }
@@ -304,11 +311,6 @@ void Game::removeDeadPlayers() {
     for (int i : playersIndicesToDelete) {
         players.erase(players.begin() + i);
     }
-
-	for (int i : playersIndicesToDetach) {
-		detach(&turns[i]);
-		turns.erase(turns.begin() + i);
-	}
 }
 
 Deck Game::getDeck() {
@@ -341,4 +343,8 @@ std::vector<Country> Game::checkAvailableCountriesToFortifyForCheater(Player& pl
 	}), countries.end());
 
 	return countries;
+}
+
+Player* Game::getCurrentPlayer() const {
+	return currentPlayer;
 }

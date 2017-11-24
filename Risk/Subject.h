@@ -1,5 +1,4 @@
 #pragma once
-#include "Player.h"
 #include <list>
 
 class Observer;
@@ -20,5 +19,4 @@ public:
 	virtual void notifyPhaseAll();
     virtual void notifyGameAll();
     virtual void setPhase(int& phase);
-    virtual void setTotalCountries(int amt);
 };

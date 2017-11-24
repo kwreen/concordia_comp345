@@ -1,4 +1,5 @@
 #include "Subject.h"
+#include "Observer.h"
 
 Subject::Subject() {
 	_observers = new std::list<Observer*>;
@@ -34,11 +35,7 @@ void Subject::notifyGameAll() {
     std::list<Observer *>::iterator i = _observers->begin();
     std::cout << "[Game Statistic Observer]" << std::endl;
     for (; i != _observers->end(); ++i) {
-        (*i)->notifyGame(totalCountries);
+        (*i)->notifyGame();
     }
     std::cout << std::endl;
-}
-
-void Subject::setTotalCountries(int amt) {
-    this->totalCountries = amt;
 }

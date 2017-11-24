@@ -8,6 +8,7 @@ set(SOURCES
         DiceFacility.cpp
         Die.cpp
 		Game.cpp
+		GameStatisticsObserver.cpp
         Hand.cpp
         HumanPlayer.cpp
         Map.cpp
@@ -29,6 +30,7 @@ set(HEADERS
         DiceFacility.h
         Die.h
 		Game.h
+		GameStatisticsObserver.h
         Hand.h
 		HumanPlayer.h
         Map.h
