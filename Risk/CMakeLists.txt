@@ -14,7 +14,10 @@ set(SOURCES
         Map.cpp
         MapLoader.cpp
 		Observer.cpp
+		ObserverDecorator.cpp
         Player.cpp
+		PlayerDominationObserverDecorator.cpp
+		PlayerHandsObserverDecorator.cpp
 		RandomPlayer.cpp
         Strategy.cpp
 		Subject.cpp
@@ -36,7 +39,10 @@ set(HEADERS
         Map.h
         MapLoader.h
 		Observer.h
+		ObserverDecorator.h
         Player.h
+		PlayerDominationObserverDecorator.h
+		PlayerHandsObserverDecorator.h
 		RandomPlayer.h
         Strategy.h
 		Subject.h

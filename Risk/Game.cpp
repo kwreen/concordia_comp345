@@ -5,6 +5,7 @@
 #include "AggressivePlayer.h"
 #include "BenevolentPlayer.h"
 #include "GameStatisticsObserver.h"
+#include "ObserverDecorator.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -90,7 +91,7 @@ void Game::assignArmies() {
 }
 
 void Game::assignObservers() {
-	attach(new GameStatisticsObserver(this));
+	attach(new ObserverDecorator(new GameStatisticsObserver(this)));
 }
 
 void Game::startUp() {
