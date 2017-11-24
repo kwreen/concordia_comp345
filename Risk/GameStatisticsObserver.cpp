@@ -2,7 +2,16 @@
 #include <iostream>
 #include <iomanip>
 
+void GameStatisticsObserver::update() {
+	Game* game = getGame();
+	if (game->getTurnNumber() != previousTurn) {
+		std::cout << "Current turn: " << game->getTurnNumber() << std::endl;
+		previousTurn = game->getTurnNumber();
+	}
+}
+
 void GameStatisticsObserver::notifyPhase(int phase) {
+	Game* game = getGame();
 	Player& player = *game->getCurrentPlayer();
 	// reinforcement
 	if (phase == 1) {
@@ -40,6 +49,7 @@ void GameStatisticsObserver::notifyPhase(int phase) {
 }
 
 void GameStatisticsObserver::notifyGame() {
+	Game* game = getGame();
 	Player& player = *game->getCurrentPlayer();
 	int playerCountries = player.getCountries().size();
 	int totalCountries = game->getMap().getCountries().size();

@@ -39,3 +39,9 @@ void Subject::notifyGameAll() {
     }
     std::cout << std::endl;
 }
+
+void Subject::notify() {
+	for (Observer* o : *_observers) {
+		o->update();
+	}
+}

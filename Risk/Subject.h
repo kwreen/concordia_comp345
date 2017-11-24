@@ -18,5 +18,6 @@ public:
 	virtual void detach(Observer *);
 	virtual void notifyPhaseAll();
     virtual void notifyGameAll();
+	virtual void notify();
     virtual void setPhase(int& phase);
 };

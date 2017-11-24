@@ -24,6 +24,7 @@ private:
 	void startUp();
 	void assignArmies();
 	void assignObservers();
+	int turnNumber = 1;
 
 public:
 	Game(const std::string& mapName, int nPlayers);
@@ -45,4 +46,5 @@ public:
 	void removeDeadPlayers();
 	Deck getDeck();
 	Player* getCurrentPlayer() const;
+	int getTurnNumber() const;
 };

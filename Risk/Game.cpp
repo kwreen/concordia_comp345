@@ -6,6 +6,7 @@
 #include "BenevolentPlayer.h"
 #include "GameStatisticsObserver.h"
 #include "ObserverDecorator.h"
+#include "PlayerDominationObserverDecorator.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -92,6 +93,7 @@ void Game::assignArmies() {
 
 void Game::assignObservers() {
 	attach(new ObserverDecorator(new GameStatisticsObserver(this)));
+	attach(new PlayerDominationObserverDecorator(new GameStatisticsObserver(this)));
 }
 
 void Game::startUp() {
@@ -138,18 +140,14 @@ void Game::reinforcementPhase(Player& player) {
     currentPhase = 1;
     setPhase(currentPhase);
 
-    notifyGameAll();
-	notifyPhaseAll();
-
     player.executeReinforcement(&player);
+
+	notify();
 }
 
 void Game::fortificationPhase(Player& player) {
     currentPhase = 3;
     setPhase(currentPhase);
-
-    notifyGameAll();
-	notifyPhaseAll();
 
 	player.executeFortify(&player);
 
@@ -159,6 +157,10 @@ void Game::fortificationPhase(Player& player) {
 			currentPlayer = &turns[(i + 1) % turns.size()];
 		}
 	}
+
+	++turnNumber;
+
+	notify();
 }
 
 Map Game::getMap() const {
@@ -286,10 +288,9 @@ void Game::attackPhase(Player& attacker) {
     currentPhase = 2;
     setPhase(currentPhase);
 
-    notifyGameAll();
-	notifyPhaseAll();
-
 	attacker.executeAttack(&attacker);
+
+	notify();
 }
 
 void Game::removeDeadPlayers() {
@@ -348,4 +349,8 @@ std::vector<Country> Game::checkAvailableCountriesToFortifyForCheater(Player& pl
 
 Player* Game::getCurrentPlayer() const {
 	return currentPlayer;
+}
+
+int Game::getTurnNumber() const {
+	return turnNumber;
 }

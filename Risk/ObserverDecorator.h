@@ -9,4 +9,5 @@ public:
 	ObserverDecorator(Observer *decoratedObserver);
 	void notifyPhase(int phase);
 	void notifyGame();
+	void update();
 };
