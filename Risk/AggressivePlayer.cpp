@@ -45,11 +45,13 @@ void AggressivePlayer::attack(Player* playerptr) {
 			}
 		}
 
+		// Reserve enough space to prevent reallocation upon push_back, thus preventing iterator invalidation.
+		attacker.getCountries().reserve(1000);
 		for (auto& attackingCountry : attacker.getCountries()) {
 			if (strongestCountry == attackingCountry.getName()) {
 				std::vector <Country> defendingCountries = Game::checkAvailableDefendingCountriesToAttack(attacker, attackingCountry);
 
-				while (defendingCountries.size() != 0) {
+				while (defendingCountries.size() != 0 && attackingCountry.getArmies() > 1) {
 					Country defendingCountry = defendingCountries[0];
 					Player& defender = Game::getOwner(defendingCountry);
 
@@ -105,6 +107,7 @@ void AggressivePlayer::attack(Player* playerptr) {
 							std::cout << "The attacker loses 1 army on " << attackingCountry.getName() << "." << std::endl;
 
 							attackingCountry.decreaseArmiesBy(1);
+							// The following code should never execute...
 							if (attackingCountry.getArmies() == 0) {
 								// Moving ONE army from defending country to attacking country
 								// Giving defeated country to defender

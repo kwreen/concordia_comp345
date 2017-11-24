@@ -9,7 +9,7 @@ Tournament::Tournament() {
 	D = UserInterface::selectTournamentTurns();
 
 	for (const auto& map : maps) {
-		winners[map] = std::vector<std::string>();
+		winners[map];
 	}
 }
 
@@ -23,26 +23,33 @@ void Tournament::startTournament() {
 }
 
 void Tournament::displayWinners() {
+	std::cout << "\n\nTournament results:\n";
+
+	std::cout << "                         ";
 	for (int i = 0; i < G; ++i) {
-		std::cout << "Game " << i << " ";
+		std::cout.width(15);
+		std::cout << std::left << "Game " + std::to_string(i + 1);
 	}
 	std::cout << '\n';
 	for (const auto& map : maps) {
 		const auto mapWinners = winners[map];
+		std::cout.width(25);
+		std::cout << std::left << map;
 		for (const auto& winner : mapWinners) {
-			std::cout << winner << ' ';
+			std::cout.width(15);
+			std::cout << std::left << winner;
 		}
 		std::cout << '\n';
 	}
 }
 
 std::string Tournament::simulateGame(const std::string& map) const {
-	Game game(map, players);
+	Game game("Resources/" + map, players);
 
 	for (int i = 0; i < D; ++i) {
 		if (game.getTurns().size() == 1) {
 			const auto& player = game.getTurns()[0];
-			switch (i) {
+			switch (player.getIDAsInt()) {
 				case 1:
 					return "Aggressive";
 				case 2:
@@ -61,8 +68,8 @@ std::string Tournament::simulateGame(const std::string& map) const {
 				game.attackPhase(player);
 				game.fortificationPhase(player);
 			}
-			game.removeDeadPlayers();
 		}
+		game.removeDeadPlayers();
 	}
 	return "Draw";
 }

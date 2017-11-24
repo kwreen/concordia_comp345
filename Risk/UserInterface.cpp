@@ -315,8 +315,8 @@ std::vector<std::string> UserInterface::selectTournamentMaps() {
 	}
 
 	std::vector<int> mapNumbers;
+	std::cout << ">>> ";
 	do {
-		std::cout << ">>> ";
 		std::string mapChoices;
 		std::cin >> mapChoices;
 		mapNumbers = split(mapChoices, ',');
@@ -339,7 +339,7 @@ std::vector<std::string> UserInterface::selectTournamentMaps() {
 
 		// Check that all numbers are within the correct range.
 		if (std::any_of(mapNumbers.begin(), mapNumbers.end(), [&files](int i) {
-			return i < 1 || i > files.size();
+			return i < 1 || i > files.size() - 2;
 		})) {
 			tryAgain();
 			continue;
@@ -367,11 +367,11 @@ std::vector<Player> UserInterface::selectTournamentComputerPlayers() {
 
 	bool validInput = false;
 	std::vector<int> playerNumbers;
+	std::cout << ">>> ";
 	do {
 		std::string playerChoices;
-		std::cout << ">>> ";
 		std::cin >> playerChoices;
-		playerNumbers = split(playerChoices, ' ');
+		playerNumbers = split(playerChoices, ',');
 		std::sort(playerNumbers.begin(), playerNumbers.end());
 
 		// Check for correct number of players.
@@ -424,6 +424,7 @@ std::vector<Player> UserInterface::selectTournamentComputerPlayers() {
 int UserInterface::selectTournamentGames() {
 	std::cout << "Select the number of games per map (1-5).\n";
 	int G;
+	std::cout << ">>> ";
 	std::cin >> G;
 	while (G < 1 || G > 5) {
 		tryAgain();
@@ -435,6 +436,7 @@ int UserInterface::selectTournamentGames() {
 int UserInterface::selectTournamentTurns() {
 	std::cout << "Select the maximum number of turns per game (10-50).\n";
 	int D;
+	std::cout << ">>> ";
 	std::cin >> D;
 	while (D < 10 || D > 50) {
 		tryAgain();

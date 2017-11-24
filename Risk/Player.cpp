@@ -45,7 +45,7 @@ std::string Player::getID() {
     return "Player " + std::to_string(player);
 }
 
-int Player::getIDAsInt(){
+int Player::getIDAsInt() const {
     return player;
 }
 

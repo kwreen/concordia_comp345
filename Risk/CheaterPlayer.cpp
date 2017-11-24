@@ -16,9 +16,10 @@ void CheaterPlayer::reinforcement(Player* playerptr) {
 void CheaterPlayer::attack(Player* playerptr) {
 	Player& attacker = *playerptr;
 	std::vector<Country> attackingCountries = Game::checkAvailableAttackingCountriesToAttack(attacker);
+	const auto attackersCountries = attacker.getCountries();
 
 	if (attackingCountries.size() > 0) {
-		for (auto& attackingCountry : attacker.getCountries()) {
+		for (auto& attackingCountry : attackersCountries) {
 			for (auto& aCountry : attackingCountries) {
 				if (attackingCountry.getName() == aCountry.getName()) {
 					std::vector<Country> defendingCountries = Game::checkAvailableDefendingCountriesToAttack(attacker, attackingCountry);
@@ -41,9 +42,11 @@ void CheaterPlayer::attack(Player* playerptr) {
 								// Removing defeated country from defender
 								const auto pos = std::find(defender.getCountries().begin(), defender.getCountries().end(), defendingCountry);
 								defender.getCountries().erase(pos);
+								break;
 							}
 						}
 					}
+					break;
 				}
 			}
 		}

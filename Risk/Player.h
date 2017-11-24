@@ -28,7 +28,7 @@ public:
 	const Hand& getHand() const;
 	DiceFacility getDice() const;
 	std::string getID();
-	int getIDAsInt();
+	int getIDAsInt() const;
 	void assignCountry(Country c);
 	int amtCountries();
 	void initializeArmies();

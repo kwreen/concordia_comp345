@@ -127,6 +127,7 @@ Game::Game(const std::string& mapName, const std::vector<Player>& players) {
 	setGameMap(mapName);
 	deck.loadDeck(map.getCountries());
 	this->players = players;
+	turns.erase(turns.begin(), turns.end());
 	assignTurns();
 	assignObservers();
 	startUp();
@@ -136,8 +137,8 @@ void Game::reinforcementPhase(Player& player) {
     currentPhase = 1;
     setPhase(currentPhase);
 
-    notifyGameAll();
-	notifyPhaseAll();
+    //notifyGameAll();
+	//notifyPhaseAll();
 
     player.executeReinforcement(&player);
 }
@@ -146,8 +147,8 @@ void Game::fortificationPhase(Player& player) {
     currentPhase = 3;
     setPhase(currentPhase);
 
-    notifyGameAll();
-	notifyPhaseAll();
+    //notifyGameAll();
+	//notifyPhaseAll();
 
 	player.executeFortify(&player);
 }
@@ -161,9 +162,13 @@ std::vector<Country> Game::checkAvailableSourceCountriesToFortify(Player& player
 
     // Removing countries from the vector which do not have adjacent countries that the player owns
     countries.erase(std::remove_if(countries.begin(), countries.end(), [&](const Country& c) {
+		if (c.getArmies() <= 1) {
+			return true;
+		}
+
         std::vector<Country> adjacentCountries = Game::map.adjacent(c);
         adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
-            for (auto& country : countries) {
+			for (auto& country : player.getCountries()) {
                 if (country.getName() == c.getName()) {
                     return false;
                 }
@@ -208,7 +213,7 @@ std::vector<Country> Game::checkAvailableAttackingCountriesToAttack(Player& play
         std::vector<Country> adjacentCountries = map.adjacent(c);
 		// Removes from adjacentCountries those that the player owns
         adjacentCountries.erase(std::remove_if(adjacentCountries.begin(), adjacentCountries.end(), [&](const Country& c) {
-            for (auto& country : countries) {
+            for (auto& country : player.getCountries()) {
                 if (country.getName() == c.getName()) {
                     return true;
                 }
@@ -273,8 +278,8 @@ void Game::attackPhase(Player& attacker) {
     currentPhase = 2;
     setPhase(currentPhase);
 
-    notifyGameAll();
-	notifyPhaseAll();
+    //notifyGameAll();
+	//notifyPhaseAll();
 
 	attacker.executeAttack(&attacker);
 }
@@ -282,14 +287,14 @@ void Game::attackPhase(Player& attacker) {
 void Game::removeDeadPlayers() {
     std::vector<int> playersIndicesToDelete;
 	std::vector<int> playersIndicesToDetach;
-    for (int i = 0; i < players.size(); ++i) {
+    for (int i = players.size() - 1; i >= 0; --i) {
         const auto player = players[i];
         if (player.getCountries().empty()) {
             playersIndicesToDelete.push_back(i);
         }
     }
 
-	for (int i = 0; i < turns.size(); i++) {
+	for (int i = turns.size() - 1; i >= 0; --i) {
 		const auto player = turns[i];
 		if (player.getCountries().empty()) {
 			playersIndicesToDetach.push_back(i);
@@ -302,6 +307,7 @@ void Game::removeDeadPlayers() {
 
 	for (int i : playersIndicesToDetach) {
 		detach(&turns[i]);
+		turns.erase(turns.begin() + i);
 	}
 }
 
