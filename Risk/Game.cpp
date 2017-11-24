@@ -295,7 +295,7 @@ void Game::attackPhase(Player& attacker) {
 
 void Game::removeDeadPlayers() {
     std::vector<int> playersIndicesToDelete;
-	std::vector<int> playersIndicesToDetach;
+	std::vector<int> turnsIndicesToDelete;
     for (int i = players.size() - 1; i >= 0; --i) {
         const auto player = players[i];
         if (player.getCountries().empty()) {
@@ -306,13 +306,17 @@ void Game::removeDeadPlayers() {
 	for (int i = turns.size() - 1; i >= 0; --i) {
 		const auto player = turns[i];
 		if (player.getCountries().empty()) {
-			playersIndicesToDetach.push_back(i);
+			turnsIndicesToDelete.push_back(i);
 		}
 	}
 
     for (int i : playersIndicesToDelete) {
         players.erase(players.begin() + i);
     }
+
+	for (int i : turnsIndicesToDelete) {
+		turns.erase(turns.begin() + i);
+	}
 }
 
 Deck Game::getDeck() {
