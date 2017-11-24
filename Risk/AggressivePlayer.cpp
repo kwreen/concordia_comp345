@@ -1,6 +1,7 @@
 #include "AggressivePlayer.h"
 #include "Game.h"
 #include "UserInterface.h"
+#include <algorithm>
 #include <iostream>
 #include <string>
 

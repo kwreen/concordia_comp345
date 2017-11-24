@@ -2,35 +2,67 @@
 #include "Tournament.h"
 #include "UserInterface.h"
 
-void Tournament::initialize() {
+Tournament::Tournament() {
+	maps = UserInterface::selectTournamentMaps();
+	players = UserInterface::selectTournamentComputerPlayers();
+	G = UserInterface::selectTournamentGames();
+	D = UserInterface::selectTournamentTurns();
 
-	int numOfMaps;
-	int numOfPlayers;
-	int numOfGames;
-	int numOfTurns;
-
-	std::vector<std::string> maps;
-
-	for (int i = 0; i<numOfMaps; i++) {
-		std::string mapName = UserInterface::selectMap();
-		maps.push_back(mapName);
+	for (const auto& map : maps) {
+		winners[map] = std::vector<std::string>();
 	}
+}
 
-	std::cout << "How many players? (2-4)" << std::endl;
-	std::cin >> numOfPlayers;
-
-	std::cout << "How many games? (1-5)" << std::endl;
-	std::cin >> numOfGames;
-
-	std::cout << "Maximum number of turns for each game? (10-50)" << std::endl;
-	std::cin >> numOfTurns;
-
-	for (int i = 0; i<maps.size(); i++) {
-		for (int j = 0; j<numOfGames; j++) {
-			// create game
-			// Game game = Game(maps[i], numOfPlayers, numOfTurns);
-			// gamesForEachMap[i].push_back(game)
+void Tournament::startTournament() {
+	for (const auto& map : maps) {
+		for (int i = 0; i < G; ++i) {
+			const auto winner = simulateGame(map);
+			winners[map].push_back(winner);
 		}
 	}
+}
 
+void Tournament::displayWinners() {
+	for (int i = 0; i < G; ++i) {
+		std::cout << "Game " << i << " ";
+	}
+	std::cout << '\n';
+	for (const auto& map : maps) {
+		const auto mapWinners = winners[map];
+		for (const auto& winner : mapWinners) {
+			std::cout << winner << ' ';
+		}
+		std::cout << '\n';
+	}
+}
+
+std::string Tournament::simulateGame(const std::string& map) const {
+	Game game(map, players);
+
+	for (int i = 0; i < D; ++i) {
+		if (game.getTurns().size() == 1) {
+			const auto& player = game.getTurns()[0];
+			switch (i) {
+				case 1:
+					return "Aggressive";
+				case 2:
+					return "Benevolent";
+				case 3:
+					return "Random";
+				case 4:
+					return "Cheater";
+				default:
+					return "something is really wrong";
+			}
+		}
+		for (auto& player : game.getTurns()) {
+			if (!player.getCountries().empty()) {
+				game.reinforcementPhase(player);
+				game.attackPhase(player);
+				game.fortificationPhase(player);
+			}
+			game.removeDeadPlayers();
+		}
+	}
+	return "Draw";
 }

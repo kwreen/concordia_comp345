@@ -1,5 +1,6 @@
 #include "RandomPlayer.h"
 #include "Game.h"
+#include <algorithm>
 
 // Reinforces a random country
 void RandomPlayer::reinforcement(Player* playerptr) {

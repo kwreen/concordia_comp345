@@ -1,6 +1,7 @@
 #include "BenevolentPlayer.h"
 #include "Game.h"
 #include <iostream>
+#include <limits.h>
 
 void BenevolentPlayer::reinforcement(Player* playerptr) {
 	Player& player = *playerptr;

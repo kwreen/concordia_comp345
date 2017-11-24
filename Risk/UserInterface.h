@@ -20,7 +20,7 @@ public:
 
 	// Tournament interactions
 	static std::vector<std::string> selectTournamentMaps();
-	static std::vector<std::string> selectTournamentComputerPlayers();
+	static std::vector<Player> selectTournamentComputerPlayers();
 	static int selectTournamentGames();
 	static int selectTournamentTurns();
 };

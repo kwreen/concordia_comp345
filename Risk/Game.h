@@ -26,6 +26,7 @@ private:
 
 public:
 	Game(const std::string& mapName, int nPlayers);
+	Game(const std::string& mapName, const std::vector<Player>& players);
 	std::vector<Player>& getTurns();
 	std::vector<Player> getUnorderedPlayers() { return players;}
 	void reinforcementPhase(Player& player);

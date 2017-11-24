@@ -121,6 +121,17 @@ Game::Game(const std::string& fileName, int nPlayers) {
     startUp();
 }
 
+Game::Game(const std::string& mapName, const std::vector<Player>& players) {
+	srand(time(NULL));
+	numPlayers = players.size();
+	setGameMap(mapName);
+	deck.loadDeck(map.getCountries());
+	this->players = players;
+	assignTurns();
+	assignObservers();
+	startUp();
+}
+
 void Game::reinforcementPhase(Player& player) {
     currentPhase = 1;
     setPhase(currentPhase);
@@ -266,8 +277,6 @@ void Game::attackPhase(Player& attacker) {
 	notifyPhaseAll();
 
 	attacker.executeAttack(&attacker);
-
-    removeDeadPlayers();
 }
 
 void Game::removeDeadPlayers() {

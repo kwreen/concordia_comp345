@@ -1,5 +1,6 @@
 #include "CheaterPlayer.h"
 #include "Game.h"
+#include <algorithm>
 
 // Doubles armies on all countries
 void CheaterPlayer::reinforcement(Player* playerptr) {

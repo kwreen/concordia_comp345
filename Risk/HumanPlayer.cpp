@@ -2,6 +2,7 @@
 #include "Country.h"
 #include "UserInterface.h"
 #include "Game.h"
+#include <algorithm>
 #include <iostream>
 #include <vector>
 

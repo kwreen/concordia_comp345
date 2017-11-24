@@ -34,12 +34,20 @@ int main() {
 
     while (game.getTurns().size() > 1) {
         for (auto& player : players) {
-            std::cout << "\n******************************** Player "<< player.getIDAsInt() << " Turn: Reinforcement Phase ********************************" << std::endl;
-            game.reinforcementPhase(player);
-            std::cout << "\n******************************** Player "<< player.getIDAsInt() << " Turn: Attack Phase ********************************" << std::endl;
-            game.attackPhase(player);
-			std::cout << "\n******************************** Player " << player.getIDAsInt() << " Turn: Fortification Phase ********************************" << std::endl;
-			game.fortificationPhase(player);
+            if (!player.getCountries().empty()) {
+                std::cout << "\n******************************** Player " << player.getIDAsInt()
+                          << " Turn: Reinforcement Phase ********************************"
+                          << std::endl;
+                game.reinforcementPhase(player);
+                std::cout << "\n******************************** Player " << player.getIDAsInt()
+                          << " Turn: Attack Phase ********************************" << std::endl;
+                game.attackPhase(player);
+                std::cout << "\n******************************** Player " << player.getIDAsInt()
+                          << " Turn: Fortification Phase ********************************"
+                          << std::endl;
+                game.fortificationPhase(player);
+            }
+            game.removeDeadPlayers();
         }
     }
 
